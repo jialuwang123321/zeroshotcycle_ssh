@@ -1,0 +1,160 @@
+训练
+python train_atloc_dfnet.py --dataset 7Scenes --scene chess --model AtLocPlus --gamma -3.0 --gpus 0 --color_jitter 0.0 --epochs 2 --nThreads 1 --skip 5 --steps 2 --vo_only --val_on_vo
+python train_dfnet_vo.py --config config_dfnetdm.txt --dataset 7Scenes --scene chess --model AtLocPlus --gamma -3.0 --gpus 0 --color_jitter 0.0 --epochs 2 --nThreads 1 --batchsize 1 --skip 5 --steps 2 --vo_only --val_on_vo
+
+python train_debug.py --config config_dfnetdm.txt --dataset 7Scenes --scene chess --model AtLocPlus --gamma -3.0 --gpus 0 --color_jitter 0.0 --epochs 2 --nThreads 1 --batchsize 1 --skip 5 --steps 2 --vo_only --val_on_vo
+
+#原版dfnet的train
+python train_dfnet.py --config config_dfnetdm.txt  
+#我的atloc_dfnet 的train
+python train_dfnet_vo.py --config config_dfnetdm.txt
+python zeroshot.py --config config_dfnetdm.txt
+
+hwf =  [240, 320, 292.5] ,near =  0.0 ,far =  2.5
+world_setup_dict =  {'pose_scale': 1, 'pose_scale2': 1, 'move_all_cam_vec': [0.0, 0.0, 1.0]}
+
+
+on epoch: data.shape =  torch.Size([1, 3, 240, 320]) ,pose.shape =  torch.Size([1, 12])
+on batch: data.shape =  torch.Size([1, 3, 240, 320]) ,pose.shape =  torch.Size([1, 12])
+
+before: img_idx.shape =  torch.Size([1, 10]) ,rays.shape =  torch.Size([4800, 11])
+after: img_idx.shape =  torch.Size([4800, 10])
+rays.shape =  torch.Size([4800, 21])
+
+AttributeError: module 'pytorch3d.transforms' has no attribute
+Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
+
+
+##########
+data_dir=./data
+batchsize=1
+cropsize=256
+pr_freq=100
+gpus=0
+nThreads=1
+dataset=7Scenes
+scene=chess
+model=AtLoc
+seed=7
+lstm=False
+logdir=./logs
+exp_name=name
+skip=5
+variable_skip=False
+real=False
+steps=2
+#val=False
+# train options
+epochs=2
+beta=-3.0
+gamma=-3.0
+color_jitter=0.0
+train_dropout=0.0
+val_freq=5
+results_dir=figures
+models_dir=models
+runs_dir=runs
+lr=5e-5
+weight_decay=0.0005
+pre_weights
+#rada train
+num_threshold=10
+optuna_eps=158
+optuna_pow=1.5
+#VO only
+vo_only=True
+val_on_vo=True
+# test options
+test_dropout=0.0
+weights=epoch_005.pth.tar
+save_freq=5
+
+
+
+args.data_dir='./data'
+args.batchsize=1
+args.cropsize=256
+args.pr_freq=100
+args.gpus=0
+args.nThreads=1
+args.dataset='7Scenes'
+args.scene='chess'
+args.model='AtLoc'
+args.seed=7
+args.lstm=False
+args.args.logdir='./logs'
+args.exp_name='name'
+args.skip=5
+args.variable_skip=False
+args.real=False
+args.steps=2
+#val=False
+# train options
+args.epochs=2
+args.beta=-3.0
+args.gamma=-3.0
+args.color_jitter=0.0
+args.train_dropout=0.0
+args.val_freq=5
+args.results_dir='figures'
+args.models_dir='models'
+args.runs_dir='runs'
+args.lr=5e-5
+args.weight_decay=0.0005
+args.pre_weights
+#rada train
+args.num_threshold=10
+args.optuna_eps=158
+args.optuna_pow=1.5
+#VO only
+args.vo_only=True
+args.val_on_vo=True
+# test options
+args.test_dropout=0.0
+args.weights='epoch_005.pth.tar'
+args.save_freq=5
+
+
+
+opt.data_dir='./data'
+opt.batchsize=1
+opt.cropsize=256
+opt.pr_freq=100
+opt.gpus=0
+opt.nThreads=1
+opt.dataset='7Scenes'
+opt.scene='chess'
+opt.model='AtLoc'
+opt.seed=7
+opt.lstm=False
+opt.opt.logdir='./logs'
+opt.exp_name='name'
+opt.skip=5
+opt.variable_skip=False
+opt.real=False
+opt.steps=2
+#val=False
+# train options
+opt.epochs=2
+opt.beta=-3.0
+opt.gamma=-3.0
+opt.color_jitter=0.0
+opt.train_dropout=0.0
+opt.val_freq=5
+opt.results_dir='figures'
+opt.models_dir='models'
+opt.runs_dir='runs'
+opt.lr=5e-5
+opt.weight_decay=0.0005
+opt.pre_weights
+#rada train
+opt.num_threshold=10
+opt.optuna_eps=158
+opt.optuna_pow=1.5
+#VO only
+opt.vo_only=True
+opt.val_on_vo=True
+# test options
+opt.test_dropout=0.0
+opt.weights='epoch_005.pth.tar'
+opt.save_freq=5

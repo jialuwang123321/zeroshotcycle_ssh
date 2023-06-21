@@ -1,0 +1,651 @@
+(base) jialu@jialu-System-Product-Name:~$ cd zeroshot123cycle0524/
+(base) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ conda activate dfnet0514
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False  
+Command Line Args:   --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_model_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  testskip:          1
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['1.', '1.', '1.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 17 22 27]
+
+frame_idx_dso[0:4] =  [ 0  5 10 15]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-01.txt, using vo_stats_filename=./data/7Scenes/heads/seq-01/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 13 14 15]
+
+frame_idx_dso[0:4] =  [0 1 2 3]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-01.txt, using vo_stats_filename=./data/7Scenes/heads/seq-01/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  988
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.65544772 -0.23273923  0.71848503 -0.09990896]
+ [ 0.56813786  0.77874678 -0.26603162  0.31429131]
+ [-0.49760191  0.58256837  0.64265577  0.29820491]], poses.shape = (1186, 3, 4)
+pose_avg =  [[ 0.65544772 -0.23273923  0.71848503 -0.09990896]
+ [ 0.56813786  0.77874678 -0.26603162  0.31429131]
+ [-0.49760191  0.58256837  0.64265577  0.29820491]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 2
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+
+
+ ================ args.no_grad_update =  False
+Found ckpts ['./logs/heads/nerfh/001000.tar']
+Reloading from ./logs/heads/nerfh/001000.tar
+Not ndc!
+epochs:   0%|                                          | 0/2001 [00:00<?, ?it/s]
+
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/_tensor.py:1104: UserWarning: The .grad attribute of a Tensor that is not a leaf Tensor is being accessed. Its .grad attribute won't be populated during autograd.backward(). If you indeed want the .grad field to be populated for a non-leaf Tensor, use .retain_grad() on the non-leaf Tensor. If you access the non-leaf Tensor by mistake, make sure you access the leaf Tensor instead. See github.com/pytorch/pytorch/pull/30531 for more informations. (Triggered internally at  aten/src/ATen/core/TensorBody.h:475.)
+  return self._grad
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+
+ !!!!!! in def PoseLoss, detected args.batch_size==2, maunally set args.batch_size==1 for zeroshot training 
+At epoch    0 : train loss: -2.8887, train psnr: 39.0391, val loss: 0.0001, val psnr: 19.6418
+epochs:   0%|                                          | 0/2001 [01:10<?, ?it/s]
+
+ ============= self.val_on_psnr =  True
+                      Median error 0.010206456761807203m and 1.1263825297355652 degrees. loss: 19.6418
+Mean error 0.011582268248566686m and 1.2136750856361649 degrees.
+epochs:   0%|                               | 1/2001 [01:15<42:01:56, 75.66s/it]
+
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    1 : train loss: -2.8854, train psnr: 39.5830, val loss: 0.0001, val psnr: 19.9639         
+epochs:   0%|                               | 1/2001 [02:24<42:01:56, 75.66s/it]
+Best val loss: 19.6418
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 2/2001 [02:24<40:50:16, 73.54s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    2 : train loss: -2.8998, train psnr: 39.2864, val loss: 0.0001, val psnr: 19.7574         
+epochs:   0%|                               | 2/2001 [03:32<40:50:16, 73.54s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 3/2001 [03:32<39:56:20, 71.96s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    3 : train loss: -2.9037, train psnr: 39.0857, val loss: 0.0001, val psnr: 19.6156         
+epochs:   0%|                               | 3/2001 [04:40<39:56:20, 71.96s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 4/2001 [04:40<39:18:11, 70.85s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    4 : train loss: -2.9050, train psnr: 39.2092, val loss: 0.0001, val psnr: 19.4922         
+epochs:   0%|                               | 4/2001 [05:49<39:18:11, 70.85s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 5/2001 [05:49<38:58:08, 70.28s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    5 : train loss: -2.9029, train psnr: 38.4478, val loss: 0.0001, val psnr: 18.8257         
+epochs:   0%|                               | 5/2001 [06:58<38:58:08, 70.28s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 6/2001 [06:58<38:37:04, 69.69s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    6 : train loss: -2.8989, train psnr: 38.5365, val loss: 0.0001, val psnr: 19.8079         
+epochs:   0%|                               | 6/2001 [08:06<38:37:04, 69.69s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 7/2001 [08:06<38:28:24, 69.46s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    7 : train loss: -2.9126, train psnr: 39.9137, val loss: 0.0001, val psnr: 19.5205         
+epochs:   0%|                               | 7/2001 [09:16<38:28:24, 69.46s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 8/2001 [09:16<38:28:36, 69.50s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    8 : train loss: -2.9068, train psnr: 39.7556, val loss: 0.0001, val psnr: 19.0628         
+epochs:   0%|                               | 8/2001 [10:25<38:28:36, 69.50s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|▏                              | 9/2001 [10:25<38:20:12, 69.28s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch    9 : train loss: -2.9057, train psnr: 38.1709, val loss: 0.0001, val psnr: 19.4872         
+epochs:   0%|▏                              | 9/2001 [11:34<38:20:12, 69.28s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   0%|▏                             | 10/2001 [11:34<38:16:33, 69.21s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   10 : train loss: -2.9127, train psnr: 39.3575, val loss: 0.0001, val psnr: 19.8168         
+epochs:   0%|▏                             | 10/2001 [12:43<38:16:33, 69.21s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 11/2001 [12:43<38:16:43, 69.25s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   11 : train loss: -2.9066, train psnr: 39.0852, val loss: 0.0001, val psnr: 18.9297         
+epochs:   1%|▏                             | 11/2001 [13:52<38:16:43, 69.25s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 12/2001 [13:52<38:13:16, 69.18s/it]
+Best val loss: 19.9639
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   12 : train loss: -2.9158, train psnr: 39.7297, val loss: 0.0001, val psnr: 19.9971         
+epochs:   1%|▏                             | 12/2001 [15:01<38:13:16, 69.18s/it]
+Best val loss: 19.9639
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 13/2001 [15:01<38:08:32, 69.07s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   13 : train loss: -2.9137, train psnr: 39.9140, val loss: 0.0001, val psnr: 19.8824         
+epochs:   1%|▏                             | 13/2001 [16:10<38:08:32, 69.07s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 14/2001 [16:10<38:08:21, 69.10s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   14 : train loss: -2.9166, train psnr: 39.6803, val loss: 0.0001, val psnr: 19.9835         
+epochs:   1%|▏                             | 14/2001 [17:19<38:08:21, 69.10s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 15/2001 [17:19<38:07:42, 69.12s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   15 : train loss: -2.9200, train psnr: 40.4549, val loss: 0.0001, val psnr: 19.8312         
+epochs:   1%|▏                             | 15/2001 [18:28<38:07:42, 69.12s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 16/2001 [18:28<38:01:40, 68.97s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   16 : train loss: -2.9058, train psnr: 39.0202, val loss: 0.0001, val psnr: 19.8862         
+epochs:   1%|▏                             | 16/2001 [19:37<38:01:40, 68.97s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 17/2001 [19:37<38:00:56, 68.98s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   17 : train loss: -2.9083, train psnr: 39.4814, val loss: 0.0001, val psnr: 19.5118         
+epochs:   1%|▎                             | 17/2001 [20:46<38:00:56, 68.98s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 18/2001 [20:46<37:58:59, 68.96s/it]
+Best val loss: 19.9971
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   18 : train loss: -2.9021, train psnr: 40.1090, val loss: 0.0001, val psnr: 20.1412         
+epochs:   1%|▎                             | 18/2001 [21:55<37:58:59, 68.96s/it]
+Best val loss: 19.9971
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 19/2001 [21:55<37:58:11, 68.97s/it]
+Best val loss: 20.1412
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   19 : train loss: -2.9046, train psnr: 39.5005, val loss: 0.0001, val psnr: 19.9954         
+epochs:   1%|▎                             | 19/2001 [23:04<37:58:11, 68.97s/it]
+Best val loss: 20.1412
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 20/2001 [23:04<38:01:39, 69.11s/it]
+Best val loss: 20.1412
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   20 : train loss: -2.9134, train psnr: 41.0719, val loss: 0.0001, val psnr: 20.0992         
+epochs:   1%|▎                             | 20/2001 [24:13<38:01:39, 69.11s/it]
+Best val loss: 20.1412
+ ============= self.val_on_psnr =  True
+                      Median error 0.008317453321069479m and 0.9065427184104919 degrees. loss: 20.1412
+Mean error 0.00931730368627077m and 1.0036416105051271 degrees.
+epochs:   1%|▎                             | 21/2001 [24:18<38:48:04, 70.55s/it]
+
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   21 : train loss: -2.9124, train psnr: 41.1921, val loss: 0.0001, val psnr: 20.2816         
+epochs:   1%|▎                             | 21/2001 [25:27<38:48:04, 70.55s/it]
+Best val loss: 20.1412
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 22/2001 [25:27<38:27:37, 69.96s/it]
+Best val loss: 20.2816
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   22 : train loss: -2.9128, train psnr: 40.5802, val loss: 0.0001, val psnr: 20.5110         
+epochs:   1%|▎                             | 22/2001 [26:36<38:27:37, 69.96s/it]
+Best val loss: 20.2816
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 23/2001 [26:36<38:20:58, 69.80s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   23 : train loss: -2.9217, train psnr: 40.6341, val loss: 0.0001, val psnr: 20.0369         
+epochs:   1%|▎                             | 23/2001 [27:45<38:20:58, 69.80s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 24/2001 [27:45<38:07:54, 69.44s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   24 : train loss: -2.9094, train psnr: 40.9676, val loss: 0.0001, val psnr: 19.8266         
+epochs:   1%|▎                             | 24/2001 [28:54<38:07:54, 69.44s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 25/2001 [28:54<38:04:38, 69.37s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   25 : train loss: -2.9142, train psnr: 40.2958, val loss: 0.0001, val psnr: 20.0231         
+epochs:   1%|▎                             | 25/2001 [30:03<38:04:38, 69.37s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 26/2001 [30:03<38:00:45, 69.29s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   26 : train loss: -2.9223, train psnr: 40.3670, val loss: 0.0001, val psnr: 20.4879         
+epochs:   1%|▍                             | 26/2001 [31:12<38:00:45, 69.29s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 27/2001 [31:12<37:59:31, 69.29s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   27 : train loss: -2.9168, train psnr: 40.9157, val loss: 0.0001, val psnr: 20.4459         
+epochs:   1%|▍                             | 27/2001 [32:22<37:59:31, 69.29s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 28/2001 [32:22<37:59:44, 69.33s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   28 : train loss: -2.9155, train psnr: 40.6807, val loss: 0.0001, val psnr: 19.9330         
+epochs:   1%|▍                             | 28/2001 [33:31<37:59:44, 69.33s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 29/2001 [33:31<37:57:31, 69.30s/it]
+Best val loss: 20.5110
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   29 : train loss: -2.9182, train psnr: 41.3937, val loss: 0.0001, val psnr: 20.6192         
+epochs:   1%|▍                             | 29/2001 [34:40<37:57:31, 69.30s/it]
+Best val loss: 20.5110
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 30/2001 [34:40<37:57:01, 69.32s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   30 : train loss: -2.9157, train psnr: 41.0714, val loss: 0.0001, val psnr: 20.3036         
+epochs:   1%|▍                             | 30/2001 [35:50<37:57:01, 69.32s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 31/2001 [35:50<37:58:07, 69.38s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   31 : train loss: -2.9181, train psnr: 40.9984, val loss: 0.0001, val psnr: 20.0705         
+epochs:   2%|▍                             | 31/2001 [36:59<37:58:07, 69.38s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 32/2001 [36:59<37:55:49, 69.35s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   32 : train loss: -2.9175, train psnr: 41.0204, val loss: 0.0001, val psnr: 20.1150         
+epochs:   2%|▍                             | 32/2001 [38:08<37:55:49, 69.35s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 33/2001 [38:08<37:53:11, 69.30s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   33 : train loss: -2.9053, train psnr: 40.2324, val loss: 0.0001, val psnr: 20.2095         
+epochs:   2%|▍                             | 33/2001 [39:18<37:53:11, 69.30s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 34/2001 [39:18<37:54:43, 69.39s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   34 : train loss: -2.9178, train psnr: 40.0769, val loss: 0.0000, val psnr: 20.3648         
+epochs:   2%|▌                             | 34/2001 [40:28<37:54:43, 69.39s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 35/2001 [40:28<37:55:17, 69.44s/it]
+Best val loss: 20.6192
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   35 : train loss: -2.9196, train psnr: 40.9490, val loss: 0.0000, val psnr: 20.6887         
+epochs:   2%|▌                             | 35/2001 [41:37<37:55:17, 69.44s/it]
+Best val loss: 20.6192
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 36/2001 [41:37<37:53:43, 69.43s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   36 : train loss: -2.9226, train psnr: 41.8599, val loss: 0.0000, val psnr: 20.5357         
+epochs:   2%|▌                             | 36/2001 [42:46<37:53:43, 69.43s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 37/2001 [42:46<37:50:45, 69.37s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   37 : train loss: -2.9199, train psnr: 42.3162, val loss: 0.0000, val psnr: 20.5148         
+epochs:   2%|▌                             | 37/2001 [43:55<37:50:45, 69.37s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 38/2001 [43:55<37:45:53, 69.26s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   38 : train loss: -2.9183, train psnr: 41.3536, val loss: 0.0001, val psnr: 20.2848         
+epochs:   2%|▌                             | 38/2001 [45:04<37:45:53, 69.26s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 39/2001 [45:04<37:44:24, 69.25s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   39 : train loss: -2.9240, train psnr: 41.9882, val loss: 0.0001, val psnr: 20.5273         
+epochs:   2%|▌                             | 39/2001 [46:14<37:44:24, 69.25s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 40/2001 [46:14<37:42:30, 69.23s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   40 : train loss: -2.9124, train psnr: 40.7305, val loss: 0.0001, val psnr: 20.2753         
+epochs:   2%|▌                             | 40/2001 [47:23<37:42:30, 69.23s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+                      Median error 0.00687977415509522m and 0.7932703793048859 degrees.l loss: 20.6887
+Mean error 0.007991330907691878m and 0.8845541225746274 degrees.
+epochs:   2%|▌                             | 41/2001 [47:28<38:29:36, 70.70s/it]
+
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   41 : train loss: -2.9198, train psnr: 41.1691, val loss: 0.0000, val psnr: 20.4217         
+epochs:   2%|▌                             | 41/2001 [48:37<38:29:36, 70.70s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 42/2001 [48:37<38:15:34, 70.31s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   42 : train loss: -2.9243, train psnr: 41.5498, val loss: 0.0001, val psnr: 20.1071         
+epochs:   2%|▋                             | 42/2001 [49:47<38:15:34, 70.31s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 43/2001 [49:47<38:06:34, 70.07s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   43 : train loss: -2.9178, train psnr: 41.5584, val loss: 0.0001, val psnr: 20.5956         
+epochs:   2%|▋                             | 43/2001 [50:56<38:06:34, 70.07s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 44/2001 [50:56<37:56:36, 69.80s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   44 : train loss: -2.9236, train psnr: 41.6309, val loss: 0.0000, val psnr: 20.2982         
+epochs:   2%|▋                             | 44/2001 [52:05<37:56:36, 69.80s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 45/2001 [52:05<37:50:42, 69.65s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   45 : train loss: -2.9185, train psnr: 41.8996, val loss: 0.0001, val psnr: 20.0723         
+epochs:   2%|▋                             | 45/2001 [53:15<37:50:42, 69.65s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 46/2001 [53:15<37:46:24, 69.56s/it]
+Best val loss: 20.6887
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+At epoch   46 : train loss: -2.9225, train psnr: 41.3689, val loss: 0.0001, val psnr: 20.8350         
+epochs:   2%|▋                             | 46/2001 [54:24<37:46:24, 69.56s/it]
+Best val loss: 20.6887
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                             | 47/2001 [54:24<37:48:08, 69.65s/it]
+Best val loss: 20.8350
+ ==== Zeroshot training! ===== In train_on_epoch, num_cycle =  1
+
+ = = = =  Load vo weight from pretrained atloc_vo: /home/jialu/AtLoc0515/logs/7Scenes_heads_AtLocPlus_False_abs_loss_0531_epo999/models/epoch_995_backup.pth.tar 
+
+epochs:   2%|▋                             | 47/2001 [54:47<37:57:58, 69.95s/it]
+Traceback (most recent call last):
+  File "train_pre_posenet_dso.py", line 173, in <module>
+    train()
+  File "train_pre_posenet_dso.py", line 140, in train
+    train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, near, far, device, early_stopping, train_dl=train_dl, val_dl=val_dl, test_dl=test_dl,num_cycle=args.num_cycle)
+  File "./feature/direct_feature_matching_pre_posenet.py", line 674, in train_feature_matching
+    loss, psnr = train_on_epoch(args, data_loaders, model, feat_model, hwf, optimizer, half_res, device, world_setup_dict, num_cycle, **render_kwargs_test)
+  File "./feature/direct_feature_matching_pre_posenet.py", line 583, in train_on_epoch
+    pa1, Ia1, photo_loss_a01, iter_psnr_a01 = train_on_batch_cycle_1(args, Ia, model, feat_model, pose_a, img_idx_a, hwf, optimizer, half_res, device, world_setup_dict, **render_kwargs_test)
+  File "./feature/direct_feature_matching_pre_posenet.py", line 1573, in train_on_batch_cycle_1
+    rgb, disp, acc, extras = render(H//4, W//4, focal/4, chunk=args.chunk, c2w=pose_nerf[0,:3,:4], img_idx=img_idx, **render_kwargs_test)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 392, in render
+    all_ret = batchify_rays(rays, chunk, **kwargs)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 344, in batchify_rays
+    ret = render_rays(rays_flat[i:i+chunk], **kwargs)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 313, in render_rays
+    raw = network_query_fn(pts, viewdirs, img_idxs, network_fine, 'fine', embedding_a, embedding_t, output_transient, test_time=test_time)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 434, in <lambda>
+    test_time=test_time)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 86, in run_network_NeRFW
+    embedded_inputs = [embed_fn(inputs_flat[i: i+netchunk]), embeddirs_fn(input_dirs_flat[i:i+netchunk])]
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 216, in <lambda>
+    embed = lambda x, eo=embedder_obj : eo.embed(x)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 130, in embed
+    ret = torch.cat([fn(inputs) for fn in self.embed_fns], -1) # cos, sin embedding
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 130, in <listcomp>
+    ret = torch.cat([fn(inputs) for fn in self.embed_fns], -1) # cos, sin embedding
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 123, in <lambda>
+    embed_fns.append(lambda x, p_fn=p_fn, freq=freq : p_fn(x * freq))
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 197, in format_stack
+    return format_list(extract_stack(f, limit=limit))
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 39, in format_list
+    return StackSummary.from_list(extracted_list).format()
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 423, in format
+    row.append('    {}\n'.format(frame.line.strip()))
+KeyboardInterrupt
+Best val loss: 20.8350
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ 

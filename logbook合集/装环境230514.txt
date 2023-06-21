@@ -1,0 +1,183 @@
+    ​ 1. 环境
+    ​ 2. 
+
+
+
+    ​ python3.7.3虚拟环境
+conda create -n dfnet0514 python=3.7
+
+conda activate  dfnet0514
+更新：
+conda update -n base -c defaults conda
+
+
+
+
+
+
+3. 下载torch 1.11.0+cu11.5
+pip install https://download.pytorch.org/whl/cu115/torch-1.11.0%2Bcu115-cp37-cp37m-linux_x86_64.whl
+
+来自https://download.pytorch.org/whl/torch/
+我的cuda 11.5.2
+
+
+
+4. 验证
+python3
+import torch
+print(torch.__version__)
+显示：
+1.11.0+cu115
+# 查看pytoc­h是否支持CUDA  
+torch.cuda.is_available()
+显示：
+True
+exit()
+5.pip装相关软件
+更新pip
+pip install --upgrade pip
+Successfully uninstalled pip-23.1.2
+
+下载相关环境
+
+失败
+pip install conda
+pip install conda-build
+pip install conda-package-handling
+pip install ruamel-yaml-conda
+
+下了
+pip install numpy
+pip install pandas
+
+
+pip install imageio
+pip install tqdm
+
+
+pip install absl-py
+pip install antlr4-python3-runtime
+pip install backcall
+pip install beautifulsoup4
+pip install brotlipy
+pip install cached-property
+pip install cachetools
+pip install certifi
+pip install cffi
+pip install chardet
+
+pip install ConfigArgParse
+pip install cryptography
+pip install cycler
+pip install decorator
+pip install dnspython
+pip install efficientnet-pytorch
+pip install einops
+pip install filelock
+pip install fvcore
+pip install glob2
+pip install google-auth
+pip install google-auth-oauthlib
+pip install grpcio
+pip install h5py
+pip install idna
+
+pip install imageio-ffmpeg
+
+
+pip install importlib-metadata
+pip install iopath
+pip install ipython
+pip install ipython-genutils
+pip install jedi
+pip install Jinja2
+pip install kiwisolver
+pip install kornia
+pip install libarchive-c
+pip install Markdown
+pip install MarkupSafe
+pip install matplotlib
+pip install mkl-fft
+pip install mkl-random
+pip install mkl-service
+pip install numpy
+pip install oauthlib
+pip install olefile
+pip install omegaconf
+
+
+pip install opencv-python
+
+
+pip install packaging
+pip install parso
+pip install pexpect
+pip install pickleshare
+pip install Pillow
+
+pip install pkginfo
+pip install portalocker
+pip install prompt-toolkit
+pip install protobuf
+pip install psutil
+pip install ptyprocess
+pip install pyasn1
+pip install pyasn1-modules
+pip install pycosat
+pip install pycparser
+pip install Pygments
+pip install pykalman
+pip install pyOpenSSL
+pip install pyparsing
+pip install PySocks
+pip install python-dateutil
+pip install python-etcd
+
+pip install pytorch3d
+？？？
+
+Installing collected packages: nvidia-cuda-runtime-cu11, nvidia-cuda-nvrtc-cu11, nvidia-cublas-cu11, nvidia-cudnn-cu11, torch, torchvision, pytorch3d
+  Attempting uninstall: torch
+    Found existing installation: torch 1.11.0+cu115
+    Uninstalling torch-1.11.0+cu115:
+      Successfully uninstalled torch-1.11.0+cu115
+Successfully installed nvidia-cublas-cu11-11.10.3.66 nvidia-cuda-nvrtc-cu11-11.7.99 nvidia-cuda-runtime-cu11-11.7.99 nvidia-cudnn-cu11-8.5.0.96 pytorch3d-0.3.0 torch-1.13.1 torchvision-0.14.1
+
+？？？
+
+pip install pytz
+pip install PyYAML
+pip install requests
+pip install requests-oauthlib
+pip install rsa
+
+
+
+
+
+pip install scipy
+pip install setuptools
+pip install six
+pip install soupsieve
+pip install tabulate
+pip install tensorboard
+pip install tensorboard-data-server
+pip install tensorboard-plugin-wit
+pip install termcolor
+pip install torch
+pip install torchelastic
+pip install torchsummary
+pip install torchtext
+pip install torchvision
+
+pip install traitlets
+pip install transforms3d
+pip install trimesh
+pip install typing-extensions
+pip install urllib3
+pip install wcwidth
+pip install Werkzeug
+pip install wheel
+pip install yacs
+pip install zipp

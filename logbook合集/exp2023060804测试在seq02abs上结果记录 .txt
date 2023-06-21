@@ -1,0 +1,2013 @@
+(base) jialu@jialu-System-Product-Name:~$ cd zeroshot123cycle0524/
+(base) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ conda activate dfnet0514
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ python multi_eval.py --opt heads --exp dfnetdm/exp2023060804
+
+
+ ================ files =  ['checkpoint-0000-18.8070.pt', 'checkpoint-0001-19.8507.pt', 'checkpoint-0023-19.8955.pt', 'checkpoint-0024-20.1682.pt', 'checkpoint-0027-20.2136.pt', 'checkpoint-0045-20.2193.pt', 'checkpoint-0075-20.3253.pt', 'checkpoint-0079-20.5206.pt', 'checkpoint-0149-20.6542.pt', 'checkpoint-0159-20.6646.pt', 'checkpoint-0162-20.6669.pt', 'checkpoint-0196-20.8491.pt', 'checkpoint-0208-20.8496.pt', 'checkpoint-0272-20.9218.pt', 'checkpoint-0302-20.9538.pt', 'checkpoint-0303-21.1484.pt', 'checkpoint-0372-21.5728.pt']
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0000-18.8070.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29457390308380127m and 8.899364471435547 degrees.
+Mean error 0.30954930019782456m and 9.747674915679665 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0001-19.8507.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29582053422927856m and 8.681903839111328 degrees.
+Mean error 0.31223150918258336m and 9.582512428413388 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0023-19.8955.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29135146737098694m and 8.986186027526855 degrees.
+Mean error 0.3100122087404388m and 9.849660710570063 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0024-20.1682.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2916453182697296m and 8.935211181640625 degrees.
+Mean error 0.31077314451472465m and 9.773720863675445 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0027-20.2136.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2922646403312683m and 9.048137664794922 degrees.
+Mean error 0.30865884490906287m and 10.030617356872897 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0045-20.2193.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29547443985939026m and 8.90570068359375 degrees.
+Mean error 0.3130238896313042m and 9.79799000492472 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0075-20.3253.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.291467547416687m and 9.142122268676758 degrees.
+Mean error 0.310398590403512m and 9.838295885839162 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0079-20.5206.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29170092940330505m and 9.054110527038574 degrees.
+Mean error 0.30956829119289125m and 9.915631188601406 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0149-20.6542.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29103562235832214m and 9.2655611038208 degrees.
+Mean error 0.30923198950001396m and 9.963872766048771 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0159-20.6646.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.293738454580307m and 9.290980339050293 degrees.
+Mean error 0.3116627288087675m and 10.007941165997357 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0162-20.6669.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2897069752216339m and 9.33405876159668 degrees.
+Mean error 0.3096127246776775m and 10.0724665584651 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0196-20.8491.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2928345799446106m and 9.34664249420166 degrees.
+Mean error 0.31225362195585327m and 10.177190508652023 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0208-20.8496.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29289472103118896m and 9.324400901794434 degrees.
+Mean error 0.3106336874173553m and 10.143328445263892 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0272-20.9218.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29497435688972473m and 9.613127708435059 degrees.
+Mean error 0.31090478467236154m and 10.185929016348567 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0302-20.9538.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.29373717308044434m and 9.423868179321289 degrees.
+Mean error 0.3104701633023661m and 9.983955324720686 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0303-21.1484.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2924322783946991m and 9.477099418640137 degrees.
+Mean error 0.310507746818273m and 10.209771784299305 degrees.
+Command Line Args:   --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=/home/jialu/zeroshot123cycle0524/logs/heads/dfnetdm/exp2023060804/checkpoint-0372-21.5728.pt
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['2.', '5.', '10.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate:           0.0005
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --no_grad_update:  True
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-02/frame-000011.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]], poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.97375542 -0.13055726  0.18642742  0.01057081]
+ [ 0.07866495  0.96169317  0.2625987  -0.10709554]
+ [-0.21357014 -0.2410416   0.94672422  0.10312981]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+989
+Median error 0.2916240096092224m and 9.595259666442871 degrees.
+Mean error 0.309620205836542m and 10.187725130299105 degrees.
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ 

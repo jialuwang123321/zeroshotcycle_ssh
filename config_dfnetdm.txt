@@ -1,0 +1,56 @@
+# ############################################### NeRF-Hist training example Cambridge ###############################################
+# model_name=dfnetdm
+# expname=nerfh
+# basedir=./logs/fire # change this if change scenes
+# datadir=./data/Cambridge/OldHospital # change this if change scenes
+# dataset_type=Cambridge
+# pretrain_model_path= ./logs/fire/dfnet/checkpoint-0582-0.0014.pt # this is your trained dfnet model for pose regression
+# pretrain_featurenet_path= ./logs/fire/dfnet/checkpoint-0582-0.0014.pt # this is your trained dfnet model for feature extraction
+# trainskip=2 # train
+# testskip=1 # train
+# df=2
+# load_pose_avg_stats=True
+# NeRFH=True
+# encode_hist=True
+# freezeBN=True
+# featuremetric=True
+# pose_only=3
+# svd_reg=True
+# combine_loss = True
+# combine_loss_w = [0., 0., 1.]
+# finetune_unlabel=True
+# i_eval=20
+# DFNet=True
+# val_on_psnr=True
+# feature_matching_lvl = [0]
+# # eval=True # add this for eval
+# # pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0267-17.1446.pt # add the trained model for eval
+
+
+##############################################NeRF-Hist training example 7-Scenes ###############################################
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0006-0.1546.pt #checkpoint-0065-0.1980.pt #checkpoint-0067-0.1964.pt #checkpoint-0068-3.5540.pt #exp2023061101_21/checkpoint-0003-3.2197.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/checkpoint-0006-0.1546.pt #checkpoint-0065-0.1980.pt  #checkpoint-0067-0.1964.pt #checkpoint-0068-3.5540.pt #exp2023061101_21/checkpoint-0003-3.2197.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 1000., 1.] #[0.1, 0, 5000.] #[0.0001, 0.01, 1] #[2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=False
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval

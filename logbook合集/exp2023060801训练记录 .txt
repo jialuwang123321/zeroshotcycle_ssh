@@ -1,0 +1,1408 @@
+(base) jialu@jialu-System-Product-Name:~$ cd zeroshot123cycle0524/
+(base) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ conda activate dfnet0514
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --lrate 5e-8 
+Command Line Args:   --config config_dfnetdm.txt --no_grad_update False --lrate 5e-8
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_model_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  pretrain_featurenet_path:./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+  trainskip:         5
+  testskip:          1
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['1.', '10.', '50.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       True
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --learning_rate:   1e-05
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 17 22 27]
+
+frame_idx_dso[0:4] =  [ 0  5 10 15]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-01.txt, using vo_stats_filename=./data/7Scenes/heads/seq-01/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 13 14 15]
+
+frame_idx_dso[0:4] =  [0 1 2 3]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-01.txt, using vo_stats_filename=./data/7Scenes/heads/seq-01/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  988
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg_from_file = [[ 0.65544772 -0.23273923  0.71848503 -0.09990896]
+ [ 0.56813786  0.77874678 -0.26603162  0.31429131]
+ [-0.49760191  0.58256837  0.64265577  0.29820491]], poses.shape = (1186, 3, 4)
+pose_avg =  [[ 0.65544772 -0.23273923  0.71848503 -0.09990896]
+ [ 0.56813786  0.77874678 -0.26603162  0.31429131]
+ [-0.49760191  0.58256837  0.64265577  0.29820491]]
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+
+
+ ================ args.no_grad_update =  False
+Found ckpts ['./logs/heads/nerfh/001000.tar']
+Reloading from ./logs/heads/nerfh/001000.tar
+Not ndc!
+epochs:   0%|                                          | 0/2001 [00:00<?, ?it/s]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    0 : train loss: 4.5593, train psnr: 19.8882, val loss: 0.0001, val psnr: 19.0284
+epochs:   0%|                                          | 0/2001 [01:37<?, ?it/s]
+
+ ============= self.val_on_psnr =  True
+                      Median error 0.0095484578050673m and 0.8735664784908295 degrees.al loss: 19.0284
+Mean error 0.011148542102717564m and 1.0092880174985177 degrees.
+epochs:   0%|                              | 1/2001 [01:42<57:01:31, 102.65s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    1 : train loss: 4.4907, train psnr: 20.1171, val loss: 0.0001, val psnr: 19.9173          
+epochs:   0%|                              | 1/2001 [03:17<57:01:31, 102.65s/it]
+Best val loss: 19.0284
+ ============= self.val_on_psnr =  True
+epochs:   0%|                              | 2/2001 [03:17<55:40:12, 100.26s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    2 : train loss: 4.3007, train psnr: 20.1994, val loss: 0.0001, val psnr: 19.2111          
+epochs:   0%|                              | 2/2001 [04:52<55:40:12, 100.26s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 3/2001 [04:52<54:49:13, 98.78s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    3 : train loss: 4.7848, train psnr: 19.6711, val loss: 0.0004, val psnr: 19.0742          
+epochs:   0%|                               | 3/2001 [06:34<54:49:13, 98.78s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 4/2001 [06:34<55:14:43, 99.59s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    4 : train loss: 4.8438, train psnr: 19.5788, val loss: 0.0002, val psnr: 18.7308          
+epochs:   0%|                               | 4/2001 [08:12<55:14:43, 99.59s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 5/2001 [08:12<54:56:21, 99.09s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    5 : train loss: 4.1094, train psnr: 20.3963, val loss: 0.0002, val psnr: 19.6966          
+epochs:   0%|                               | 5/2001 [09:52<54:56:21, 99.09s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 6/2001 [09:52<55:08:16, 99.50s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    6 : train loss: 3.9945, train psnr: 20.4955, val loss: 0.0002, val psnr: 19.2866          
+epochs:   0%|                               | 6/2001 [11:30<55:08:16, 99.50s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                               | 7/2001 [11:30<54:54:38, 99.14s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    7 : train loss: 4.8856, train psnr: 19.7942, val loss: 0.0001, val psnr: 19.0850          
+epochs:   0%|                               | 7/2001 [13:14<54:54:38, 99.14s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|                              | 8/2001 [13:14<55:37:17, 100.47s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    8 : train loss: 4.2496, train psnr: 20.1734, val loss: 0.0001, val psnr: 18.8450          
+epochs:   0%|                              | 8/2001 [14:50<55:37:17, 100.47s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|▏                              | 9/2001 [14:50<54:50:17, 99.11s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch    9 : train loss: 4.4568, train psnr: 20.0584, val loss: 0.0001, val psnr: 19.6255          
+epochs:   0%|▏                              | 9/2001 [16:24<54:50:17, 99.11s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   0%|▏                             | 10/2001 [16:24<53:58:36, 97.60s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   10 : train loss: 4.2237, train psnr: 20.2044, val loss: 0.0002, val psnr: 19.3014          
+epochs:   0%|▏                             | 10/2001 [17:58<53:58:36, 97.60s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 11/2001 [17:58<53:24:58, 96.63s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   11 : train loss: 4.2583, train psnr: 20.2289, val loss: 0.0001, val psnr: 19.0917          
+epochs:   1%|▏                             | 11/2001 [19:33<53:24:58, 96.63s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 12/2001 [19:33<53:00:36, 95.95s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   12 : train loss: 4.6878, train psnr: 19.7880, val loss: 0.0001, val psnr: 18.0848          
+epochs:   1%|▏                             | 12/2001 [21:07<53:00:36, 95.95s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 13/2001 [21:07<52:43:07, 95.47s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   13 : train loss: 4.4040, train psnr: 20.1277, val loss: 0.0001, val psnr: 19.4692          
+epochs:   1%|▏                             | 13/2001 [22:41<52:43:07, 95.47s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 14/2001 [22:41<52:29:55, 95.12s/it]
+Best val loss: 19.9173
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   14 : train loss: 4.1932, train psnr: 20.2442, val loss: 0.0001, val psnr: 19.9347          
+epochs:   1%|▏                             | 14/2001 [24:16<52:29:55, 95.12s/it]
+Best val loss: 19.9173
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 15/2001 [24:16<52:22:31, 94.94s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   15 : train loss: 4.3090, train psnr: 20.1094, val loss: 0.0001, val psnr: 19.2700          
+epochs:   1%|▏                             | 15/2001 [25:50<52:22:31, 94.94s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▏                             | 16/2001 [25:50<52:18:06, 94.85s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   16 : train loss: 4.1754, train psnr: 20.3787, val loss: 0.0001, val psnr: 19.5897          
+epochs:   1%|▏                             | 16/2001 [27:25<52:18:06, 94.85s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 17/2001 [27:25<52:11:15, 94.70s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   17 : train loss: 4.0779, train psnr: 20.4469, val loss: 0.0001, val psnr: 19.5971          
+epochs:   1%|▎                             | 17/2001 [28:59<52:11:15, 94.70s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 18/2001 [28:59<52:07:34, 94.63s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   18 : train loss: 4.5469, train psnr: 20.0264, val loss: 0.0002, val psnr: 18.8658          
+epochs:   1%|▎                             | 18/2001 [30:34<52:07:34, 94.63s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 19/2001 [30:34<52:02:53, 94.54s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   19 : train loss: 4.3635, train psnr: 20.1869, val loss: 0.0001, val psnr: 19.2727          
+epochs:   1%|▎                             | 19/2001 [32:08<52:02:53, 94.54s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 20/2001 [32:08<51:59:33, 94.48s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   20 : train loss: 4.4648, train psnr: 20.0642, val loss: 0.0001, val psnr: 18.5410          
+epochs:   1%|▎                             | 20/2001 [33:42<51:59:33, 94.48s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+                      Median error 0.011452232021838427m and 0.8299170136451721 degrees. loss: 19.9347
+Mean error 0.014480829081118205m and 0.9951470781660635 degrees.
+epochs:   1%|▎                             | 21/2001 [33:47<52:46:54, 95.97s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   21 : train loss: 4.0616, train psnr: 20.2602, val loss: 0.0001, val psnr: 19.2554          
+epochs:   1%|▎                             | 21/2001 [35:22<52:46:54, 95.97s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 22/2001 [35:22<52:29:27, 95.49s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   22 : train loss: 4.4098, train psnr: 20.0284, val loss: 0.0001, val psnr: 19.4653          
+epochs:   1%|▎                             | 22/2001 [36:56<52:29:27, 95.49s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 23/2001 [36:56<52:17:06, 95.16s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   23 : train loss: 4.5259, train psnr: 20.0103, val loss: 0.0001, val psnr: 19.4074          
+epochs:   1%|▎                             | 23/2001 [38:30<52:17:06, 95.16s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 24/2001 [38:30<52:07:37, 94.92s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   24 : train loss: 4.3273, train psnr: 20.2437, val loss: 0.0001, val psnr: 19.4541          
+epochs:   1%|▎                             | 24/2001 [40:05<52:07:37, 94.92s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▎                             | 25/2001 [40:05<52:01:08, 94.77s/it]
+Best val loss: 19.9347
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   25 : train loss: 3.9472, train psnr: 20.5694, val loss: 0.0001, val psnr: 20.2022          
+epochs:   1%|▎                             | 25/2001 [41:39<52:01:08, 94.77s/it]
+Best val loss: 19.9347
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 26/2001 [41:39<51:55:00, 94.63s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   26 : train loss: 4.1358, train psnr: 20.3717, val loss: 0.0001, val psnr: 19.7828          
+epochs:   1%|▍                             | 26/2001 [43:14<51:55:00, 94.63s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 27/2001 [43:14<51:52:50, 94.62s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   27 : train loss: 3.8786, train psnr: 20.5724, val loss: 0.0001, val psnr: 19.2960          
+epochs:   1%|▍                             | 27/2001 [44:48<51:52:50, 94.62s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 28/2001 [44:48<51:48:53, 94.54s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   28 : train loss: 4.2873, train psnr: 20.3754, val loss: 0.0001, val psnr: 19.7320          
+epochs:   1%|▍                             | 28/2001 [46:23<51:48:53, 94.54s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 29/2001 [46:23<51:46:46, 94.53s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   29 : train loss: 4.2929, train psnr: 20.3288, val loss: 0.0001, val psnr: 20.0084          
+epochs:   1%|▍                             | 29/2001 [47:57<51:46:46, 94.53s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   1%|▍                             | 30/2001 [47:57<51:43:21, 94.47s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   30 : train loss: 4.0205, train psnr: 20.4961, val loss: 0.0001, val psnr: 19.3512          
+epochs:   1%|▍                             | 30/2001 [49:31<51:43:21, 94.47s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 31/2001 [49:31<51:37:55, 94.35s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   31 : train loss: 4.5436, train psnr: 19.7989, val loss: 0.0002, val psnr: 18.9298          
+epochs:   2%|▍                             | 31/2001 [51:06<51:37:55, 94.35s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 32/2001 [51:06<51:37:15, 94.38s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   32 : train loss: 4.5468, train psnr: 19.9180, val loss: 0.0001, val psnr: 19.6160          
+epochs:   2%|▍                             | 32/2001 [52:40<51:37:15, 94.38s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▍                             | 33/2001 [52:40<51:37:07, 94.42s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   33 : train loss: 4.2902, train psnr: 20.2679, val loss: 0.0001, val psnr: 19.7977          
+epochs:   2%|▍                             | 33/2001 [54:15<51:37:07, 94.42s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 34/2001 [54:15<51:36:57, 94.47s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   34 : train loss: 3.9584, train psnr: 20.5089, val loss: 0.0001, val psnr: 19.6382          
+epochs:   2%|▌                             | 34/2001 [55:49<51:36:57, 94.47s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 35/2001 [55:49<51:34:42, 94.45s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   35 : train loss: 4.4512, train psnr: 20.0353, val loss: 0.0001, val psnr: 19.7895          
+epochs:   2%|▌                             | 35/2001 [57:24<51:34:42, 94.45s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 36/2001 [57:24<51:34:00, 94.47s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   36 : train loss: 3.8618, train psnr: 20.5754, val loss: 0.0001, val psnr: 20.1000          
+epochs:   2%|▌                             | 36/2001 [58:58<51:34:00, 94.47s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                             | 37/2001 [58:58<51:32:04, 94.46s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   37 : train loss: 3.9303, train psnr: 20.5804, val loss: 0.0001, val psnr: 19.3094          
+epochs:   2%|▌                           | 37/2001 [1:00:32<51:32:04, 94.46s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 38/2001 [1:00:32<51:27:37, 94.37s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   38 : train loss: 4.5031, train psnr: 19.9759, val loss: 0.0001, val psnr: 19.5304          
+epochs:   2%|▌                           | 38/2001 [1:02:07<51:27:37, 94.37s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 39/2001 [1:02:07<51:27:06, 94.41s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   39 : train loss: 4.6807, train psnr: 19.8948, val loss: 0.0001, val psnr: 18.9813          
+epochs:   2%|▌                           | 39/2001 [1:03:41<51:27:06, 94.41s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 40/2001 [1:03:41<51:24:16, 94.37s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   40 : train loss: 4.3661, train psnr: 20.0812, val loss: 0.0001, val psnr: 19.3959          
+epochs:   2%|▌                           | 40/2001 [1:05:15<51:24:16, 94.37s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+                      Median error 0.008692000061273575m and 0.8517908453941345 degrees. loss: 20.2022
+Mean error 0.011288230174871752m and 1.0131667020093453 degrees.
+epochs:   2%|▌                           | 41/2001 [1:05:21<52:15:18, 95.98s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   41 : train loss: 4.0633, train psnr: 20.3454, val loss: 0.0001, val psnr: 19.8503          
+epochs:   2%|▌                           | 41/2001 [1:06:55<52:15:18, 95.98s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 42/2001 [1:06:55<51:59:28, 95.54s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   42 : train loss: 4.1179, train psnr: 20.4310, val loss: 0.0001, val psnr: 19.7808          
+epochs:   2%|▌                           | 42/2001 [1:08:29<51:59:28, 95.54s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 43/2001 [1:08:29<51:45:32, 95.16s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   43 : train loss: 3.9714, train psnr: 20.4334, val loss: 0.0001, val psnr: 17.9791          
+epochs:   2%|▌                           | 43/2001 [1:10:04<51:45:32, 95.16s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▌                           | 44/2001 [1:10:04<51:35:24, 94.90s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   44 : train loss: 4.0271, train psnr: 20.5143, val loss: 0.0001, val psnr: 19.9044          
+epochs:   2%|▌                           | 44/2001 [1:11:38<51:35:24, 94.90s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 45/2001 [1:11:38<51:29:12, 94.76s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   45 : train loss: 3.9613, train psnr: 20.5203, val loss: 0.0001, val psnr: 20.0313          
+epochs:   2%|▋                           | 45/2001 [1:13:13<51:29:12, 94.76s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 46/2001 [1:13:13<51:24:40, 94.67s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   46 : train loss: 3.9547, train psnr: 20.4136, val loss: 0.0001, val psnr: 19.8809          
+epochs:   2%|▋                           | 46/2001 [1:14:47<51:24:40, 94.67s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 47/2001 [1:14:47<51:21:54, 94.63s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   47 : train loss: 4.0412, train psnr: 20.3580, val loss: 0.0001, val psnr: 18.9821          
+epochs:   2%|▋                           | 47/2001 [1:16:22<51:21:54, 94.63s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 48/2001 [1:16:22<51:19:37, 94.61s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   48 : train loss: 4.3944, train psnr: 20.2034, val loss: 0.0001, val psnr: 19.8635          
+epochs:   2%|▋                           | 48/2001 [1:17:56<51:19:37, 94.61s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 49/2001 [1:17:56<51:16:25, 94.56s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   49 : train loss: 4.1980, train psnr: 20.2897, val loss: 0.0001, val psnr: 19.7232          
+epochs:   2%|▋                           | 49/2001 [1:19:31<51:16:25, 94.56s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   2%|▋                           | 50/2001 [1:19:31<51:13:22, 94.52s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   50 : train loss: 4.3515, train psnr: 20.2004, val loss: 0.0002, val psnr: 19.5763          
+epochs:   2%|▋                           | 50/2001 [1:21:05<51:13:22, 94.52s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▋                           | 51/2001 [1:21:05<51:11:56, 94.52s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   51 : train loss: 4.1996, train psnr: 20.3182, val loss: 0.0001, val psnr: 18.4711          
+epochs:   3%|▋                           | 51/2001 [1:22:39<51:11:56, 94.52s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▋                           | 52/2001 [1:22:39<51:08:20, 94.46s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   52 : train loss: 4.2738, train psnr: 20.3561, val loss: 0.0001, val psnr: 19.7549          
+epochs:   3%|▋                           | 52/2001 [1:24:14<51:08:20, 94.46s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▋                           | 53/2001 [1:24:14<51:05:52, 94.43s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   53 : train loss: 3.7603, train psnr: 20.7343, val loss: 0.0001, val psnr: 19.7582          
+epochs:   3%|▋                           | 53/2001 [1:25:48<51:05:52, 94.43s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 54/2001 [1:25:48<51:04:45, 94.45s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   54 : train loss: 3.8993, train psnr: 20.4815, val loss: 0.0001, val psnr: 19.6111          
+epochs:   3%|▊                           | 54/2001 [1:27:23<51:04:45, 94.45s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 55/2001 [1:27:23<51:03:42, 94.46s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   55 : train loss: 3.6647, train psnr: 20.7809, val loss: 0.0001, val psnr: 19.3421          
+epochs:   3%|▊                           | 55/2001 [1:28:57<51:03:42, 94.46s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 56/2001 [1:28:57<51:02:39, 94.48s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   56 : train loss: 4.1674, train psnr: 20.3791, val loss: 0.0001, val psnr: 19.6947          
+epochs:   3%|▊                           | 56/2001 [1:30:32<51:02:39, 94.48s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 57/2001 [1:30:32<51:02:09, 94.51s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   57 : train loss: 3.9469, train psnr: 20.4395, val loss: 0.0001, val psnr: 19.5666          
+epochs:   3%|▊                           | 57/2001 [1:32:06<51:02:09, 94.51s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 58/2001 [1:32:06<51:00:02, 94.49s/it]
+Best val loss: 20.2022
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   58 : train loss: 3.8984, train psnr: 20.4833, val loss: 0.0001, val psnr: 20.2281          
+epochs:   3%|▊                           | 58/2001 [1:33:41<51:00:02, 94.49s/it]
+Best val loss: 20.2022
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 59/2001 [1:33:41<50:58:30, 94.50s/it]
+Best val loss: 20.2281
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   59 : train loss: 3.6255, train psnr: 20.8206, val loss: 0.0001, val psnr: 18.6714          
+epochs:   3%|▊                           | 59/2001 [1:35:16<50:58:30, 94.50s/it]
+Best val loss: 20.2281
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 60/2001 [1:35:16<50:58:36, 94.55s/it]
+Best val loss: 20.2281
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   60 : train loss: 3.9043, train psnr: 20.6572, val loss: 0.0001, val psnr: 20.2483          
+epochs:   3%|▊                           | 60/2001 [1:36:50<50:58:36, 94.55s/it]
+Best val loss: 20.2281
+ ============= self.val_on_psnr =  True
+                      Median error 0.0083601800724864m and 0.7808401882648468 degrees.al loss: 20.2483
+Mean error 0.010207853980561782m and 0.9819527202651568 degrees.
+epochs:   3%|▊                           | 61/2001 [1:36:55<51:45:46, 96.06s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   61 : train loss: 3.8147, train psnr: 20.5768, val loss: 0.0001, val psnr: 19.3009          
+epochs:   3%|▊                           | 61/2001 [1:38:30<51:45:46, 96.06s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▊                           | 62/2001 [1:38:30<51:31:03, 95.65s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   62 : train loss: 4.1933, train psnr: 20.3803, val loss: 0.0001, val psnr: 19.9035          
+epochs:   3%|▊                           | 62/2001 [1:40:04<51:31:03, 95.65s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 63/2001 [1:40:04<51:20:06, 95.36s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   63 : train loss: 3.7431, train psnr: 20.7554, val loss: 0.0001, val psnr: 19.8606          
+epochs:   3%|▉                           | 63/2001 [1:41:39<51:20:06, 95.36s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 64/2001 [1:41:39<51:09:19, 95.07s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   64 : train loss: 3.9353, train psnr: 20.6368, val loss: 0.0001, val psnr: 19.2583          
+epochs:   3%|▉                           | 64/2001 [1:43:13<51:09:19, 95.07s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 65/2001 [1:43:13<51:02:14, 94.90s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   65 : train loss: 3.7937, train psnr: 20.6723, val loss: 0.0001, val psnr: 19.6879          
+epochs:   3%|▉                           | 65/2001 [1:44:48<51:02:14, 94.90s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 66/2001 [1:44:48<50:55:33, 94.75s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   66 : train loss: 4.2420, train psnr: 20.4420, val loss: 0.0001, val psnr: 19.6937          
+epochs:   3%|▉                           | 66/2001 [1:46:22<50:55:33, 94.75s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 67/2001 [1:46:22<50:51:52, 94.68s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   67 : train loss: 4.3568, train psnr: 20.3134, val loss: 0.0001, val psnr: 19.6317          
+epochs:   3%|▉                           | 67/2001 [1:47:57<50:51:52, 94.68s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 68/2001 [1:47:57<50:48:44, 94.63s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   68 : train loss: 3.8545, train psnr: 20.5615, val loss: 0.0001, val psnr: 19.8891          
+epochs:   3%|▉                           | 68/2001 [1:49:31<50:48:44, 94.63s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 69/2001 [1:49:31<50:44:45, 94.56s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   69 : train loss: 3.6845, train psnr: 20.7770, val loss: 0.0001, val psnr: 19.6340          
+epochs:   3%|▉                           | 69/2001 [1:51:06<50:44:45, 94.56s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   3%|▉                           | 70/2001 [1:51:06<50:42:59, 94.55s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   70 : train loss: 4.0846, train psnr: 20.2582, val loss: 0.0001, val psnr: 19.5788          
+epochs:   3%|▉                           | 70/2001 [1:52:40<50:42:59, 94.55s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   4%|▉                           | 71/2001 [1:52:40<50:40:18, 94.52s/it]
+Best val loss: 20.2483
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   71 : train loss: 3.6233, train psnr: 20.7808, val loss: 0.0001, val psnr: 20.3853          
+epochs:   4%|▉                           | 71/2001 [1:54:14<50:40:18, 94.52s/it]
+Best val loss: 20.2483
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 72/2001 [1:54:14<50:35:10, 94.41s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   72 : train loss: 3.8766, train psnr: 20.6385, val loss: 0.0001, val psnr: 19.9851          
+epochs:   4%|█                           | 72/2001 [1:55:49<50:35:10, 94.41s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 73/2001 [1:55:49<50:34:13, 94.43s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   73 : train loss: 4.1372, train psnr: 20.3809, val loss: 0.0001, val psnr: 19.0262          
+epochs:   4%|█                           | 73/2001 [1:57:23<50:34:13, 94.43s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 74/2001 [1:57:23<50:33:36, 94.46s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   74 : train loss: 3.9737, train psnr: 20.5918, val loss: 0.0001, val psnr: 19.8491          
+epochs:   4%|█                           | 74/2001 [1:58:58<50:33:36, 94.46s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 75/2001 [1:58:58<50:33:47, 94.51s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   75 : train loss: 3.7834, train psnr: 20.6036, val loss: 0.0001, val psnr: 19.0023          
+epochs:   4%|█                           | 75/2001 [2:00:32<50:33:47, 94.51s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 76/2001 [2:00:32<50:31:23, 94.48s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   76 : train loss: 4.1980, train psnr: 20.1933, val loss: 0.0001, val psnr: 19.2359          
+epochs:   4%|█                           | 76/2001 [2:02:07<50:31:23, 94.48s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 77/2001 [2:02:07<50:27:38, 94.42s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   77 : train loss: 3.7799, train psnr: 20.7557, val loss: 0.0001, val psnr: 20.3099          
+epochs:   4%|█                           | 77/2001 [2:03:41<50:27:38, 94.42s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 78/2001 [2:03:41<50:26:30, 94.43s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   78 : train loss: 4.0319, train psnr: 20.4464, val loss: 0.0001, val psnr: 19.9778          
+epochs:   4%|█                           | 78/2001 [2:05:15<50:26:30, 94.43s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 79/2001 [2:05:15<50:23:42, 94.39s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   79 : train loss: 3.8555, train psnr: 20.7415, val loss: 0.0001, val psnr: 20.0562          
+epochs:   4%|█                           | 79/2001 [2:06:50<50:23:42, 94.39s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█                           | 80/2001 [2:06:50<50:21:16, 94.37s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   80 : train loss: 3.6796, train psnr: 20.6865, val loss: 0.0001, val psnr: 19.9319          
+epochs:   4%|█                           | 80/2001 [2:08:24<50:21:16, 94.37s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+                      Median error 0.009667590726166964m and 0.7077556252479553 degrees. loss: 20.3853
+Mean error 0.011985793026934307m and 0.9081477918077697 degrees.
+epochs:   4%|█▏                          | 81/2001 [2:08:30<51:11:56, 96.00s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   81 : train loss: 3.9670, train psnr: 20.5930, val loss: 0.0001, val psnr: 19.4643          
+epochs:   4%|█▏                          | 81/2001 [2:10:04<51:11:56, 96.00s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 82/2001 [2:10:04<50:56:15, 95.56s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   82 : train loss: 3.6877, train psnr: 20.8103, val loss: 0.0001, val psnr: 18.6991          
+epochs:   4%|█▏                          | 82/2001 [2:11:38<50:56:15, 95.56s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 83/2001 [2:11:38<50:43:54, 95.22s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   83 : train loss: 3.6945, train psnr: 20.6605, val loss: 0.0001, val psnr: 19.9448          
+epochs:   4%|█▏                          | 83/2001 [2:13:13<50:43:54, 95.22s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 84/2001 [2:13:13<50:32:49, 94.92s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   84 : train loss: 3.8796, train psnr: 20.5837, val loss: 0.0001, val psnr: 19.1527          
+epochs:   4%|█▏                          | 84/2001 [2:14:47<50:32:49, 94.92s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 85/2001 [2:14:47<50:26:34, 94.78s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   85 : train loss: 3.7597, train psnr: 20.7134, val loss: 0.0001, val psnr: 19.0453          
+epochs:   4%|█▏                          | 85/2001 [2:16:22<50:26:34, 94.78s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 86/2001 [2:16:22<50:21:27, 94.67s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   86 : train loss: 3.8878, train psnr: 20.5389, val loss: 0.0001, val psnr: 19.4736          
+epochs:   4%|█▏                          | 86/2001 [2:17:56<50:21:27, 94.67s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 87/2001 [2:17:56<50:15:21, 94.53s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   87 : train loss: 3.7111, train psnr: 20.6693, val loss: 0.0001, val psnr: 20.1311          
+epochs:   4%|█▏                          | 87/2001 [2:19:30<50:15:21, 94.53s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 88/2001 [2:19:30<50:14:14, 94.54s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   88 : train loss: 3.7418, train psnr: 20.6274, val loss: 0.0001, val psnr: 19.7263          
+epochs:   4%|█▏                          | 88/2001 [2:21:05<50:14:14, 94.54s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▏                          | 89/2001 [2:21:05<50:09:58, 94.46s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   89 : train loss: 3.7965, train psnr: 20.7777, val loss: 0.0001, val psnr: 19.1051          
+epochs:   4%|█▏                          | 89/2001 [2:22:39<50:09:58, 94.46s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   4%|█▎                          | 90/2001 [2:22:39<50:08:28, 94.46s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   90 : train loss: 3.6375, train psnr: 20.8451, val loss: 0.0001, val psnr: 20.1351          
+epochs:   4%|█▎                          | 90/2001 [2:24:13<50:08:28, 94.46s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 91/2001 [2:24:13<50:05:51, 94.42s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   91 : train loss: 3.9120, train psnr: 20.6339, val loss: 0.0001, val psnr: 19.6337          
+epochs:   5%|█▎                          | 91/2001 [2:25:48<50:05:51, 94.42s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 92/2001 [2:25:48<50:05:18, 94.46s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   92 : train loss: 3.9125, train psnr: 20.5239, val loss: 0.0001, val psnr: 19.7057          
+epochs:   5%|█▎                          | 92/2001 [2:27:22<50:05:18, 94.46s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 93/2001 [2:27:22<50:02:46, 94.43s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   93 : train loss: 3.8178, train psnr: 20.6646, val loss: 0.0001, val psnr: 19.2413          
+epochs:   5%|█▎                          | 93/2001 [2:28:57<50:02:46, 94.43s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 94/2001 [2:28:57<50:01:56, 94.45s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   94 : train loss: 4.1259, train psnr: 20.3565, val loss: 0.0001, val psnr: 19.8733          
+epochs:   5%|█▎                          | 94/2001 [2:30:31<50:01:56, 94.45s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 95/2001 [2:30:31<50:00:16, 94.45s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   95 : train loss: 4.0362, train psnr: 20.5244, val loss: 0.0001, val psnr: 19.2822          
+epochs:   5%|█▎                          | 95/2001 [2:32:06<50:00:16, 94.45s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 96/2001 [2:32:06<49:57:48, 94.42s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   96 : train loss: 3.7908, train psnr: 20.6249, val loss: 0.0001, val psnr: 19.2336          
+epochs:   5%|█▎                          | 96/2001 [2:33:40<49:57:48, 94.42s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 97/2001 [2:33:40<49:54:20, 94.36s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   97 : train loss: 3.6353, train psnr: 20.9418, val loss: 0.0001, val psnr: 19.5824          
+epochs:   5%|█▎                          | 97/2001 [2:35:14<49:54:20, 94.36s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                          | 98/2001 [2:35:14<49:53:12, 94.37s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   98 : train loss: 3.8934, train psnr: 20.6908, val loss: 0.0001, val psnr: 19.5008          
+epochs:   5%|█▎                          | 98/2001 [2:36:48<49:53:12, 94.37s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                          | 99/2001 [2:36:48<49:50:00, 94.32s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch   99 : train loss: 3.8120, train psnr: 20.6925, val loss: 0.0001, val psnr: 20.3209          
+epochs:   5%|█▍                          | 99/2001 [2:38:23<49:50:00, 94.32s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▎                         | 100/2001 [2:38:23<49:51:03, 94.40s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  100 : train loss: 3.5815, train psnr: 20.8479, val loss: 0.0001, val psnr: 19.7019          
+epochs:   5%|█▎                         | 100/2001 [2:39:57<49:51:03, 94.40s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+                      Median error 0.007528732530772686m and 0.7932703793048859 degrees. loss: 20.3853
+Mean error 0.009947513400467192m and 0.9932929921729362 degrees.
+epochs:   5%|█▎                         | 101/2001 [2:40:02<50:37:03, 95.91s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  101 : train loss: 3.9002, train psnr: 20.6134, val loss: 0.0001, val psnr: 18.8749          
+epochs:   5%|█▎                         | 101/2001 [2:41:37<50:37:03, 95.91s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 102/2001 [2:41:37<50:21:23, 95.46s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  102 : train loss: 3.8350, train psnr: 20.7882, val loss: 0.0001, val psnr: 19.4447          
+epochs:   5%|█▍                         | 102/2001 [2:43:11<50:21:23, 95.46s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 103/2001 [2:43:11<50:09:56, 95.15s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  103 : train loss: 3.7231, train psnr: 20.7615, val loss: 0.0001, val psnr: 19.7036          
+epochs:   5%|█▍                         | 103/2001 [2:44:46<50:09:56, 95.15s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 104/2001 [2:44:46<49:59:44, 94.88s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  104 : train loss: 3.5091, train psnr: 21.0041, val loss: 0.0001, val psnr: 20.1430          
+epochs:   5%|█▍                         | 104/2001 [2:46:20<49:59:44, 94.88s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 105/2001 [2:46:20<49:53:01, 94.72s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  105 : train loss: 4.0309, train psnr: 20.5387, val loss: 0.0001, val psnr: 19.9258          
+epochs:   5%|█▍                         | 105/2001 [2:47:54<49:53:01, 94.72s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 106/2001 [2:47:54<49:48:23, 94.62s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  106 : train loss: 3.6377, train psnr: 20.8342, val loss: 0.0001, val psnr: 19.8897          
+epochs:   5%|█▍                         | 106/2001 [2:49:29<49:48:23, 94.62s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 107/2001 [2:49:29<49:44:30, 94.55s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  107 : train loss: 3.9617, train psnr: 20.5957, val loss: 0.0001, val psnr: 18.9193          
+epochs:   5%|█▍                         | 107/2001 [2:51:03<49:44:30, 94.55s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 108/2001 [2:51:03<49:40:40, 94.47s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  108 : train loss: 3.7656, train psnr: 20.5816, val loss: 0.0001, val psnr: 19.3290          
+epochs:   5%|█▍                         | 108/2001 [2:52:37<49:40:40, 94.47s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 109/2001 [2:52:37<49:38:06, 94.44s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  109 : train loss: 3.9951, train psnr: 20.5063, val loss: 0.0001, val psnr: 19.8618          
+epochs:   5%|█▍                         | 109/2001 [2:54:12<49:38:06, 94.44s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   5%|█▍                         | 110/2001 [2:54:12<49:36:09, 94.43s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  110 : train loss: 3.8885, train psnr: 20.5900, val loss: 0.0001, val psnr: 20.2253          
+epochs:   5%|█▍                         | 110/2001 [2:55:46<49:36:09, 94.43s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▍                         | 111/2001 [2:55:46<49:34:52, 94.44s/it]
+Best val loss: 20.3853
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  111 : train loss: 3.5909, train psnr: 20.8664, val loss: 0.0001, val psnr: 20.3972          
+epochs:   6%|█▍                         | 111/2001 [2:57:20<49:34:52, 94.44s/it]
+Best val loss: 20.3853
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 112/2001 [2:57:20<49:31:32, 94.38s/it]
+Best val loss: 20.3972
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  112 : train loss: 4.4612, train psnr: 20.1812, val loss: 0.0001, val psnr: 20.0446          
+epochs:   6%|█▌                         | 112/2001 [2:58:55<49:31:32, 94.38s/it]
+Best val loss: 20.3972
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 113/2001 [2:58:55<49:31:10, 94.42s/it]
+Best val loss: 20.3972
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  113 : train loss: 3.8184, train psnr: 20.6447, val loss: 0.0001, val psnr: 20.5991          
+epochs:   6%|█▌                         | 113/2001 [3:00:29<49:31:10, 94.42s/it]
+Best val loss: 20.3972
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 114/2001 [3:00:29<49:29:07, 94.41s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  114 : train loss: 3.5516, train psnr: 20.8726, val loss: 0.0001, val psnr: 19.4522          
+epochs:   6%|█▌                         | 114/2001 [3:02:04<49:29:07, 94.41s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 115/2001 [3:02:04<49:28:54, 94.45s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  115 : train loss: 3.5832, train psnr: 20.9218, val loss: 0.0001, val psnr: 19.6846          
+epochs:   6%|█▌                         | 115/2001 [3:03:38<49:28:54, 94.45s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 116/2001 [3:03:38<49:27:41, 94.46s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  116 : train loss: 3.7146, train psnr: 20.7437, val loss: 0.0001, val psnr: 19.6326          
+epochs:   6%|█▌                         | 116/2001 [3:05:13<49:27:41, 94.46s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 117/2001 [3:05:13<49:25:18, 94.44s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  117 : train loss: 3.3955, train psnr: 20.9886, val loss: 0.0001, val psnr: 20.4862          
+epochs:   6%|█▌                         | 117/2001 [3:06:47<49:25:18, 94.44s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 118/2001 [3:06:47<49:23:27, 94.43s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  118 : train loss: 3.9276, train psnr: 20.4208, val loss: 0.0001, val psnr: 20.2369          
+epochs:   6%|█▌                         | 118/2001 [3:08:22<49:23:27, 94.43s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 119/2001 [3:08:22<49:21:35, 94.42s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  119 : train loss: 3.6126, train psnr: 20.7390, val loss: 0.0001, val psnr: 19.5093          
+epochs:   6%|█▌                         | 119/2001 [3:09:56<49:21:35, 94.42s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▌                         | 120/2001 [3:09:56<49:19:45, 94.41s/it]
+Best val loss: 20.5991
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  120 : train loss: 3.8865, train psnr: 20.5814, val loss: 0.0001, val psnr: 20.6335          
+epochs:   6%|█▌                         | 120/2001 [3:11:30<49:19:45, 94.41s/it]
+Best val loss: 20.5991
+ ============= self.val_on_psnr =  True
+                      Median error 0.007476606871932745m and 0.7823424339294434 degrees. loss: 20.6335
+Mean error 0.009817071520808946m and 0.9933852594277939 degrees.
+epochs:   6%|█▋                         | 121/2001 [3:11:35<50:06:25, 95.95s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  121 : train loss: 3.6971, train psnr: 20.7739, val loss: 0.0001, val psnr: 19.8986          
+epochs:   6%|█▋                         | 121/2001 [3:13:10<50:06:25, 95.95s/it]
+Best val loss: 20.6335
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 122/2001 [3:13:10<49:51:21, 95.52s/it]
+Best val loss: 20.6335
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  122 : train loss: 3.5596, train psnr: 20.8395, val loss: 0.0001, val psnr: 20.6845          
+epochs:   6%|█▋                         | 122/2001 [3:14:44<49:51:21, 95.52s/it]
+Best val loss: 20.6335
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 123/2001 [3:14:44<49:40:17, 95.22s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  123 : train loss: 3.5195, train psnr: 20.8108, val loss: 0.0001, val psnr: 19.2510          
+epochs:   6%|█▋                         | 123/2001 [3:16:19<49:40:17, 95.22s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 124/2001 [3:16:19<49:32:35, 95.02s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  124 : train loss: 3.6021, train psnr: 20.8181, val loss: 0.0001, val psnr: 19.9572          
+epochs:   6%|█▋                         | 124/2001 [3:17:54<49:32:35, 95.02s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 125/2001 [3:17:54<49:27:40, 94.92s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  125 : train loss: 3.8581, train psnr: 20.5869, val loss: 0.0001, val psnr: 19.8118          
+epochs:   6%|█▋                         | 125/2001 [3:19:28<49:27:40, 94.92s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 126/2001 [3:19:28<49:22:03, 94.79s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  126 : train loss: 3.4069, train psnr: 21.1312, val loss: 0.0001, val psnr: 20.1100          
+epochs:   6%|█▋                         | 126/2001 [3:21:03<49:22:03, 94.79s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 127/2001 [3:21:03<49:17:45, 94.70s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  127 : train loss: 3.8149, train psnr: 20.6012, val loss: 0.0001, val psnr: 20.0546          
+epochs:   6%|█▋                         | 127/2001 [3:22:37<49:17:45, 94.70s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 128/2001 [3:22:37<49:14:10, 94.63s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  128 : train loss: 3.5482, train psnr: 20.9272, val loss: 0.0001, val psnr: 20.1316          
+epochs:   6%|█▋                         | 128/2001 [3:24:12<49:14:10, 94.63s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▋                         | 129/2001 [3:24:12<49:10:44, 94.58s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  129 : train loss: 3.8466, train psnr: 20.6790, val loss: 0.0001, val psnr: 19.7568          
+epochs:   6%|█▋                         | 129/2001 [3:25:46<49:10:44, 94.58s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   6%|█▊                         | 130/2001 [3:25:46<49:09:06, 94.57s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  130 : train loss: 3.8763, train psnr: 20.6362, val loss: 0.0001, val psnr: 20.0644          
+epochs:   6%|█▊                         | 130/2001 [3:27:21<49:09:06, 94.57s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 131/2001 [3:27:21<49:08:00, 94.59s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  131 : train loss: 3.5075, train psnr: 20.9251, val loss: 0.0001, val psnr: 20.1691          
+epochs:   7%|█▊                         | 131/2001 [3:28:55<49:08:00, 94.59s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 132/2001 [3:28:55<49:04:03, 94.51s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  132 : train loss: 3.9830, train psnr: 20.6662, val loss: 0.0001, val psnr: 20.3687          
+epochs:   7%|█▊                         | 132/2001 [3:30:30<49:04:03, 94.51s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 133/2001 [3:30:30<49:02:07, 94.50s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  133 : train loss: 3.5213, train psnr: 20.9312, val loss: 0.0001, val psnr: 19.8270          
+epochs:   7%|█▊                         | 133/2001 [3:32:04<49:02:07, 94.50s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 134/2001 [3:32:04<48:59:24, 94.46s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  134 : train loss: 3.5808, train psnr: 20.9081, val loss: 0.0001, val psnr: 19.8510          
+epochs:   7%|█▊                         | 134/2001 [3:33:38<48:59:24, 94.46s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 135/2001 [3:33:38<48:57:47, 94.46s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  135 : train loss: 3.7658, train psnr: 20.7494, val loss: 0.0001, val psnr: 19.4259          
+epochs:   7%|█▊                         | 135/2001 [3:35:13<48:57:47, 94.46s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 136/2001 [3:35:13<48:56:59, 94.49s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  136 : train loss: 3.4578, train psnr: 20.9955, val loss: 0.0001, val psnr: 19.9837          
+epochs:   7%|█▊                         | 136/2001 [3:36:48<48:56:59, 94.49s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 137/2001 [3:36:48<48:55:40, 94.50s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  137 : train loss: 3.8853, train psnr: 20.6485, val loss: 0.0001, val psnr: 19.2853          
+epochs:   7%|█▊                         | 137/2001 [3:38:22<48:55:40, 94.50s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▊                         | 138/2001 [3:38:22<48:54:33, 94.51s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  138 : train loss: 3.5598, train psnr: 20.8315, val loss: 0.0001, val psnr: 20.0172          
+epochs:   7%|█▊                         | 138/2001 [3:39:56<48:54:33, 94.51s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 139/2001 [3:39:56<48:51:59, 94.48s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  139 : train loss: 3.7142, train psnr: 20.8736, val loss: 0.0001, val psnr: 19.4875          
+epochs:   7%|█▉                         | 139/2001 [3:41:31<48:51:59, 94.48s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 140/2001 [3:41:31<48:49:55, 94.46s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  140 : train loss: 3.4534, train psnr: 21.1699, val loss: 0.0001, val psnr: 19.6909          
+epochs:   7%|█▉                         | 140/2001 [3:43:05<48:49:55, 94.46s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+                      Median error 0.007960395887494087m and 0.7823424339294434 degrees. loss: 20.6845
+Mean error 0.010329504405678088m and 0.9727942546799417 degrees.
+epochs:   7%|█▉                         | 141/2001 [3:43:10<49:34:13, 95.94s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  141 : train loss: 3.7279, train psnr: 20.8859, val loss: 0.0001, val psnr: 19.8565          
+epochs:   7%|█▉                         | 141/2001 [3:44:45<49:34:13, 95.94s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 142/2001 [3:44:45<49:21:39, 95.59s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  142 : train loss: 3.5309, train psnr: 20.8937, val loss: 0.0001, val psnr: 20.1699          
+epochs:   7%|█▉                         | 142/2001 [3:46:20<49:21:39, 95.59s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 143/2001 [3:46:20<49:09:52, 95.26s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  143 : train loss: 3.5545, train psnr: 20.8651, val loss: 0.0001, val psnr: 20.0667          
+epochs:   7%|█▉                         | 143/2001 [3:47:54<49:09:52, 95.26s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 144/2001 [3:47:54<49:01:17, 95.03s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  144 : train loss: 3.7603, train psnr: 20.7527, val loss: 0.0001, val psnr: 20.0878          
+epochs:   7%|█▉                         | 144/2001 [3:49:28<49:01:17, 95.03s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 145/2001 [3:49:28<48:52:15, 94.79s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  145 : train loss: 3.4222, train psnr: 21.1553, val loss: 0.0001, val psnr: 19.9770          
+epochs:   7%|█▉                         | 145/2001 [3:51:03<48:52:15, 94.79s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 146/2001 [3:51:03<48:47:28, 94.69s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  146 : train loss: 3.9674, train psnr: 20.4953, val loss: 0.0001, val psnr: 19.9617          
+epochs:   7%|█▉                         | 146/2001 [3:52:37<48:47:28, 94.69s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 147/2001 [3:52:37<48:43:41, 94.62s/it]
+Best val loss: 20.6845
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  147 : train loss: 3.3567, train psnr: 20.9074, val loss: 0.0001, val psnr: 20.6957          
+epochs:   7%|█▉                         | 147/2001 [3:54:12<48:43:41, 94.62s/it]
+Best val loss: 20.6845
+ ============= self.val_on_psnr =  True
+epochs:   7%|█▉                         | 148/2001 [3:54:12<48:42:04, 94.62s/it]
+Best val loss: 20.6957
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  148 : train loss: 3.4178, train psnr: 21.0564, val loss: 0.0001, val psnr: 19.6706          
+epochs:   7%|█▉                         | 148/2001 [3:55:46<48:42:04, 94.62s/it]
+Best val loss: 20.6957
+ ============= self.val_on_psnr =  True
+epochs:   7%|██                         | 149/2001 [3:55:46<48:39:46, 94.59s/it]
+Best val loss: 20.6957
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  149 : train loss: 3.6847, train psnr: 20.7957, val loss: 0.0001, val psnr: 19.2468          
+epochs:   7%|██                         | 149/2001 [3:57:21<48:39:46, 94.59s/it]
+Best val loss: 20.6957
+ ============= self.val_on_psnr =  True
+epochs:   7%|██                         | 150/2001 [3:57:21<48:39:13, 94.63s/it]
+Best val loss: 20.6957
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  150 : train loss: 3.5990, train psnr: 20.9146, val loss: 0.0001, val psnr: 20.7707          
+epochs:   7%|██                         | 150/2001 [3:58:56<48:39:13, 94.63s/it]
+Best val loss: 20.6957
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 151/2001 [3:58:56<48:37:03, 94.61s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  151 : train loss: 3.5535, train psnr: 20.8582, val loss: 0.0001, val psnr: 19.7364          
+epochs:   8%|██                         | 151/2001 [4:00:30<48:37:03, 94.61s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 152/2001 [4:00:30<48:34:53, 94.59s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  152 : train loss: 3.4143, train psnr: 21.0386, val loss: 0.0001, val psnr: 20.2188          
+epochs:   8%|██                         | 152/2001 [4:02:05<48:34:53, 94.59s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 153/2001 [4:02:05<48:32:03, 94.55s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  153 : train loss: 3.6160, train psnr: 20.8753, val loss: 0.0001, val psnr: 20.1899          
+epochs:   8%|██                         | 153/2001 [4:03:39<48:32:03, 94.55s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 154/2001 [4:03:39<48:30:13, 94.54s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  154 : train loss: 3.2842, train psnr: 21.1954, val loss: 0.0001, val psnr: 19.1723          
+epochs:   8%|██                         | 154/2001 [4:05:14<48:30:13, 94.54s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 155/2001 [4:05:14<48:28:15, 94.53s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  155 : train loss: 3.5104, train psnr: 20.9972, val loss: 0.0001, val psnr: 18.8922          
+epochs:   8%|██                         | 155/2001 [4:06:48<48:28:15, 94.53s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 156/2001 [4:06:48<48:26:52, 94.53s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  156 : train loss: 3.8372, train psnr: 20.7271, val loss: 0.0001, val psnr: 19.6545          
+epochs:   8%|██                         | 156/2001 [4:08:23<48:26:52, 94.53s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██                         | 157/2001 [4:08:23<48:27:34, 94.61s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  157 : train loss: 3.4942, train psnr: 20.9100, val loss: 0.0001, val psnr: 19.6065          
+epochs:   8%|██                         | 157/2001 [4:09:58<48:27:34, 94.61s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 158/2001 [4:09:58<48:26:48, 94.63s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  158 : train loss: 3.5232, train psnr: 20.9314, val loss: 0.0001, val psnr: 19.4909          
+epochs:   8%|██▏                        | 158/2001 [4:11:32<48:26:48, 94.63s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 159/2001 [4:11:32<48:22:57, 94.56s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  159 : train loss: 3.8974, train psnr: 20.5121, val loss: 0.0001, val psnr: 19.5526          
+epochs:   8%|██▏                        | 159/2001 [4:13:06<48:22:57, 94.56s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 160/2001 [4:13:06<48:20:31, 94.53s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  160 : train loss: 3.7710, train psnr: 20.7430, val loss: 0.0001, val psnr: 19.4935          
+epochs:   8%|██▏                        | 160/2001 [4:14:41<48:20:31, 94.53s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+                      Median error 0.009474195074290037m and 0.8416225016117096 degrees. loss: 20.7707
+Mean error 0.011610620043114174m and 0.9976364544966081 degrees.
+epochs:   8%|██▏                        | 161/2001 [4:14:46<49:05:45, 96.06s/it]
+
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  161 : train loss: 3.2816, train psnr: 21.2014, val loss: 0.0001, val psnr: 20.6457          
+epochs:   8%|██▏                        | 161/2001 [4:16:21<49:05:45, 96.06s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 162/2001 [4:16:21<48:51:05, 95.63s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  162 : train loss: 3.3589, train psnr: 21.1868, val loss: 0.0001, val psnr: 19.7163          
+epochs:   8%|██▏                        | 162/2001 [4:17:55<48:51:05, 95.63s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 163/2001 [4:17:55<48:39:20, 95.30s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  163 : train loss: 3.3696, train psnr: 21.1655, val loss: 0.0001, val psnr: 19.9493          
+epochs:   8%|██▏                        | 163/2001 [4:19:30<48:39:20, 95.30s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 164/2001 [4:19:30<48:30:08, 95.05s/it]
+Best val loss: 20.7707
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  164 : train loss: 3.5331, train psnr: 20.9075, val loss: 0.0001, val psnr: 20.9799          
+epochs:   8%|██▏                        | 164/2001 [4:21:04<48:30:08, 95.05s/it]
+Best val loss: 20.7707
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 165/2001 [4:21:04<48:23:32, 94.89s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  165 : train loss: 3.4158, train psnr: 21.1173, val loss: 0.0001, val psnr: 19.6777          
+epochs:   8%|██▏                        | 165/2001 [4:22:39<48:23:32, 94.89s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▏                        | 166/2001 [4:22:39<48:18:09, 94.76s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  166 : train loss: 3.6271, train psnr: 20.9262, val loss: 0.0001, val psnr: 20.3784          
+epochs:   8%|██▏                        | 166/2001 [4:24:13<48:18:09, 94.76s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▎                        | 167/2001 [4:24:13<48:15:51, 94.74s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  167 : train loss: 3.5992, train psnr: 20.8940, val loss: 0.0001, val psnr: 19.7458          
+epochs:   8%|██▎                        | 167/2001 [4:25:48<48:15:51, 94.74s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▎                        | 168/2001 [4:25:48<48:12:25, 94.68s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  168 : train loss: 3.9264, train psnr: 20.5661, val loss: 0.0001, val psnr: 18.3395          
+epochs:   8%|██▎                        | 168/2001 [4:27:22<48:12:25, 94.68s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▎                        | 169/2001 [4:27:22<48:09:37, 94.64s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  169 : train loss: 3.5061, train psnr: 21.0508, val loss: 0.0001, val psnr: 20.0545          
+epochs:   8%|██▎                        | 169/2001 [4:28:57<48:09:37, 94.64s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   8%|██▎                        | 170/2001 [4:28:57<48:07:36, 94.62s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  170 : train loss: 3.3132, train psnr: 21.1555, val loss: 0.0001, val psnr: 19.9468          
+epochs:   8%|██▎                        | 170/2001 [4:30:31<48:07:36, 94.62s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 171/2001 [4:30:31<48:03:50, 94.55s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  171 : train loss: 4.1331, train psnr: 20.4071, val loss: 0.0001, val psnr: 19.7204          
+epochs:   9%|██▎                        | 171/2001 [4:32:06<48:03:50, 94.55s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 172/2001 [4:32:06<48:02:52, 94.57s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  172 : train loss: 3.6191, train psnr: 20.8646, val loss: 0.0001, val psnr: 20.6345          
+epochs:   9%|██▎                        | 172/2001 [4:33:41<48:02:52, 94.57s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 173/2001 [4:33:41<47:59:59, 94.53s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  173 : train loss: 3.7710, train psnr: 20.7404, val loss: 0.0001, val psnr: 20.3461          
+epochs:   9%|██▎                        | 173/2001 [4:35:15<47:59:59, 94.53s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 174/2001 [4:35:15<47:57:55, 94.51s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  174 : train loss: 3.3783, train psnr: 21.1530, val loss: 0.0001, val psnr: 20.4567          
+epochs:   9%|██▎                        | 174/2001 [4:36:50<47:57:55, 94.51s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 175/2001 [4:36:50<47:56:37, 94.52s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  175 : train loss: 3.4609, train psnr: 21.0601, val loss: 0.0001, val psnr: 20.3750          
+epochs:   9%|██▎                        | 175/2001 [4:38:24<47:56:37, 94.52s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▎                        | 176/2001 [4:38:24<47:54:47, 94.51s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  176 : train loss: 3.3388, train psnr: 21.2210, val loss: 0.0001, val psnr: 18.8834          
+epochs:   9%|██▎                        | 176/2001 [4:39:58<47:54:47, 94.51s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▍                        | 177/2001 [4:39:58<47:51:52, 94.47s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  177 : train loss: 3.3304, train psnr: 21.2091, val loss: 0.0001, val psnr: 20.5204          
+epochs:   9%|██▍                        | 177/2001 [4:41:33<47:51:52, 94.47s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▍                        | 178/2001 [4:41:33<47:50:24, 94.47s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  178 : train loss: 3.1633, train psnr: 21.4021, val loss: 0.0001, val psnr: 20.6853          
+epochs:   9%|██▍                        | 178/2001 [4:43:07<47:50:24, 94.47s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▍                        | 179/2001 [4:43:07<47:50:15, 94.52s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+At epoch  179 : train loss: 3.1752, train psnr: 21.3618, val loss: 0.0001, val psnr: 20.5645          
+epochs:   9%|██▍                        | 179/2001 [4:44:44<47:50:15, 94.52s/it]
+Best val loss: 20.9799
+ ============= self.val_on_psnr =  True
+epochs:   9%|██▍                        | 180/2001 [4:44:44<48:05:23, 95.07s/it]
+Best val loss: 20.9799
+ ==== Origional DFnet training in train_on_epoch==========
+

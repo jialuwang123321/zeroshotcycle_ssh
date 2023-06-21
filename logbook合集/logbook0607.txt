@@ -1,0 +1,529 @@
+目录：不冻结nerf 跑dfnet 
+
+自己生成pose_avg_stats.txt
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+
+python train_dfnet.py --config config_dfnetdm.txt --save_pose_avg_stats
+按c继续，最后存储
+实际在/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的def fix_coord里实现的
+
+##口令
+
+### exp2023060701 
+
+不冻结nerf 跑dfnet(不是cycle版本) 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --lrate 5e-6  (默认5e-4) 
+
+#训练参数：
+(可参考exp2023060701训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060701
+
+
+#验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+
+
+##原本结果
+
+python run_feature.py --config config_dfnet.txt --eval --pretrain_model_path=./logs/heads/dfnet/checkpoint-0343-0.1294.pt
+
+## test on seq-02-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.27869856357574463m and 7.882973670959473 degrees.
+Mean error 0.3010631873940011m and 9.82450222824413 degrees.
+
+## test on seq-01-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19403094798326492m and 4.845377445220947 degrees.
+Mean error 0.21426984581809777m and 7.055067385377189 degrees.
+
+
+
+## 结果 （其他见/home/jialu/zeroshot123cycle0524/logbook合集/exp2023060701测试在seq01abs上结果记录.txt和 exp2023060701测试在seq02abs上结果记录.txt）
+## heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19141441583633423m and 5.707443714141846 degrees.
+Mean error 0.2218930169125559m and 7.385748549270244 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.20007020235061646m and 3.514830231666565 degrees.
+Mean error 0.21762426032756382m and 5.349218400806068 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt') (seq02abs测试最佳)
+Median error 0.2895991802215576m and 8.81373405456543 degrees.
+Mean error 0.30820904773847396m and 9.717539922472682 degrees.
+
+
+
+
+
+### exp2023060801 （结果更大了）
+来自exp2023060701 
+
+不冻结nerf 跑dfnet(不是cycle版本) 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --lrate 5e-8  (默认5e-4,exp2023060701是5e-6 ) 
+
+#训练参数：
+(可参考exp2023060801训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 10., 50.] #[2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060801
+
+
+#验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0013-20.0113.pt
+
+## 结果 （其他见/home/jialu/zeroshot123cycle0524/logbook合集/exp2023060801测试在seq01abs上结果记录.txt和 exp2023060801测试在seq02abs上结果记录.txt）
+
+## heads/dfnetdm/exp2023060801/checkpoint-0001-19.9173.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.20527826994657516m and 3.6088942289352417 degrees.
+Mean error 0.22258136230652872m and 5.514445554909979 degrees.
+
+# heads/dfnetdm/exp2023060801/checkpoint-0060-20.2483.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.29251691699028015m and 8.835927963256836 degrees.
+Mean error 0.3109406724542048m and 9.756975123445956 degrees.
+
+
+### exp2023060803 
+来自exp2023060701 
+（和 exp2023060802的区别:
+exp2023060802：combine_loss_w = [1., 10., 50.] --lrate 5e-8）
+exp2023060803： combine_loss_w = [2.,5.,10.], --lrate 5e-10）
+
+
+不冻结nerf 跑dfnet(不是cycle版本) 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --lrate 5e-10  (默认5e-4,exp2023060701是5e-6 ) 
+
+#训练参数：
+(可参考exp2023060803训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060803
+
+
+#验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/exp2023060803
+
+## 结果 （其他见/home/jialu/zeroshot123cycle0524/logbook合集/exp2023060803测试在seq01abs上结果记录.txt和 exp2023060803测试在seq02abs上结果记录.txt）
+
+## heads/dfnetdm/exp2023060803/
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+
+
+# heads/dfnetdm/exp2023060803/
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+
+
+
+### exp2023060804  (seq1结果更大了,seq2更小了一点点）
+来自exp2023060701 
+（和 exp2023060802的区别:
+exp2023060802：combine_loss_w = [1., 10., 50.] --lrate 5e-8）
+exp2023060804： combine_loss_w = [2.,5.,10.], --lrate 5e-10）
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_dso12-999imgs_skip5_seq01.txt
+
+不冻结nerf 跑dfnet(不是cycle版本) 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --lrate 5e-12  (默认5e-4,exp2023060803是5e-10 ) 
+
+#训练参数：
+(可参考exp2023060804训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060804
+
+
+#验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/exp2023060804
+
+## 结果 （其他见/home/jialu/zeroshot123cycle0524/logbook合集/exp2023060804测试在seq01abs上结果记录.txt和 exp2023060804测试在seq02abs上结果记录.txt）
+
+## heads/dfnetdm/exp2023060804/checkpoint-0045-20.2193.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.2026066780090332m and 3.64890718460083 degrees.
+Mean error 0.2198355420292751m and 5.493801171631224 degrees.
+
+# heads/dfnetdm/exp2023060804/checkpoint-0001-19.8507.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt (seq02abs测试最佳)
+Median error 0.29582053422927856m and 8.681903839111328 degrees.
+Mean error 0.31223150918258336m and 9.582512428413388 degrees.
+
+
+
+## exp2023061001 （cycle1 + atloc_vo +不冻结nerf）
+using photo_loss only (direct_feature_matching_pre_posenet.py 的 def cycle_1_loss_on_batch里)
+  
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False  
+
+#训练参数：
+
+/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的 def load_7Scenes_dataloader(args)里面： 
+args.batch_size = 2
+
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 的 def cycle_1_loss_on_batch里：
+  using photo_loss only
+
+(可参考exp2023061001训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+using /pose_avg_stats_nerf_best.txt
+combine_loss_w = [1., 1., 1.] （其实这个在cycle=1里没有用）
+
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 1., 1.] #[2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+## 原本最佳：
+（exp203060701结果：）
+## heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.20007020235061646m and 3.514830231666565 degrees.
+Mean error 0.21762426032756382m and 5.349218400806068 degrees.
+
+（exp2030600804结果：）
+# heads/dfnetdm/exp2023060804/checkpoint-0001-19.8507.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt (seq02abs测试最佳)
+Median error 0.29582053422927856m and 8.681903839111328 degrees.
+Mean error 0.31223150918258336m and 9.582512428413388 degrees.
+
+（exp20230602冻结nerf的dfnetdm atloc_vo+1cycle）
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+
+## 验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+
+
+
+
+
+## exp2023061002 （cycle1 + atloc_vo +不冻结nerf）(更差了)
+using photo_loss + vo_loss  (direct_feature_matching_pre_posenet.py 的 def cycle_1_loss_on_batch里)
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+  
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False --lrate 5e-12  (默认5e-4,exp2023061002是5e-12 ) 
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False --lrate 5e-15  (默认5e-4,exp2023061002是5e-12 ) 
+pretrain_model_path= ./logs/heads/dfnetdm/checkpoint-0003-19.9564.pt 
+
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False --lrate 5e-18 --learning_rate 0.00001 
+retrain_model_path= ./logs/heads/dfnetdm/checkpoint-0002-20.3654.pt 
+
+(--lrate默认5e-4,exp2023061002是5e-12 ) 
+
+#训练参数：
+
+/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的 def load_7Scenes_dataloader(args)里面： 
+args.batch_size = 2
+
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 的 def cycle_1_loss_on_batch里：
+  using photo_loss + vo_loss 
+
+(可参考exp2023061002训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+using /pose_avg_stats_nerf_best.txt
+combine_loss_w = [1., 1., 1.] （其实这个在cycle=1里没有用）
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/checkpoint-0002-20.3654.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/checkpoint-0002-20.3654.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 1., 1.] #[2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=False
+
+#验证： (纸061001)
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023061002
+
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt ( seq01abs测试最佳)
+logs/heads/dfnetdm/exp2023061002/checkpoint-0006-20.4175.pt
+Median error 0.20m and 3.82 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt ( seq01abs测试最佳)
+checkpoint-0000-xxx
+Median error 0.29m and 9.54 degrees.
+
+
+
+
+
+### exp2023061101 不冻结nerf 跑dfnet(不是cycle版本)
+来自exp2023060701,但是更小的pose lr （见纸061101）
+
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --real --pose_avg_stats_mode 100 --lrate 5e-16 --learning_rate 0.00001
+
+retrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --pose_avg_stats_mode 1 --exp dfnetdm/exp2023061101_21 --pose_avg_stats_mode_pred_eval -1
+
+
+#训练参数：
+(可参考exp2023061101训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt # ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt  #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=False
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 1., 1.] #[2.,5.,10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=False
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+#验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pose_avg_stats_mode=1 --pose_avg_stats_mode_pred_eval=-1 --pretrain_model_path=xxx
+
+##原本结果
+
+python run_feature.py --config config_dfnet.txt --eval --pretrain_model_path=./logs/heads/dfnet/checkpoint-0343-0.1294.pt
+
+## test on seq-02-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.27869856357574463m and 7.882973670959473 degrees.
+Mean error 0.3010631873940011m and 9.82450222824413 degrees.
+
+## test on seq-01-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19403094798326492m and 4.845377445220947 degrees.
+Mean error 0.21426984581809777m and 7.055067385377189 degrees.
+
+
+
+## 结果 （其他见/home/jialu/zeroshot123cycle0524/logbook合集/exp2023060701测试在seq01abs上结果记录.txt和 exp2023060701测试在seq02abs上结果记录.txt）
+## heads/dfnetdm/exp2023060701/checkpoint-0132-19.9465.pt
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19141441583633423m and 5.707443714141846 degrees.
+Mean error 0.2218930169125559m and 7.385748549270244 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.20007020235061646m and 3.514830231666565 degrees.
+Mean error 0.21762426032756382m and 5.349218400806068 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt') (seq02abs测试最佳)
+Median error 0.2895991802215576m and 8.81373405456543 degrees.
+Mean error 0.30820904773847396m and 9.717539922472682 degrees.

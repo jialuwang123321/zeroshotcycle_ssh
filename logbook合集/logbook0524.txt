@@ -1,0 +1,542 @@
+##0.github上 (e.g./7Scenes/chess) 下有自己的pose_avg_stats.txt和world_setup.json必须记得放进来，stats.txt和pose_stats.txt和mapnet或者atloc的一样，可以直接覆盖也可以用mapnet的
+
+
+自己生成
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --save_pose_avg_stats
+按c继续，最后存储
+实际在/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的def fix_coord里实现的
+
+seq-01/dso_vo_stats.pkl, trainskip=1,all_poses.shape=(988, 12)的pose_avg_stats.txt是：
+6.339297013399513014e-01 -2.189583762903077324e-01 7.417481804570551507e-01 -9.431017277358294537e-02
+6.058399618956199495e-01 7.367353616377181336e-01 -3.002980977010252239e-01 3.553662459514169147e-01
+-4.807193300974633154e-01 6.397485727728141613e-01 5.996921621180265616e-01 3.362181873785424768e-01
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+load_pose_avg_stats=True(默认)
+pose_avg_from_file = [[ 0.6339297  -0.21895838  0.74174818 -0.09431017]
+ [ 0.60583996  0.73673536 -0.3002981   0.35536625]
+ [-0.48071933  0.63974857  0.59969216  0.33621819]], poses.shape = (1186, 3, 4)
+load_pose_avg_stats=False(config_dfnetdm.txt里手动设置)
+pose_avg_from_file = None, poses.shape = (1186, 3, 4)
+pose_avg =  [[ 0.6340894  -0.2190126   0.74159566 -0.0942882 ]
+ [ 0.60564678  0.73692833 -0.30021429  0.35525359]
+ [-0.48075214  0.63950772  0.59992271  0.33610197]]
+
+##1. 口令
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+
+python train_dfnet.py --config config_dfnetdm.txt --trainskip 5 --testskip 5
+
+#1.1 DFNET 原本train.py 
+python train_dfnet.py --config config_dfnetdm.txt
+python train_dfnet.py --config config_dfnetdm.txt --num_cycle 2
+python train_dfnet.py --config config_dfnetdm.txt --learning_rate 0.00001 --num_cycle 1
+python train_dfnet.py --config config_dfnetdm.txt --learning_rate 0.000001 --num_cycle 1
+python train_dfnet.py --config config_dfnetdm.txt --learning_rate 0.000000001 --num_cycle 1 (0427正在用！！！)
+#1.2 DFNET train_dfnet但是DSO版本
+python train_dfnet_dso.py --config config_dfnetdm.txt --learning_rate 0.000000001 --num_cycle 1  
+#1.3 pretrain+posenet但是DSO版本
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --learning_rate 0.000000001 --num_cycle 1 
+
+#2. DFNET 但是不用预训练的nerf的口令
+#2.1 DFNET 原本train.py 
+python train_dfnet.py --config config_dfnetdm.txt --no_grad_update False --learning_rate 0.000001 --no_reload 
+python train_dfnet.py --config config_dfnetdm.txt --no_grad_update False --no_reload --learning_rate 0.000001 --num_cycle 1
+
+python train_dfnet.py --config config_dfnetdm.txt --no_grad_update False --no_reload --learning_rate 0.000001 --num_cycle 1
+#2.2 DFNET train_dfnet 但是 DSO版本
+python train_dfnet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --learning_rate 0.000001 --num_cycle 1
+#2.3  pretrain+posenet但是DSO版本
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --learning_rate 0.00001 --num_cycle 1 --real --trainskip 5 --testskip 5
+
+验证：
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --num_cycle 1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0272-11.2680.pt
+checkpoint-0000-15.9864.pt lr=0.00000001
+checkpoint-0007-15.9938.pt lr=0.0000000001
+
+
+##2. batch_size！！
+    2.1 跑代码的时候，需要手动调整的地方只有一个！！
+    /home/jialu/zeroshot123cycle/dataset_loaders/load_7Scenes.py里def load_7Scenes_dataloader(args):中train_dl = DataLoader之前的第489行
+    我手动加了一个args.batch_size = 2 #如果不用zeroshot则本来默认为1
+
+    2.2 其他batch_size相关的笔记：
+    #dfnet batch_size地方：/home/jialu/zeroshot/dataset_loaders/load_7Scenes.py  train_dl = DataLoader(train_set, batch_size=args.batch_size
+    /home/jialu/zeroshot/feature/direct_feature_matching.py 的 def eval_on_batch里：
+    batch_size=1  #prepare_batch_render里将args.batch_size改成了batch_size，否则args.batch_size=2时会报错
+    batch_rays, target = prepare_batch_render(args, pose_nerf, batch_size, data, H, W, focal, half_res)
+
+##3. num_workers！！
+/home/jialu/zeroshot/dataset_loaders/load_7Scenes.py
+num_workers手动改成了16
+原本：
+    train_dl = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, num_workers=8) # debug
+    # train_dl = DataLoader(train_set, batch_size=args.batch_size, shuffle=False, num_workers=5, pin_memory=False)
+    val_dl = DataLoader(val_set, batch_size=args.val_batch_size, shuffle=False, num_workers=2)
+    test_dl = DataLoader(val_set, batch_size=1, shuffle=False, num_workers=2)
+
+
+##4.  注释掉了：
+/home/jialu/zeroshot/feature/direct_feature_matching.py  里：
+TEST views are...
+
+ ============before, grad_a =  None
+========= after, pose grad =  None
+ 111111111111111
+
+ 
+##修改预训练的nerf
+/home/jialu/zeroshot/models/nerfw.py ctrl+F(Found ckpts)
+e.g.  ckpts = ['/home/jialu/zeroshot/logs/fire/nerfh/000600.tar']
+
+
+
+
+######  exp23052801: 
+# no posenet no nerf pretrain 但是DSO版本,  shuffle=True, config_dfnetdm.txt的 trainskip==1, #DFNET train.py里面： args.batch_size =  1 ,
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --real
+
+验证：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-xxxpt 
+
+## checkpoint-0131-0.0001.pt (train on seq01-dso,test on seq01-dso最佳)
+train on seq01-dso,test on seq01-dso
+Median error 0.009185379836708307m and 0.7564008831977844 degrees.
+Mean error 0.011306735298180149m and 0.8242737710521169 degrees.
+train on seq01-dso,test on seq01-abs
+Median error 0.5671603381633759m and 56.14462471008301 degrees.
+Mean error 0.6056844159840089m and 56.194089794931145 degrees.
+train on seq01-dso,test on seq02-abs
+Median error 0.5857251882553101m and 60.593955993652344 degrees.
+Mean error 0.606341447880825m and 61.57611106741416 degrees.
+
+
+## checkpoint-0317-17.5881.pt  (train on seq01-dso,test on seq01-abs，test on seq01-abs第二)
+train on seq01-dso,test on seq02-dso
+Median error 0.559341311454773m and 13.193904876708984 degrees.
+Mean error 0.5137039772540903m and 22.981623067653334 degrees.
+train on seq01-dso,test on seq01-abs
+Median error 0.0902310386300087m and 10.466457843780518 degrees.
+Mean error 0.1049012182250257m and 10.40748552803086 degrees.
+train on seq01-dso,test on seq02-abs
+Median error 0.3967609703540802m and 17.256336212158203 degrees.
+Mean error 0.3832350670010665m and 16.85997546707535 degrees.
+
+## checkpoint-0272-11.2680.pt  (train on seq01-dso,test on seq01-abs，test on seq01-abs最佳 )
+train on seq01-dso,test on seq02-dso
+Median error 0.39418092370033264m and 13.142556190490723 degrees.
+Mean error 0.4270090704710346m and 22.60620262046675 degrees.
+train on seq01-dso,test on seq01-abs
+Median error 0.06631188467144966m and 8.968775749206543 degrees.
+Mean error 0.07067838644887875m and 8.976386751723194 degrees.
+train on seq01-dso,test on seq02-abs
+Median error 0.08008643984794617m and 13.565333366394043 degrees.
+Mean error 0.08095061328898667m and 13.486038757648217 degrees.
+
+
+
+
+####保存结果
+/home/jialu/zeroshot123cycle0524/dm/pose_model.py
+
+    # 打开结果文件以追加模式写入
+    with open('/home/jialu/zeroshot123cycle0524/test_results_logbook/results.txt', 'a') as file:
+        file.write('Median error {}m and {} degrees.\n'.format(median_result[0], median_result[1]))
+
+    # 打开结果文件以追加模式写入
+    with open('/home/jialu/zeroshot123cycle0524/test_results_logbook/results.txt', 'a') as file:
+        file.write('Mean error {}m and {} degrees.\n\n'.format(mean_result[0], mean_result[1]))
+
+
+######  2023052901
+#exp23052901: 来自2023052801但是 config_dfnetdm.txt里
+pretrain_model_path= ./logs/heads/dfnetdmexp2023052801/checkpoint-0272-11.2680.pt #checkpoint-0000-0.0487.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdmexp2023052801/checkpoint-0272-11.2680.pt #checkpoint-0000-0.0487.pt # this is your trained dfnet model for feature extraction
+combine_loss_w = [1., 10., 10.]
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --real
+
+验证：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads
+结果见/home/jialu/zeroshot123cycle0524/test_results_logbook/results_exp2023052901.txt
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0019-0.0005.pt
+
+
+######  2023052902
+#exp23052901: 来自2023052801但是 config_dfnetdm.txt里
+pretrain_model_path= ./logs/heads/dfnetdmexp2023052801/checkpoint-0272-11.2680.pt #checkpoint-0000-0.0487.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path= ./logs/heads/dfnetdmexp2023052801/checkpoint-0272-11.2680.pt #checkpoint-0000-0.0487.pt # this is your trained dfnet model for feature extraction
+combine_loss_w = [10., 1., 1.]
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --real
+
+验证：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdmexp2023052902
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0019-0.0005.pt
+
+
+######  2023052903
+#来自2023052801但是 avg_pose_stats.txt是seq01 dso skips=1算出来的
+
+config_dfnetdm.txt里 combine_loss_w = [1., 10., 10.]
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0019-0.0005.pt
+
+
+######exp2023052904 训练nerf 
+avg_pose_stats.txt是seq01 dso skips=1算出来的
+seven_scenes.py line 297 self.real改成True,test=train_split ==seq01 (dso seq01)
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_nerf.py --config config_nerfh.txt --no_reload
+验证nerf
+python run_nerf.py --config config_nerfh.txt --render_test
+
+结果
+Found ckpts ['./logs/heads/nerfh/000600.tar']
+Reloading from ./logs/heads/nerfh/000600.tar
+train poses shape torch.Size([198, 4, 4])
+  0%|                                                   | 0/198 [00:00<?, ?it/s]torch.Size([120, 160, 3]) torch.Size([120, 160])
+100%|█████████████████████████████████████████| 198/198 [00:47<00:00,  4.15it/s]
+Mean PSNR of this run is: 10.275062834373628
+Saved train set
+test poses shape torch.Size([20, 4, 4])
+  0%|                                                    | 0/20 [00:00<?, ?it/s]torch.Size([120, 160, 3]) torch.Size([120, 160])
+100%|███████████████████████████████████████████| 20/20 [00:04<00:00,  4.20it/s]
+Mean PSNR of this run is: 10.17928260564804
+Saved test set
+
+
+官网结果
+Found ckpts ['./logs/heads/nerfh/000600.tar']
+Reloading from ./logs/heads/nerfh/000600.tar
+Not ndc!
+TRAIN views are [ 12  17  22  27  32  37  42  47  52  57  62  67  72  77  82  87  92  97
+ 102 107 112 117 122 127 132 137 142 147 152 157 162 167 172 177 182 187
+ 192 197 202 207 212 217 222 227 232 237 242 247 252 257 262 267 272 277
+ 282 287 292 297 302 307 312 317 322 327 332 337 342 347 352 357 362 367
+ 372 377 382 387 392 397 402 407 412 417 422 427 432 437 442 447 452 457
+ 462 467 472 477 482 487 492 497 502 507 512 517 522 527 532 537 542 547
+ 552 557 562 567 572 577 582 587 592 597 602 607 612 617 622 627 632 637
+ 642 647 652 657 662 667 672 677 682 687 692 697 702 707 712 717 722 727
+ 732 737 742 747 752 757 762 767 772 777 782 787 792 797 802 807 812 817
+ 822 827 832 837 842 847 852 857 862 867 872 877 882 887 892 897 902 907
+ 912 917 922 927 932 937 942 947 952 957 962 967 972 977 982 987 992 997]
+TEST views are [ 11  61 111 161 211 261 311 361 411 461 511 561 611 661 711 761 811 861
+ 911 961]
+VAL views are [ 11  61 111 161 211 261 311 361 411 461 511 561 611 661 711 761 811 861
+ 911 961]
+train poses shape torch.Size([198, 4, 4])
+  0%|                                                   | 0/198 [00:00<?, ?it/s]torch.Size([120, 160, 3]) torch.Size([120, 160])
+100%|█████████████████████████████████████████| 198/198 [00:47<00:00,  4.20it/s]
+Mean PSNR of this run is: 11.439979527935837
+Saved train set
+test poses shape torch.Size([20, 4, 4])
+  0%|                                                    | 0/20 [00:00<?, ?it/s]torch.Size([120, 160, 3]) torch.Size([120, 160])
+100%|███████████████████████████████████████████| 20/20 [00:04<00:00,  4.17it/s]
+Mean PSNR of this run is: 11.965250819921494
+Saved test set
+
+
+#chess官网结果
+ound ckpts ['/home/jialu/zeroshot/logs/chess/nerfh/000600.tar']
+Reloading from /home/jialu/zeroshot/logs/chess/nerfh/000600.tar
+Not ndc!
+TRAIN views are [480 485 490 495]
+TEST views are [470]
+VAL views are [470]
+train poses shape torch.Size([4, 4, 4])
+Mean PSNR of this run is: 9.877455830574036
+Saved train set
+test poses shape torch.Size([1, 4, 4])
+Mean PSNR of this run is: 11.196883916854858
+Saved test set
+
+
+######exp2023060201 训练nerf  （见纸060201）
+avg_pose_stats.txt是heads seq01 dso skips=5 run_nerf.py自己跑的时候才算出来的
+seven_scenes.py line 297 self.real改成True,train_split ==seq01 (dso seq01),test=seq02dso, config_nerfh的 load_pose_avg_stats=False
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_nerf.py --config config_nerfh.txt
+python run_nerf.py --config config_nerfh.txt --no_reload --epochs 1000
+验证nerf
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_nerf.py --config config_nerfh.txt --render_test
+结果1：seven_scenes.py line 297 self.real改成True,train_split ==seq01 (dso seq01),test=seq02dso
+## 1000 epochs
+train: Mean PSNR of this run is: 26.18131520772221
+test: Mean PSNR of this run is: 9.949430227279663
+
+## 800 epochs
+train: Mean PSNR of this run is: 25.945138016132393
+test: Mean PSNR of this run is: 9.932620525360107
+
+## 600 epochs
+train: Mean PSNR of this run is:25.464257170455625
+test: Mean PSNR of this run is: 9.98488649725914
+
+## 400 epochs
+train: Mean PSNR of this run is:24.664470529315448
+test: Mean PSNR of this run is: 10.04439851641655
+
+## 200 epochs
+train: Mean PSNR of this run is:22.721762699310226
+test: Mean PSNR of this run is: 9.965616255998611
+
+结果2：seven_scenes.py line 297 self.real改成True,train_split ==seq01 (dso seq01),test=seq01dso, config_nerfh的 load_pose_avg_stats=False
+
+## 1000 epochs 
+train: Mean PSNR of this run is: 12.716638138799956
+test: Mean PSNR of this run is: 12.598458290100098
+
+结果3：seven_scenes.py line 297 self.real改成True,train_split ==seq02 ,test=seq02 dso, config_nerfh的 load_pose_avg_stats=False
+
+## 1000 epochs 
+train: Mean PSNR of this run is: 8.970982817688373
+test: Mean PSNR of this run is: 9.017485290765762
+
+结果4：seven_scenes.py line 297 self.real改成False,train_split ==seq02 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+
+## 1000 epochs 
+train: Mean PSNR of this run is: 10.047198618301238
+test: Mean PSNR of this run is: 10.00279089808464
+
+结果5：seven_scenes.py line 297 self.real改成False,train_split ==seq01 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+## 1000 epochs 
+train: Mean PSNR of this run is: 10.37543115591762
+test: Mean PSNR of this run is: 10.165938556194305
+
+结果5.2：seven_scenes.py line 297 self.real改成False,train_split ==seq01 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+用pose_avg_stats_abs12-999_all_skip_5_seq01.txt, 再pose_avg_stats_nerf_best.txt
+## 1000 epochs
+train: Mean PSNR of this run is: 9.122537293217398
+test: Mean PSNR of this run is:  9.506200075149536
+
+结果5.3：seven_scenes.py line 297 self.real改成False,train_split ==seq01 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+用pose_avg_stats_nerf_best.txt
+## 1000 epochs
+train: Mean PSNR of this run is: 8.682063080445685
+test: Mean PSNR of this run is:   8.852549076080322
+
+结果5.4：seven_scenes.py line 297 self.real改成False,train_split ==seq01 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+用pose_avg_stats_abs12-999_all_skip_5_seq01.txt 再pose_avg_stats_dso12-999imgs_skip5_seq01.txt，再pose_avg_stats_nerf_best.txt
+## 1000 epochs
+train: Mean PSNR of this run is: 8.887661451643163
+test: Mean PSNR of this run is:   9.447746306657791
+
+结果5.5：seven_scenes.py line 297 self.real改成False,train_split ==seq01 (abs seq01),test=seq02 abs, config_nerfh的 load_pose_avg_stats=False
+用pose_avg_stats_dso12-999imgs_skip5_seq01.txt，再pose_avg_stats_nerf_best.txt
+## 1000 epochs
+train: Mean PSNR of this run is: 8.727025169916827
+test: Mean PSNR of this run is:   9.270228058099747
+
+
+结果6：seven_scenes.py line 297 self.real改成True,train_split test split==seq01 (dso seq01)， skip均为5
+## 1000 epochs
+train: Mean PSNR of this run is: 12.663321723841657
+test: Mean PSNR of this run is: 12.663321723841657
+
+
+结果7：seven_scenes.py line 297 self.real改成True,train_split=seq01 (dso seq01)，skip=50 test split==dso02， skip=5
+## 1000 epochs
+train: Mean PSNR of this run is: 7.188426196575165
+test: Mean PSNR of this run is: 9.102830177906787
+
+结果8：seven_scenes.py line 297 self.real改成True,train_split=seq01 (dso seq01)，skip=5 test split==dso02， skip=50
+用pose_avg_stats_abs_999imgs_seq01-skip5(equal to before remove).txt
+## 1000 epochs
+train: Mean PSNR of this run is: 7.74758221826168
+test: Mean PSNR of this run is:9.406845480203629
+
+结果9：seven_scenes.py line 297 self.real改成True,train_split=seq01 (dso seq01)，skip=1 test split==dso02， skip=5
+用pose_avg_stats_nerf_best.txt
+## 1000 epochs
+train: Mean PSNR of this run is: 24.628436079150752
+test: Mean PSNR of this run is:9.899900335856158
+
+
+
+
+######exp2023053001 训练0epoch feature
+avg_pose_stats.txt是seq01 dso skips=1算出来的
+seven_scenes.py line 297 self.real改成True,test=train_split ==seq01 (dso seq01)
+
+###### run_feature.py 
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature.py --config config_dfnet.txt 
+得到/home/jialu/zeroshot123cycle0524/logs/heads/dfnet/checkpoint-0000-0.0486.pt
+验证nerf
+python run_feature.py --config config_dfnet.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnet/checkpoint-0012-0.0012.pt
+train on seq01-dso，test on seq02-dso，
+#checkpoint-0005-0.0046.pt
+Median error 0.7744019031524658m and 45.96619415283203 degrees.
+Mean error 0.8062715051569519m and 44.89893026130144 degrees.
+#checkpoint-0012-0.0012.pt
+Median error 0.7765315771102905m and 45.79391860961914 degrees.
+Mean error 0.8175600093343983m and 44.215816181518434 degrees.
+#checkpoint-0017-0.0009.pt
+Median error 0.7580716013908386m and 46.3576774597168 degrees.
+Mean error 0.8018368856851444m and 44.265276228091835 degrees.
+
+######  exp2023053002
+#来自2023052801但是 avg_pose_stats.txt是seq01 dso skips=1算出来的
+config_dfnetdm.txt里 combine_loss_w = [1., 10., 10.]
+pretrain_model_path= ./logs/heads/dfnet/checkpoint-0000-0.0486.pt 
+pretrain_featurenet_path= ./logs/heads/dfnet/checkpoint-0000-0.0486.pt 
+seven_scenes.py line 297 self.real改成True,test=train_split ==seq01 (dso seq01)
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --no_reload --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0019-0.0005.pt
+
+
+
+###### exp2023053003 run_feature.py 
+self.real=True 所以是dso
+！！我暂时把train从02改成01，test还是01,之后改回来
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature.py --config config_dfnet.txt 
+得到/home/jialu/zeroshot123cycle0524/logs/heads/dfnet/xxx
+验证（！！我暂时把train从02改成01，test还是01，验证记得real=true and false on seq02,load_pose_avg_stats=False,之后改回来）
+python run_feature.py --config config_dfnet.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnet/checkpoint-0363-0.1366.pt
+
+
+######  exp2023053004
+#来自######  exp2023053002 但是Reloading from ./logs/heads/nerfh/000600.tar
+
+ avg_pose_stats.txt是seq01 dso skips=1算出来的
+config_dfnetdm.txt里 
+val_on_psnr=True
+combine_loss_w = [1., 10., 1.]
+pretrain_model_path= ./logs/heads/dfnet/checkpoint-0363-0.1366.pt
+pretrain_featurenet_path= ./logs/heads/dfnet/checkpoint-0363-0.1366.pt
+seven_scenes.py line 297 self.real改成True,test=train_split ==seq01 (dso seq01)
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 
+def train_on_batch 里loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss 
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0039-19.2510.pt
+
+
+######  exp2023053005
+#来自######  exp2023053004 但是Reloading from ./logs/heads/nerfh/000600.tar
+
+ avg_pose_stats.txt是seq01 dso skips=1算出来的
+config_dfnetdm.txt里 
+val_on_psnr=False
+combine_loss_w = [1., 10., 1.]
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+seven_scenes.py line 297 self.real改成True,test=01, train_split ==seq02 (dso)
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 
+def train_on_batch 里loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss 
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0039-19.2510.pt
+
+######  exp2023053006
+#来自######  exp2023053005 但是
+config_dfnetdm.txt里 
+val_on_psnr=False
+combine_loss_w = [100., 1., 1.]
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+seven_scenes.py line 297 self.real改成True,test=01, train_split ==seq02 (dso)
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 
+def train_on_batch 里loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss 
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0049-0.0000.pt
+
+
+######  exp2023053007
+#来自######  exp2023053006 但是
+config_dfnetdm.txt里 
+val_on_psnr=False
+combine_loss_w = [100., 1., 1.]
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+pretrain_featurenet_path= ./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+seven_scenes.py line 297 self.real改成True,test=01, train_split ==seq02 (dso)
+/home/jialu/zeroshot123cycle0524/feature/direct_feature_matching_pre_posenet.py 
+def train_on_batch 里loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss 
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --no_grad_update False --real
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False --real   
+
+--learning_rate 0.000000001 
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0049-0.0000.pt

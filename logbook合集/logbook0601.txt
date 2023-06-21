@@ -1,0 +1,1027 @@
+目录：跑atloc_vo cycle123 dfnet口令
+
+##0.github上 (e.g./7Scenes/chess) 下有自己的pose_avg_stats.txt和world_setup.json必须记得放进来，stats.txt和pose_stats.txt和mapnet或者atloc的一样，可以直接覆盖也可以用mapnet的
+
+自己生成
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+
+python train_dfnet.py --config config_dfnetdm.txt --save_pose_avg_stats
+按c继续，最后存储
+实际在/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的def fix_coord里实现的
+
+seq-01/dso_vo_stats.pkl, trainskip=1,all_poses.shape=(988, 12)的pose_avg_stats.txt是：
+6.339297013399513014e-01 -2.189583762903077324e-01 7.417481804570551507e-01 -9.431017277358294537e-02
+6.058399618956199495e-01 7.367353616377181336e-01 -3.002980977010252239e-01 3.553662459514169147e-01
+-4.807193300974633154e-01 6.397485727728141613e-01 5.996921621180265616e-01 3.362181873785424768e-01
+
+##1. 口令
+
+##exp20230602
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+
+python train_dfnet.py --config config_dfnetdm.txt --num_cycle 1 --learning_rate 0.000001
+
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 1 --no_grad_update False  
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0013-20.0113.pt
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.18981599062681198m and 3.312343120574951 degrees.
+Mean error 0.21550118471099902m and 5.208955585142138 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01.txt
+Median error 0.18956705927848816m and 3.6847755908966064 degrees.
+Mean error 0.21533589741509213m and 5.375064483824891 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt
+Median error 0.5704635679721832m and 55.76937294006348 degrees.
+Mean error 0.6101418596047622m and 56.09367736824128 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.20847267657518387m and 6.577452659606934 degrees.
+Mean error 0.22395802704383608m and 8.059329927691564 degrees.
+
+=====================================
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0011-19.9512.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.18998738378286362m and 3.3249623775482178 degrees.
+Mean error 0.2156474921543166m and 5.194641233108908 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0010-19.9302.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19053532183170319m and 3.32425594329834 degrees.
+Mean error 0.2158155204343651m and 5.201973851920984 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0009-19.9193.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19050763547420502m and 3.302756905555725 degrees.
+Mean error 0.21590775769083245m and 5.188281036656998 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0006-19.8924.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.1905403435230255m and 3.2745518684387207 degrees.
+Mean error 0.2161167983704733m and 5.147529865731957 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0005-19.8286.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0004-19.7074.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19053298979997635m and 3.257173776626587 degrees.
+Mean error 0.2159842645772073m and 5.126462553284671 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0003-19.6251.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+edian error 0.19018351286649704m and 3.2111828327178955 degrees.
+Mean error 0.21588982821551533m and 5.110652061405513 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0002-19.5006.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19050659239292145m and 3.200189709663391 degrees.
+Mean error 0.21561712598586494m and 5.1047584103337424 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-19.4073.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.18970315903425217m and 3.1672468185424805 degrees.
+Mean error 0.21532232818468983m and 5.076551242033962 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-19.2303.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.1895526722073555m and 3.140198230743408 degrees.
+Mean error 0.2159761104333075m and 5.0498837861892305 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7426.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.1915038302540779m and 2.916481614112854 degrees.
+Mean error 0.21685510380985404m and 5.0973181647327745 degrees.
+
+====================================
+
+# train on seq-01-dso， test 先using pose_avg_stats_absseq01_skip1.txt 再 seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt
+Median error 0.6326902508735657m and 61.43693542480469 degrees.
+Mean error 0.6428070887319954m and 61.009794227507435 degrees.
+
+# train on seq-01-dso， test 先 seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt 再 using pose_avg_stats_absseq01_skip1.txt
+Median error 0.5731401443481445m and 61.3576602935791 degrees.
+Mean error 0.5933559368617138m and 61.38624280860067 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+# train on seq-01-dso， test不用pose_avg_stats.txt
+Median error 0.2506016790866852m and 17.875425338745117 degrees.
+Mean error 0.2660940045166595m and 19.435784849560694 degrees.
+
+
+=================
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq02.txt
+Median error 0.23994727432727814m and 11.984611988067627 degrees.
+Mean error 0.24282341964754015m and 13.093395684894762 degrees.
+
+
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_fromgit.txt
+Median error 0.23994727432727814m and 11.984611988067627 degrees.
+Mean error 0.24282341964754015m and 13.093395684894762 degrees.
+
+
+
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28863760828971863m and 9.5274019241333 degrees.
+Mean error 0.3067710506828658m and 10.50984833720239 degrees.
+
+#验证cycle1 checkpoint-0000-18.7947.pt
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.1894242838025093m and 3.132585883140564 degrees.
+Mean error 0.21606220272162302m and 5.02310740262994 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.2897097170352936m and 10.542192459106445 degrees.
+Mean error 0.30897108630415643m and 10.939604290093401 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28381773829460144m and 9.151459693908691 degrees.
+Mean error 0.30446298725533893m and 10.092575909033101 degrees.
+
+
+#验证cycle1+mapnet_vo checkpoint-0000-18.7947.pt
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+
+
+## test on seq-01-abs
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_absseq01_skip1.txt
+Median error 0.19088684022426605m and 3.1926076412200928 degrees.
+Mean error 0.21627344240845456m and 5.1955006806413655 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt
+Median error 0.5696187019348145m and 55.48673439025879 degrees.
+Mean error 0.6086925334534664m and 55.59141023728529 degrees.
+
+# train on seq-01-dso， test 先using pose_avg_stats_absseq01_skip1.txt 再 seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt
+Median error 0.6326902508735657m and 61.43693542480469 degrees.
+Mean error 0.6428070887319954m and 61.009794227507435 degrees.
+
+# train on seq-01-dso， test 先 seq-01-abs using pose_avg_stats_dsoseq01_allimgs.txt 再 using pose_avg_stats_absseq01_skip1.txt
+Median error 0.5731401443481445m and 61.3576602935791 degrees.
+Mean error 0.5933559368617138m and 61.38624280860067 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+# train on seq-01-dso， test不用pose_avg_stats.txt
+Median error 0.2506016790866852m and 17.875425338745117 degrees.
+Mean error 0.2660940045166595m and 19.435784849560694 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01.txt
+Median error 0.19088684022426605m and 3.1926076412200928 degrees.
+Mean error 0.21627344240845456m and 5.1955006806413655 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq02.txt
+Median error 0.23994727432727814m and 11.984611988067627 degrees.
+Mean error 0.24282341964754015m and 13.093395684894762 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.20724092423915863m and 6.642790079116821 degrees.
+Mean error 0.22445549511233806m and 8.095987183362366 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_fromgit.txt
+Median error 0.23994727432727814m and 11.984611988067627 degrees.
+Mean error 0.24282341964754015m and 13.093395684894762 degrees.
+
+
+
+## test on seq-02-abs
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01.txt
+Median error 0.2933586835861206m and 10.724116325378418 degrees.
+Mean error 0.3115812808546427m and 11.13754085330076 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq02.txt
+Median error 0.28856784105300903m and 12.413871765136719 degrees.
+Mean error 0.3084887733082198m and 12.709782997325169 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28863760828971863m and 9.5274019241333 degrees.
+Mean error 0.3067710506828658m and 10.50984833720239 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_fromgit.txt
+Median error 0.28856784105300903m and 12.413871765136719 degrees.
+Mean error 0.3084887733082198m and 12.709782997325169 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.29483121633529663m and 10.709415435791016 degrees.
+Mean error 0.31162429870651515m and 11.151596921760706 degrees.
+
+# train on seq-01-dso，test on seq-02-abs不用pose_avg_stats.txt
+Median error 0.3397635519504547m and 24.50663948059082 degrees.
+Mean error 0.3491887953226559m and 23.812051907588547 degrees.
+
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.2892392873764038m and 9.588479042053223 degrees.
+Mean error 0.30690426674753396m and 10.589840169140977 degrees.
+
+# train on seq-01-dso， test on  seq-02-abs using pose_avg_stats_abs_999imgs_seq01and2.txt
+Median error 0.28947997093200684m and 9.579812049865723 degrees.
+Mean error 0.3068141587176506m and 10.579703619012456 degrees.
+
+
+
+
+####pose_avg_stats.txt设置
+/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py里有abs和dso两个选项
+
+# Here we use either pre-stored pose average stats or calculate pose average stats on the flight to center the poses
+pose_avg_from_file_abs = np.loadtxt('/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_absseq01_skip1.txt')
+all_poses, pose_avg = center_poses(all_poses, pose_avg_from_file_abs)
+
+pose_avg_from_file_dso = np.loadtxt('/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_dsoseq01_allimgs.txt')
+all_poses, pose_avg = center_poses(all_poses, pose_avg_from_file_dso)
+
+
+
+###### exp2023060301 run_feature.py 
+self.real=True
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature.py --config config_dfnet.txt 
+得到/home/jialu/zeroshot123cycle0524/logs/heads/dfnet/xxx
+验证（！！我暂时把train从02改成01，test还是01，验证记得real=true and false on seq02,load_pose_avg_stats=False,之后改回来）
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature.py --config config_dfnet.txt --eval --pretrain_model_path=./logs/heads/dfnet/checkpoint-0343-0.1294.pt
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnet
+
+
+## test on seq-02-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.27869856357574463m and 7.882973670959473 degrees.
+Mean error 0.3010631873940011m and 9.82450222824413 degrees.
+
+## test on seq-01-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19403094798326492m and 4.845377445220947 degrees.
+Mean error 0.21426984581809777m and 7.055067385377189 degrees.
+
+## test on seq-01-abs ,checkpoint-0343-0.1294.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt (seq01abs测试最佳)
+Median error 0.19761254638433456m and 5.3619043827056885 degrees.
+Mean error 0.2090659599434509m and 7.252625640225314 degrees.
+
+## test on seq-01-abs ,checkpoint-0341-0.1329.pt
+Median error 0.18215402215719223m and 5.176386594772339 degrees.
+Mean error 0.22292821332133614m and 6.82703090112219 degrees.
+
+## test on seq-01-abs , checkpoint-0067-0.1352.pt
+Median error 0.2034510001540184m and 3.9570595026016235 degrees.
+Mean error 0.2274653434240625m and 6.707422445991985 degrees.
+
+# train on seq-01-dso， test on ,checkpoint-0343-0.1294.pt seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.19699228554964066m and 5.3377556800842285 degrees.
+Mean error 0.20900493153269112m and 7.249167749213304 degrees.
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.19761254638433456m and 5.3619043827056885 degrees.
+Mean error 0.2090659599434509m and 7.252625640225314 degrees.
+
+
+## exp2023060302(纸2023060303)
+来自exp2023053004
+train_split.txt=seq01 dso ,test_split.txt=seq01 dso 
+train on seq-01-dso，using pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=../logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True  #using pose_avg_stats_nerf_best.txt
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 0., 100.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --real
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0009-17.6755.pt
+
+## test on seq-01-abs ,checkpoint-0004-0.0002.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19516686350107193m and 5.770613193511963 degrees.
+Mean error 0.22403481389633437m and 7.3405846894270015 degrees.
+
+## test on seq-01-abs ,checkpoint-0003-17.1867.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20477872341871262m and 4.254229545593262 degrees.
+Mean error 0.22115174958836814m and 5.835911711338561 degrees.
+
+## test on seq-01-abs ,checkpoint-0009-17.6755.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20582032948732376m and 3.764738082885742 degrees.
+Mean error 0.22487577741309578m and 5.395244708910645 degrees.
+
+## test on seq-01-abs ,checkpoint-0014-17.7269.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+edian error 0.2006039395928383m and 3.626098394393921 degrees.
+Mean error 0.2176708486119685m and 5.453597005954397 degrees.
+
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-01-abs ,checkpoint-0040-18.8235.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.2048637941479683m and 3.513271689414978 degrees.
+Mean error 0.22391355040328584m and 5.400148498776712 degrees.
+
+## test on seq-01-abs ,checkpoint-0059-18.9688.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20112934708595276m and 3.6415011882781982 degrees.
+Mean error 0.21674903854727745m and 5.529065642038337 degrees.
+
+## test on seq-01-abs ,checkpoint-0069-19.6369.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20297842472791672m and 3.3823822736740112 degrees.
+Mean error 0.21970833061255424m and 5.328232369155657 degrees.
+
+## test on seq-01-abs ,checkpoint-0113-19.7619.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20133353769779205m and 3.686898708343506 degrees.
+Mean error 0.21787785791871156m and 5.583282188606648 degrees.
+
+## test on seq-02-abs ,checkpoint-0004-0.0002.pt [1,. 1,. 1,.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2895030081272125m and 7.832333087921143 degrees.
+Mean error 0.30741840193407843m and 9.456537103146706 degrees.
+
+## test on seq-02-abs ,checkpoint-0002-0.0002.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28556662797927856m and 7.5268635749816895 degrees.
+Mean error 0.30450918460669724m and 9.374760816504669 degrees.
+
+## test on seq-02-abs ,checkpoint-0009-17.6755.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2913677394390106m and 7.95035457611084 degrees.
+Mean error 0.3068193061196286m and 9.453154696010362 degrees.
+
+## test on seq-02-abs ,checkpoint-0014-17.7269.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.29210272431373596m and 8.147333145141602 degrees.
+Mean error 0.30481313653026604m and 9.742743585179621 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+## test on seq-02-abs ,checkpoint-0059-18.9688.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2932227551937103m and 8.459884643554688 degrees.
+Mean error 0.30974849760231044m and 9.736845465051152 degrees.
+
+## test on seq-02-abs ,checkpoint-0069-19.6369.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2931302785873413m and 8.562237739562988 degrees.
+Mean error 0.3128104884746222m and 9.873702760111575 degrees.
+
+## test on seq-02-abs ,checkpoint-0113-19.7619.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2948954701423645m and 8.59456729888916 degrees.
+Mean error 0.31265300125094586m and 9.662904071313667 degrees.
+
+
+## exp2023060401(纸2023060303)
+来自exp2023060302
+
+train_split.txt=seq01 dso ,test_split.txt=seq01 dso ,using pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 0., 1.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=False
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --real --lrate 5e-6 (默认5e-4)
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0009-17.6755.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+新的结果：
+
+## test on seq-01-abs ,checkpoint-0004-0.0002.pt [1,. 0,. 1.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.19983870536088943m and 3.6713656187057495 degrees.
+Mean error 0.21979871903911896m and 5.484001063564528 degrees.
+
+checkpoint-0007-0.0001.pt
+Median error 0.20291230827569962m and 3.7841269969940186 degrees.
+Mean error 0.22188629965422305m and 5.588112685060212 degrees.
+
+## test on seq-02-abs ,checkpoint-0004-0.0002.pt [1,. 0,. 1.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2905714213848114m and 8.118437767028809 degrees.
+Mean error 0.30634972935258076m and 9.588965978311455 degrees.
+
+checkpoint-0007-0.0001.pt
+Median error 0.29439687728881836m and 8.280657768249512 degrees.
+Mean error 0.3084656909462234m and 9.65743804158769 degrees.
+
+
+## exp2023060402(纸2023060302)
+来自exp2023060302
+
+train_split.txt=seq01 dso ,test_split.txt=seq02 dso ,
+using pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 0., 1.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=False
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060302/checkpoint-0016-18.0661.pt
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --real 
+
+
+--lrate 5e-6 (默认5e-4)
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-0.1163.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+
+结果
+## test on seq-02-abs ,checkpoint-0006-14.5535.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.26235565543174744m and 7.434200286865234 degrees.
+Mean error 0.285959802381506m and 8.32598013125729 degrees.
+
+## test on seq-02-abs ,checkpoint-0009-14.6265.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2562622129917145m and 7.071696758270264 degrees.
+Mean error 0.2771035988520383m and 7.812027120674585 degrees.
+
+## test on seq-02-abs ,checkpoint-0012-14.7197.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2504439353942871m and 7.288544654846191 degrees.
+Mean error 0.2703947948312615m and 8.461403966793759 degrees.
+
+## test on seq-02-abs ,checkpoint-0027-15.1619.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24746474623680115m and 6.5136847496032715 degrees.
+Mean error 0.269837123218969m and 8.215764992760214 degrees.
+
+
+## test on seq-02-abs ,checkpoint-0030-15.1700.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2432601898908615m and 6.448315620422363 degrees.
+Mean error 0.2695976424386915m and 8.446120158003604 degrees.
+
+
+## test on seq-02-abs ,checkpoint-0032-15.1900.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24630531668663025m and 6.642731189727783 degrees.
+Mean error 0.26831609185943256m and 8.409983653270077 degrees.
+
+
+
+## exp2023060403
+来自exp2023060402
+
+train_split.txt=seq01 dso ,test_split.txt=seq02 dso ,
+using pose_avg_stats_nerf_best.txt
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/checkpoint-0032-15.1900.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=./logs/heads/dfnetdm/checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 0., 10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --real --lrate 5e-6 (默认5e-4)
+
+
+
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-0.1163.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+## test on seq-02-abs ,checkpoint-0032-15.1900.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24630531668663025m and 6.642731189727783 degrees.
+Mean error 0.26831609185943256m and 8.409983653270077 degrees.
+
+结果
+## test on seq-02-abs checkpoint-0021-15.4131.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.25758615136146545m and 7.142773151397705 degrees.
+Mean error 0.2773520461452185m and 10.971674351407737 degrees.
+
+## test on seq-02-abs checkpoint-0023-15.5082.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.25454995036125183m and 7.243379592895508 degrees.
+Mean error 0.27296793929049773m and 10.837012209653613 degrees.
+
+## test on seq-02-abs checkpoint-0032-15.5598.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2546449601650238m and 6.992400169372559 degrees.
+Mean error 0.27539701827427915m and 10.247908923273984 degrees.
+
+## test on seq-02-abs ,checkpoint-0034-15.6113.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.25243258476257324m and 7.5172834396362305 degrees.
+Mean error 0.2710138135471949m and 10.385473916275075 degrees.
+
+
+
+## exp2023060404
+来自exp2023060402
+
+train_split.txt=seq01 dso ,test_split.txt=seq02 dso ,
+load_pose_avg_stats=False
+pose_avg_from_file = None, poses.shape = (1187, 3, 4)
+pose_avg =  [[ 0.90830921 -0.24233858  0.34094925 -0.16922804]
+ [ 0.20521256  0.96841584  0.1416283  -0.08393278]
+ [-0.36450266 -0.05867522  0.92935194 -0.07313037]]
+
+
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/checkpoint-0032-15.1900.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=./logs/heads/dfnetdm/checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=False
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [1., 0., 10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 16 21 26]
+
+frame_idx_dso[0:4] =  [ 0  5 10 15]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-02.txt, using vo_stats_filename=./data/7Scenes/heads/seq-02/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [11 12 13 14]
+
+frame_idx_dso[0:4] =  [0 1 2 3]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-02.txt, using vo_stats_filename=./data/7Scenes/heads/seq-02/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  989
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --real --lrate 5e-6 (默认5e-4)
+
+ --num_cycle 1
+
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-0.1163.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+## test on seq-02-abs ,checkpoint-0032-15.1900.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24630531668663025m and 6.642731189727783 degrees.
+Mean error 0.26831609185943256m and 8.409983653270077 degrees.
+
+结果
+## test on seq-02-abs checkpoint-0000-15.2388.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24681197106838226m and 6.6877312660217285 degrees.
+Mean error 0.2748679257995243m and 8.722072901390682 degrees.
+
+## test on seq-02-abscheckpoint-0003-15.3839.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.25084102153778076m and 6.906414031982422 degrees.
+Mean error 0.2755686231724978m and 9.197343796280686 degrees.
+
+## test on seq-02-abs checkpoint-0004-15.4323.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2517005503177643m and 7.0860795974731445 degrees.
+Mean error 0.27145488564813974m and 8.969663592995238 degrees.
+
+
+Median error 0.2551608681678772m and 7.8680548667907715 degrees.
+Mean error 0.26230751273539615m and 10.167994353298711 degrees.
+
+
+Median error 0.2561221718788147m and 8.076066017150879 degrees.
+Mean error 0.26377861035462274m and 10.168003243370654 degrees.
+
+
+
+
+
+
+## exp2023060501
+来自exp2023060402
+
+train_split.txt=seq01 dso ,test_split.txt=seq02 dso ,
+load_pose_avg_stats=pose_avg_stats_dso_12-999imgs_seq01_and_02.txt
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --lrate 5e-6
+
+model_name=dfnetdm
+expname=nerfh
+basedir=./logs/heads
+datadir=./data/7Scenes/heads
+dataset_type=7Scenes
+pretrain_model_path= ./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnet/checkpoint-0343-0.1294.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt  # this is your trained dfnet model for pose regression
+pretrain_featurenet_path=./logs/heads/dfnetdm/exp2023060402/checkpoint-0030-15.1700.pt #checkpoint-0032-15.1900.pt #./logs/heads/dfnetdm/exp2023053005/checkpoint-0072-19.5473.pt # this is your trained dfnet model for feature extraction
+trainskip=5 # train  
+testskip=1 #train
+df=2
+load_pose_avg_stats=True
+NeRFH=True
+encode_hist=True
+freezeBN=True
+featuremetric=True
+pose_only=3
+svd_reg=True
+combine_loss = True
+combine_loss_w = [10., 0., 10.] #[0., 0., 1.]
+finetune_unlabel=True
+i_eval=20
+DFNet=True
+val_on_psnr=True
+feature_matching_lvl = [0]
+# eval=True # add this for eval
+# pretrain_model_path=./logs/fire/dfnetdm/checkpoint-0317-17.5881.pt # add the trained model for eval
+
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060501
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-0.1163.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+## test on seq-02-abs ,checkpoint-0032-15.1900.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24630531668663025m and 6.642731189727783 degrees.
+Mean error 0.26831609185943256m and 8.409983653270077 degrees.
+
+结果
+
+
+
+
+
+## exp2023060502
+来自exp2023060402
+
+train_split.txt=seq01 dso ,test_split.txt=seq02 dso ,
+load_pose_avg_stats=
+
+训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_pre_posenet_dso.py --config config_dfnetdm.txt --num_cycle 2 --real --lrate 5e-6 (默认5e-4)
+
+验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --exp dfnetdm/exp2023060501
+结果
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0001-0.1163.pt
+
+
+原本结果
+## test on seq-01-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20798498392105103m and 3.446230888366699 degrees.
+Mean error 0.22016802622450266m and 5.3988102191252265 degrees.
+
+## test on seq-02-abs ,checkpoint-0016-18.0661.pt [1,. 0,. 10.]
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.28747594356536865m and 8.361526489257812 degrees.
+Mean error 0.304160577161247m and 9.828845385593882 degrees.
+
+## test on seq-02-abs ,checkpoint-0032-15.1900.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24630531668663025m and 6.642731189727783 degrees.
+Mean error 0.26831609185943256m and 8.409983653270077 degrees.
+
+
+
+
+
+结果
+## test on seq-02-abs exp2023060501/checkpoint-0000-15.0801.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.24413438141345978m and 6.578166961669922 degrees.
+Mean error 0.2675344540301571m and 7.989831295064053 degrees.
+
+
+## test on seq-01-abs exp2023060501/checkpoint-0004-15.2698.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs_999imgs_seq01and2-skip5.txt
+Median error 0.20924090594053268m and 5.42793869972229 degrees.
+Mean error 0.23118517799717694m and 7.137927564170196 degrees.
+
+## test on seq-01-abs exp2023060501/checkpoint-0004-15.2698.p
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.20927833020687103m and 5.384345769882202 degrees.
+Mean error 0.23123219725016037m and 7.1149449692322655 degrees.
+
+
+## test on seq-01-abs exp2023060501/checkpoint-0017-15.3236.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_abs12-999_all_skip_1_seq01.txt
+Median error 0.21600773185491562m and 4.455129384994507 degrees.
+Mean error 0.2326104874620855m and 6.20063437945266 degrees.
+
+
+最佳
+
+#验证cycle1+mapnet_vo checkpoint-0000-18.7947.pt
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+
+
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt (等价于pose_avg_stats_abs_999imgs_seq01-skip5.txt)
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+
+## test on seq-02-abs ,checkpoint-0030-15.1700.pt
+# train on seq-01-dso， test on seq-02-abs using pose_avg_stats_abs12-999_all_skip_1_seq01_02.txt
+Median error 0.2432601898908615m and 6.448315620422363 degrees.
+Mean error 0.2695976424386915m and 8.446120158003604 degrees.
+
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7947.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.19135203957557678m and 2.916614055633545 degrees.
+Mean error 0.21643507392013725m and 5.107806895214778 degrees.
+
+验证cycle1+atloc vo on heads seq01- dso
+python train_dfnet.py --config config_dfnetdm.txt --eval --pretrain_model_path=./logs/heads/dfnetdm/checkpoint-0000-18.7426.pt
+# train on seq-01-dso， test on seq-01-abs using pose_avg_stats_before_removetop12imgsfordso.txt
+Median error 0.1915038302540779m and 2.916481614112854 degrees.
+Mean error 0.21685510380985404m and 5.0973181647327745 degrees.

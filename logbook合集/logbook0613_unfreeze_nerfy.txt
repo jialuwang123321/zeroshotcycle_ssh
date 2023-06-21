@@ -1,0 +1,40 @@
+目录：不冻结nerf 跑run_feature, 跑dfnet 
+
+自己生成pose_avg_stats.txt
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+
+python train_dfnet.py --config config_dfnetdm.txt --save_pose_avg_stats
+按c继续，最后存储
+实际在/home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py 的def fix_coord里实现的
+
+##口令
+
+### exp2023061301 不冻结nerf 跑run_feature.py 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature_and_nerf.py --config config_dfnet.txt
+ --real --pose_avg_stats_mode 100 
+  --lrate 5e-16 --learning_rate 0.00001  
+
+ 
+# 训练口令：
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 5e-8 --learning_rate 0.00001
+python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 1e-9 --learning_rate 0.0001
+
+
+--lrate 5e-4默认
+#训练参数：
+(可参考exp2023060701训练记录.txt)
+训练时train=test_split=seq01 dso
+shuffle等于true(纸060201)
+pose_avg用的/home/jialu/zeroshot123cycle0524/data/7Scenes/heads/pose_avg_stats_nerf_best.txt
+
+#验证：/home/jialu/zeroshot123cycle0524/dataset_loaders/seven_scenes.py line 297 self.real改成False,test改成seq02,load_pose_avg_stats=False
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python multi_eval.py --opt heads --pose_avg_stats_mode 1 --exp dfnetdm/tem --pose_avg_stats_mode_pred_eval -1
