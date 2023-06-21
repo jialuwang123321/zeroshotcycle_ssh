@@ -7,7 +7,7 @@ parser.add_argument("--opt", type=str, help="Specify the scene")
 parser.add_argument("--exp", type=str, help="Specify the scene")
 parser.add_argument("--pose_avg_stats_mode", type=int, help="Specify the pose_avg_stats_mode")
 parser.add_argument("--pose_avg_stats_mode_pred_eval", type=int, help="Specify the pose_avg_stats_mode")
-
+print('123333')
 args = parser.parse_args()
 
 # 指定文件夹路径
