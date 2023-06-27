@@ -23,8 +23,11 @@ python run_feature_and_nerf.py --config config_dfnet.txt
 # 训练口令：
 cd zeroshot123cycle0524/
 conda activate dfnet0514
-python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 5e-8 --learning_rate 0.00001
 python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 1e-9 --learning_rate 0.0001
+
+
+(之前的)
+python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 5e-8 --learning_rate 0.00001
 
 
 --lrate 5e-4默认

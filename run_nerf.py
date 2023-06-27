@@ -65,6 +65,17 @@ def train_on_epoch_nerfw(args, train_dl, H, W, focal, N_rand, optimizer, loss_fu
             img_loss = img2mse(rgb, target_s)
             psnr = mse2psnr(img_loss)
         loss.backward()
+
+        # 在训练迭代结束后打印最后一层的权重.grad
+
+        # print('\n\n ====== NeRF gradients:')
+        # for param2 in render_kwargs_train['network_fn'].parameters():
+        #     print(param2.grad)
+        
+        # print('\n\n ====== NeRF-fine gradients:')
+        # for param3 in render_kwargs_train['network_fine'].parameters():
+        #     print(param3.grad)
+
         optimizer.step()
 
         # NOTE: IMPORTANT!

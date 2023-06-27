@@ -389,7 +389,7 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     if args.combine_loss: #args.combine_loss_w= [0.0, 0.0, 1.0]
         pose_loss = PoseLoss(args, pose_, pose, device) #pose_.shape= torch.Size([1, 3, 4])， pose_loss= tensor(0.0001, grad_fn=<MseLossBackward0>)
         loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss
-        # print('\n\n ================ pose_loss = {}, photo_loss = {}, feat_loss={}'.format( pose_loss, photo_loss, feat_loss))
+        print('\n\n ================ pose_loss = {}, photo_loss = {}, feat_loss={}'.format( pose_loss, photo_loss, feat_loss))
 
     # if args.combine_loss: #args.combine_loss_w= [0.0, 0.0, 1.0]
 
@@ -400,11 +400,59 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
 
     ### Loss Design End
     #dfnetdm optimizer
-    torch.cuda.empty_cache() # free memory
+    loss=loss.requires_grad_()
+    # optimizer.zero_grad()
+    # optimizer_nerf.zero_grad()
+    # torch.cuda.empty_cache() # free memory
     loss.backward()
-    optimizer.step()
-    optimizer.zero_grad()
+
+    # optimizer.step()
+    optimizer_nerf.step()
     psnr = mse2psnr(img2mse(rgb, data))
+        
+    
+
+    """
+        output = model(input)
+         -> model.param.required_grad = True
+         -> output.require_grad = True
+         -> model.param.grad = None
+        loss = loss_f(output)
+        loss.backward()
+         -> model.param.grad = [1.]
+         -> nerf_model.param.grad = [1.]
+        optimzer.step()
+          -> model.param = model.param + lr * model.param.grad
+        optimizer.zero_grad()
+          -> model.param.grad = None
+        optimizer_nerf.step()
+          -> nerf_model.param.grad
+    """
+    # 在训练迭代结束后打印最后一层的权重.grad
+
+    # print('\n\n ====== Model gradients:')
+    # for param1 in model.parameters():
+    #     print(param1.grad)
+
+    print('\n\n ====== NeRF gradients:')
+    for param2 in render_kwargs_train['network_fn'].parameters():
+        print(param2.grad)
+    
+    # print('\n\n ====== NeRF-fine gradients:')
+    # for param3 in render_kwargs_train['network_fine'].parameters():
+    #     print(param3.grad)
+
+
+    # last_layer_params_1 = list(render_kwargs_train['network_fn'].parameters())[-1]  # 获取最后一层的参数
+    # print("&&& Last Layer nerf Weights:", last_layer_params_1)
+
+    # last_layer_params_2 = list(render_kwargs_train['network_fine'].parameters())[-1]  # 获取最后一层的参数
+    # print("&&& Last Layer nerf_fine Weights:", last_layer_params_2)
+
+
+
+
+
 
     #nerf optimizer
     # # compute loss
@@ -438,23 +486,14 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     #     img_loss = img2mse(rgb, results+10)
     #     psnr = mse2psnr(img_loss)
     # loss_func_nerf_all.backward()
-    optimizer_nerf.step()
+    # optimizer_nerf.step()
     
     # loss_func_nerf.backward()
-    # optimizer_nerf.step()
 
-    # 在训练迭代结束后打印最后一层的权重
-    last_layer_params_1 = list(render_kwargs_train['network_fn'].parameters())[-1]  # 获取最后一层的参数
-    print("&&& Last Layer nerf Weights:", last_layer_params_1)
 
-    last_layer_params_2 = list(render_kwargs_train['network_fine'].parameters())[-1]  # 获取最后一层的参数
-    print("&&& Last Layer nerf_fine Weights:", last_layer_params_2)
-
-    optimizer_nerf.zero_grad()
     
 
-    # for param_group in optimizer.param_groups:
-    #     print('param_group_lr= {}'.format(param_group['lr']))
+
 
     # end of every new tensor from onward is in GPU
     torch.set_default_tensor_type('torch.FloatTensor')

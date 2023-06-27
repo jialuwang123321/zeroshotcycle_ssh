@@ -127,71 +127,6 @@ def train():
 
     feat_model.eval()
     feat_model.to(device)
-
-    # set optimizer
-    # state_dict = model.state_dict()
-    # print('\n\n =================== ')
-    # for name, param in state_dict.items():
-    #     print(name, param.shape)
-        # '''
-        # =================== 
-        # encoder.0.weight torch.Size([64, 3, 3, 3])
-        # encoder.0.bias torch.Size([64])
-        # encoder.2.weight torch.Size([64, 64, 3, 3])
-        # encoder.2.bias torch.Size([64])
-        # encoder.5.weight torch.Size([128, 64, 3, 3])
-        # encoder.5.bias torch.Size([128])
-        # encoder.7.weight torch.Size([128, 128, 3, 3])
-        # encoder.7.bias torch.Size([128])
-        # encoder.10.weight torch.Size([256, 128, 3, 3])
-        # encoder.10.bias torch.Size([256])
-        # encoder.12.weight torch.Size([256, 256, 3, 3])
-        # encoder.12.bias torch.Size([256])
-        # encoder.14.weight torch.Size([256, 256, 3, 3])
-        # encoder.14.bias torch.Size([256])
-        # encoder.17.weight torch.Size([512, 256, 3, 3])
-        # encoder.17.bias torch.Size([512])
-        # encoder.19.weight torch.Size([512, 512, 3, 3])
-        # encoder.19.bias torch.Size([512])
-        # encoder.21.weight torch.Size([512, 512, 3, 3])
-        # encoder.21.bias torch.Size([512])
-        # encoder.24.weight torch.Size([512, 512, 3, 3])
-        # encoder.24.bias torch.Size([512])
-        # encoder.26.weight torch.Size([512, 512, 3, 3])
-        # encoder.26.bias torch.Size([512])
-        # encoder.28.weight torch.Size([512, 512, 3, 3])
-        # encoder.28.bias torch.Size([512])
-        # adaptation_layers.adapt_layer_0.0.weight torch.Size([64, 64, 1, 1])
-        # adaptation_layers.adapt_layer_0.0.bias torch.Size([64])
-        # adaptation_layers.adapt_layer_0.2.weight torch.Size([128, 64, 5, 5])
-        # adaptation_layers.adapt_layer_0.2.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_0.3.weight torch.Size([128])
-        # adaptation_layers.adapt_layer_0.3.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_0.3.running_mean torch.Size([128])
-        # adaptation_layers.adapt_layer_0.3.running_var torch.Size([128])
-        # adaptation_layers.adapt_layer_0.3.num_batches_tracked torch.Size([])
-        # adaptation_layers.adapt_layer_1.0.weight torch.Size([64, 256, 1, 1])
-        # adaptation_layers.adapt_layer_1.0.bias torch.Size([64])
-        # adaptation_layers.adapt_layer_1.2.weight torch.Size([128, 64, 5, 5])
-        # adaptation_layers.adapt_layer_1.2.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_1.3.weight torch.Size([128])
-        # adaptation_layers.adapt_layer_1.3.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_1.3.running_mean torch.Size([128])
-        # adaptation_layers.adapt_layer_1.3.running_var torch.Size([128])
-        # adaptation_layers.adapt_layer_1.3.num_batches_tracked torch.Size([])
-        # adaptation_layers.adapt_layer_2.0.weight torch.Size([64, 512, 1, 1])
-        # adaptation_layers.adapt_layer_2.0.bias torch.Size([64])
-        # adaptation_layers.adapt_layer_2.2.weight torch.Size([128, 64, 5, 5])
-        # adaptation_layers.adapt_layer_2.2.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_2.3.weight torch.Size([128])
-        # adaptation_layers.adapt_layer_2.3.bias torch.Size([128])
-        # adaptation_layers.adapt_layer_2.3.running_mean torch.Size([128])
-        # adaptation_layers.adapt_layer_2.3.running_var torch.Size([128])
-        # adaptation_layers.adapt_layer_2.3.num_batches_tracked torch.Size([])
-        # fc_pose.weight torch.Size([12, 512])
-        # fc_pose.bias torch.Size([12])
-
-        # '''
     
     optimizer = optim.Adam(model.parameters(), lr=args.learning_rate) #weight_decay=weight_decay, **kwargs
     # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.95, patience=args.patience[1], verbose=True)
@@ -203,6 +138,24 @@ def train():
         train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, near, far, device, early_stopping, train_dl=train_dl, val_dl=val_dl, test_dl=test_dl,num_cycle=args.num_cycle)
     elif args.dataset_type == 'Cambridge':
         train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, near, far, device, early_stopping, train_dl=train_dl, val_dl=val_dl, test_dl=test_dl,num_cycle=args.num_cycle)
+
+
+"""
+    output = model(input)
+        -> model.param.required_grad = True
+        -> output.require_grad = True
+        -> model.param.grad = None
+    loss = loss_f(output)
+    loss.backward()
+        -> model.param.grad = [1.]
+        -> nerf_model.param.grad = [1.]
+    optimzer.step()
+        -> model.param = model.param + lr * model.param.grad
+    optimizer.zero_grad()
+        -> model.param.grad = None
+    optimizer_nerf.step()
+        -> nerf_model.param.grad
+"""
 
 def eval():
     print(parser.format_values())

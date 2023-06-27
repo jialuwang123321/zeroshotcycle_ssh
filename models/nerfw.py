@@ -398,9 +398,11 @@ def create_nerf(args):
         embedding_t = embedding_t.to(device)
 
     # initialize NeRF model
-    if args.NeRFH:
+    if args.NeRFH: #dfnetdm进这里
+        print('******* using args.NeRFH 1')
         model = NeRFW('coarse', D=args.netdepth, W=args.netwidth, skips=skips, in_channels_xyz=input_ch, in_channels_dir=input_ch_views)
     else:
+        print('******* using args.NeRF 2')
         model = NeRF(D=args.netdepth, W=args.netwidth, input_ch=input_ch, output_ch=output_ch, skips=skips, input_ch_views=input_ch_views, use_viewdirs=args.use_viewdirs)
 
     if args.multi_gpu:
@@ -444,7 +446,7 @@ def create_nerf(args):
                                                                 embed_fn=embed_fn,
                                                                 embeddirs_fn=embeddirs_fn,
                                                                 netchunk=args.netchunk)
-
+    
     # Create optimizer if NeRF is need to be trained, otherwise returns None
     print('\n\n ================ args.no_grad_update = ', args.no_grad_update)
     if args.no_grad_update== True:
@@ -455,7 +457,9 @@ def create_nerf(args):
     else:
         print('optimizer 2  ,nerf optimizer is not None')
         print_current_line()
-        optimizer = torch.optim.Adam(params=grad_vars, lr=args.lrate, betas=(0.9, 0.999))
+        # optimizer = torch.optim.Adam(params=grad_vars, lr=args.lrate, betas=(0.9, 0.999))
+        optimizer = torch.optim.Adam(params=model.parameters(), lr=args.lrate, betas=(0.9, 0.999))
+        
 
     start = 0
     basedir = args.basedir

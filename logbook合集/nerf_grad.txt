@@ -1,0 +1,407 @@
+(base) jialu@jialu-System-Product-Name:~$ cd zeroshot123cycle0524/
+(base) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ conda activate dfnet0514
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ python train_dfnet_nerf_dso.py --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 1e-9 --learning_rate 0.0001
+
+Command Line Args:   --config config_dfnetdm.txt --real --pose_avg_stats_mode 100 --no_grad_update False --lrate 1e-9 --learning_rate 0.0001
+Config File (config_dfnetdm.txt):
+  model_name:        dfnetdm
+  expname:           nerfh
+  basedir:           ./logs/heads
+  datadir:           ./data/7Scenes/heads
+  dataset_type:      7Scenes
+  pretrain_model_path:./logs/heads/dfnetdm/checkpoint-0006-0.1546.pt
+  pretrain_featurenet_path:./logs/heads/dfnetdm/checkpoint-0006-0.1546.pt
+  trainskip:         5
+  testskip:          1
+  df:                2
+  load_pose_avg_stats:True
+  NeRFH:             True
+  encode_hist:       True
+  freezeBN:          False
+  featuremetric:     True
+  pose_only:         3
+  svd_reg:           True
+  combine_loss:      True
+  combine_loss_w:    ['1.', '1000.', '1.']
+  finetune_unlabel:  True
+  i_eval:            20
+  DFNet:             True
+  val_on_psnr:       False
+  feature_matching_lvl:[0]
+Defaults:
+  --fff:             1
+  --reduce_embedding:-1
+  --epochToMaxFreq:  -1
+  --train_local_nerf:-1
+  --batch_size:      1
+  --patience:        [200, 50]
+  --resize_factor:   2
+  --efficientnet_block:6
+  --dropout:         0.5
+  --val_batch_size:  1
+  --netdepth:        8
+  --netwidth:        128
+  --netdepth_fine:   8
+  --netwidth_fine:   128
+  --N_rand:          1536
+  --lrate_decay:     250
+  --chunk:           32768
+  --netchunk:        65536
+  --N_vocab:         1000
+  --hist_bin:        10
+  --in_channels_a:   50
+  --in_channels_t:   20
+  --N_samples:       64
+  --N_importance:    64
+  --perturb:         1.0
+  --i_embed:         0
+  --multires:        10
+  --multires_views:  4
+  --raw_noise_std:   0.0
+  --render_factor:   0
+  --mesh_grid_size:  80
+  --precrop_iters:   0
+  --precrop_frac:    0.5
+  --factor:          8
+  --llffhold:        8
+  --i_print:         1
+  --i_img:           500
+  --i_weights:       200
+  --i_testset:       200
+  --i_video:         50000
+  --num_cycle:       2
+  --pose_avg_stats_mode_pred_eval:-1
+
+
+
+ ************ in /home/jialu/zeroshot123cycle0524/train_pre_posenet_dso.py 
+ args.real= True
+
+
+ ************ in load_7Scenes.py line 510 
+ args.real= True
+ in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py
+  args.finetune_unlabel = True
+
+
+ **********in seven_scenes.py line 230  self.real =  True
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 17 22 27]
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!! self.real= True
+frame_idx_dso[0:4] =  [ 0  5 10 15]
+
+
+ ======== real = True, loading poses from ./data/7Scenes/heads/dso_poses/seq-01.txt, using vo_stats_filename=./data/7Scenes/heads/seq-01/dso_vo_stats.pkl  ========
+
+
+
+
+ ======= len(self.c_imgs) =  198
+
+
+ **********in seven_scenes.py line 230  self.real =  False
+=================train=False, split_file = ./data/7Scenes/heads/TestSplit.txt
+
+
+ ===train=False, frame_idx[0:4] = [12 13 14 15]
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!! self.real= False
+
+
+ ======== real = False, loading poses from ./data/7Scenes/heads/seq-01/frame-000012.pose.txt  and etc ========
+
+
+
+
+ ======= len(self.c_imgs) =  988
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg = [[ 0.97469172 -0.12902098  0.18256406  0.01019205]
+ [ 0.07811936  0.96173645  0.26260306 -0.10702473]
+ [-0.20945981 -0.24169524  0.94747559  0.10368893]], poses.shape = (988, 3, 4)
+
+
+ ================== 
+ val  using seq01abs test best (pose_avg_stats_abs_999imgs_seq01and2-skip5.txt)
+
+
+ =========== in /home/jialu/zeroshot123cycle0524/dataset_loaders/load_7Scenes.py def center_poses =========== 
+
+
+pose_avg = [[ 0.65544772 -0.23273923  0.71848503 -0.09990896]
+ [ 0.56813786  0.77874678 -0.26603162  0.31429131]
+ [-0.49760191  0.58256837  0.64265577  0.29820491]], poses.shape = (198, 3, 4)
+
+
+ ================== 
+ train using pose_avg_stats_nerf_best.txt
+
+
+ in load_7Scenes.py, batch_size for train_dl = 1
+args.val_batch_size =  1
+/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/hub.py:564: UserWarning: TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead
+  warnings.warn('TORCH_MODEL_ZOO is deprecated, please use env TORCH_HOME instead')
+******* using args.NeRFH 1
+
+
+ ================ args.no_grad_update =  False
+optimizer 2  ,nerf optimizer is not None
+Current line: 11 in /home/jialu/zeroshot123cycle0524/models/nerfw.py
+Found ckpts ['./logs/heads/nerfh/001000.tar']
+Reloading from ./logs/heads/nerfh/001000.tar
+Not ndc!
+epochs:   0%|                                          | 0/2001 [00:00<?, ?it/s]
+
+ ==== Origional DFnet training in train_on_epoch==========
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+
+
+ ====== NeRF gradients:
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+epochs:   0%|                                          | 0/2001 [00:04<?, ?it/s]
+Traceback (most recent call last):
+  File "train_dfnet_nerf_dso.py", line 189, in <module>
+    train()
+  File "train_dfnet_nerf_dso.py", line 138, in train
+    train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, near, far, device, early_stopping, train_dl=train_dl, val_dl=val_dl, test_dl=test_dl,num_cycle=args.num_cycle)
+  File "./feature/direct_feature_matching_unfreeze_nerf.py", line 791, in train_feature_matching
+    loss, psnr = train_on_epoch(args, data_loaders, model, feat_model, hwf, optimizer, half_res, device, world_setup_dict, optimizer_nerf, num_cycle, **render_kwargs_train)
+  File "./feature/direct_feature_matching_unfreeze_nerf.py", line 528, in train_on_epoch
+    loss, psnr = train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer, half_res, device, world_setup_dict,optimizer_nerf,**render_kwargs_train)
+  File "./feature/direct_feature_matching_unfreeze_nerf.py", line 356, in train_on_batch
+    rgb, disp, acc, extras = render(H//4, W//4, focal/4, chunk=args.chunk, c2w=pose_nerf[0,:3,:4], img_idx=img_idx, **render_kwargs_train)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 399, in render
+    all_ret = batchify_rays(rays, chunk, **kwargs)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 344, in batchify_rays
+    ret = render_rays(rays_flat[i:i+chunk], **kwargs)
+  File "/home/jialu/zeroshot123cycle0524/models/rendering.py", line 292, in render_rays
+    raw = network_query_fn(pts, viewdirs, None, network_fn, 'coarse', None, None, False, test_time=test_time)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 443, in <lambda>
+    test_time=test_time)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 63, in run_network_NeRFW
+    out_chunks += [fn(torch.cat(embedded_inputs, 1), output_transient=output_transient)]
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/jialu/zeroshot123cycle0524/models/nerfw.py", line 337, in forward
+    xyz_ = getattr(self, f"xyz_encoding_{i+1}")(xyz_)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/modules/container.py", line 141, in forward
+    input = module(input)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 98, in forward
+    return F.relu(input, inplace=self.inplace)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/site-packages/torch/nn/functional.py", line 1440, in relu
+    result = torch.relu_(input)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 197, in format_stack
+    return format_list(extract_stack(f, limit=limit))
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 211, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+  File "/home/jialu/anaconda3/envs/dfnet0514/lib/python3.7/traceback.py", line 359, in extract
+    linecache.checkcache(filename)
+KeyboardInterrupt
+
+(dfnet0514) jialu@jialu-System-Product-Name:~/zeroshot123cycle0524$ 
