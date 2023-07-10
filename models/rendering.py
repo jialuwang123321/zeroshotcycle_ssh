@@ -11,6 +11,7 @@ from models.ray_utils import *
 from models.nerf import img2mse, mse2psnr,to8b
 from einops import rearrange, reduce, repeat
 import pdb
+import ipdb
 
 ''' 
 Render Procedure:
@@ -273,7 +274,7 @@ def render_rays(ray_batch,
         z_vals = 1./(1./near * (1.-t_vals) + 1./far * (t_vals)) # sample in diparity disparity = 1/depth
 
     z_vals = z_vals.expand([N_rays, N_samples])
-
+    # print('render_rays start========')
     if perturb > 0.:
         # get intervals between samples
         mids = .5 * (z_vals[...,1:] + z_vals[...,:-1]) # find mid points of each interval
@@ -291,9 +292,11 @@ def render_rays(ray_batch,
     else:
         raw = network_query_fn(pts, viewdirs, None, network_fn, 'coarse', None, None, False, test_time=test_time)
 
+    # print(' coarse raw.shape ', raw.shape)
 
     rgb_map, disp_map, acc_map, weights, depth_map, _, _ = raw2outputs_NeRFW(raw, z_vals, rays_d, raw_noise_std, white_bkgd, test_time=test_time, typ="coarse")
     if N_importance > 0:
+        # print('N_importance = ', N_importance)
 
         rgb_map_0, disp_map_0, acc_map_0 = rgb_map, disp_map, acc_map
 
@@ -312,10 +315,14 @@ def render_rays(ray_batch,
         else:
             raw = network_query_fn(pts, viewdirs, img_idxs, network_fine, 'fine', embedding_a, embedding_t, output_transient, test_time=test_time)
 
-
+        print(' fine raw.shape ', raw.shape)
         rgb_map, disp_map, acc_map, weights, depth_map, transient_sigmas, beta = raw2outputs_NeRFW(raw, z_vals, rays_d, raw_noise_std, output_transient, network_fine.beta_min, white_bkgd, test_time, typ="fine")
 
     ret = {'rgb_map' : rgb_map, 'disp_map' : disp_map, 'acc_map' : acc_map}
+    # ipdb.set_trace();
+    # print('final raw.shape', raw.shape)
+    #dfnetdm raw.shape torch.Size([4800, 128, 9])
+    #run_nerf raw.shape torch.Size([1536, 128, 9])
     if retraw:
         ret['raw'] = raw
 

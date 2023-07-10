@@ -68,7 +68,7 @@ def train_on_epoch_nerfw(args, train_dl, H, W, focal, N_rand, optimizer, loss_fu
 
         # 在训练迭代结束后打印最后一层的权重.grad
 
-        # print('\n\n ====== NeRF gradients:')
+        # print('\n\n ====== NeRF gradients 111:')
         # for param2 in render_kwargs_train['network_fn'].parameters():
         #     print(param2.grad)
         
@@ -255,8 +255,6 @@ def train_nerf(args, train_dl, val_dl, hwf, i_split, near, far, render_poses=Non
 
 
 def train():
-
-    print(parser.format_values())
 
     # Load data
     if args.dataset_type == '7Scenes':

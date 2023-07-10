@@ -1,0 +1,150 @@
+'''
+复刻本环境 请参考本文
+'''
+
+1. #python3.7.3虚拟环境
+conda create -n dfnet0514 python=3.7
+conda activate dfnet0514
+
+2. 下载torch 1.11.0+cu11.5
+pip install https://download.pytorch.org/whl/cu115/torch-1.11.0%2Bcu115-cp37-cp37m-linux_x86_64.whl
+
+其他版本见https://download.pytorch.org/whl/torch/
+我的cuda 11.5.2
+
+#验证
+python3
+import torch
+print(torch.__version__)
+显示：
+1.11.0+cu115
+# 查看pytoc­h是否支持CUDA  
+torch.cuda.is_available()
+显示：
+True
+exit()
+
+3.pip装相关软件
+更新pip
+pip install --upgrade pip
+
+4. ## 下载 torchvision-0.12.0 (来自 https://download.pytorch.org/whl/torchvision/)
+pip install https://download.pytorch.org/whl/cu115/torchvision-0.12.0%2Bcu115-cp37-cp37m-linux_x86_64.whl
+
+
+5. ## 下载相关环境
+下面的内容写进一个文件，起名requirements.txt，进入这个文件所在的目录下：
+pip install -r requirements.txt
+
+
+absl-py==0.14.0
+antlr4-python3-runtime==4.8
+backcall==0.2.0
+beautifulsoup4==4.9.3
+brotlipy==0.7.0
+cached-property==1.5.2
+cachetools==4.2.4
+certifi==2021.5.30
+cffi==1.14.5
+chardet==3.0.4
+ConfigArgParse==1.5.2
+cryptography==3.4.7
+cycler==0.10.0
+decorator==5.0.9
+dnspython==2.1.0
+dpcpp-cpp-rt==2023.0.0
+efficientnet-pytorch==0.7.1
+einops==0.3.2
+filelock==3.0.12
+fvcore==0.1.5.post20210924
+glob2==0.7
+google-auth==1.35.0
+google-auth-oauthlib==0.4.6
+grpcio==1.41.0
+h5py==3.5.0
+idna==2.10
+imageio==2.9.0
+imageio-ffmpeg==0.4.5
+importlib-metadata==4.8.1
+intel-cmplr-lib-rt==2023.0.0
+intel-cmplr-lic-rt==2023.0.0
+intel-opencl-rt==2023.0.0
+intel-openmp==2023.0.0
+iopath==0.1.9
+ipython==7.22.0
+ipython-genutils==0.2.0
+jedi==0.17.0
+Jinja2==3.0.0
+kiwisolver==1.3.2
+kornia==0.6.2
+libarchive-c==2.9
+Markdown==3.3.4
+MarkupSafe==2.0.1
+matplotlib==3.3.2
+mkl==2023.1.0
+mkl-fft==1.3.0
+mkl-random==1.2.1
+mkl-service==2.3.0
+numpy==1.20.2
+nvidia-cublas-cu11==11.10.3.66
+nvidia-cuda-nvrtc-cu11==11.7.99
+nvidia-cuda-runtime-cu11==11.7.99
+nvidia-cudnn-cu11==8.5.0.96
+oauthlib==3.1.1
+olefile==0.46
+omegaconf==2.1.1
+opencv-python==4.4.0.46
+packaging==21.3
+parso==0.8.2
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow==8.2.0
+pkginfo==1.7.0
+portalocker==2.3.2
+prompt-toolkit==3.0.17
+protobuf==3.18.0
+psutil==5.8.0
+ptyprocess==0.7.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pycosat==0.6.3
+pycparser==2.20
+Pygments==2.9.0
+pykalman==0.9.5
+pyOpenSSL==19.1.0
+pyparsing==2.4.7
+PySocks==1.7.1
+python-dateutil==2.8.2
+python-etcd==0.4.5
+pytorch3d==0.3.0
+pytz==2021.1
+PyYAML==5.4.1
+requests==2.24.0
+requests-oauthlib==1.3.0
+rsa==4.7.2
+scipy==1.7.3
+six==1.16.0
+soupsieve==2.2.1
+tabulate==0.8.9
+tbb==2021.9.0
+tensorboard==2.6.0
+tensorboard-data-server==0.6.1
+tensorboard-plugin-wit==1.8.0
+termcolor==1.1.0
+torch @ https://download.pytorch.org/whl/cu115/torch-1.11.0%2Bcu115-cp37-cp37m-linux_x86_64.whl
+torchsummary==1.5.1
+torchvision @ https://download.pytorch.org/whl/cu115/torchvision-0.12.0%2Bcu115-cp37-cp37m-linux_x86_64.whl
+tqdm==4.51.0
+traitlets==5.0.5
+transforms3d==0.3.1
+trimesh==3.9.32
+typing-extensions==3.7.4.3
+urllib3==1.25.11
+wcwidth==0.2.5
+Werkzeug==2.0.1
+yacs==0.1.8
+zipp==3.6.0
+
+
+
+

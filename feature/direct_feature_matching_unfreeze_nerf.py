@@ -400,17 +400,16 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
 
     ### Loss Design End
     #dfnetdm optimizer
-    loss=loss.requires_grad_()
-    # optimizer.zero_grad()
-    # optimizer_nerf.zero_grad()
-    # torch.cuda.empty_cache() # free memory
     loss.backward()
-
-    # optimizer.step()
-    optimizer_nerf.step()
+    optimizer.step()
+    optimizer.zero_grad()
     psnr = mse2psnr(img2mse(rgb, data))
-        
-    
+
+    #dfnetdm nerf optimizer
+    optimizer_nerf.step()
+    optimizer_nerf.zero_grad()
+
+    # torch.cuda.empty_cache() # free memory
 
     """
         output = model(input)
@@ -434,9 +433,9 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     # for param1 in model.parameters():
     #     print(param1.grad)
 
-    print('\n\n ====== NeRF gradients:')
-    for param2 in render_kwargs_train['network_fn'].parameters():
-        print(param2.grad)
+    # print('\n\n ====== NeRF gradients:')
+    # for param2 in render_kwargs_train['network_fn'].parameters():
+    #     print(param2.grad)
     
     # print('\n\n ====== NeRF-fine gradients:')
     # for param3 in render_kwargs_train['network_fine'].parameters():

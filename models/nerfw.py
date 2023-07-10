@@ -22,7 +22,16 @@ to8b = lambda x : (255*np.clip(x,0,1)).astype(np.uint8)
 def run_network_NeRFW(inputs, viewdirs, ts, fn, embed_fn, embeddirs_fn, 
                     typ, embedding_a, embedding_t, output_transient, 
                     netchunk=1024*64, test_time=False):
-    ''' We need a new query function, Coarse = NeRF, Fine = NeRF-W 
+    ''' 
+    run_network_NeRFW 是 NeRF-W 架构中用于执行神经网络查询操作的函数,
+    用于对动态场景进行建模和预测
+    函数本身不会改变任何外部状态或数据。它只是根据输入参数执行神经网络的查询操作,并返回查询结果
+    在细化（fine）查询模式下,返回的查询结果形状为 [N_rays, N_samples, 9],其中最后一个维度为 9 表示每个采样点的预测结果,可能包含更多的信息,例如颜色、法线、瞬态等。
+
+    具体来说,返回的查询结果是一个包含预测结果的 torch.Tensor 对象,其中包含了每个射线上每个采样点的预测值。
+    结果的形状与输入的射线和采样点的数量一致。
+
+    We need a new query function, Coarse = NeRF, Fine = NeRF-W 
     Inputs:
         inputs: torch.Tensor() [N_rays,N_samples,3]
         viewdirs: torch.Tensor() [N_rays, 3]
@@ -457,8 +466,8 @@ def create_nerf(args):
     else:
         print('optimizer 2  ,nerf optimizer is not None')
         print_current_line()
-        # optimizer = torch.optim.Adam(params=grad_vars, lr=args.lrate, betas=(0.9, 0.999))
-        optimizer = torch.optim.Adam(params=model.parameters(), lr=args.lrate, betas=(0.9, 0.999))
+        optimizer = torch.optim.Adam(params=grad_vars, lr=args.lrate, betas=(0.9, 0.999))
+        # optimizer = torch.optim.Adam(params=model.parameters(), lr=args.lrate, betas=(0.9, 0.999))
         
 
     start = 0
