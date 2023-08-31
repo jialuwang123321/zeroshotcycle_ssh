@@ -43,11 +43,13 @@ def train_on_epoch_nerfw(args, train_dl, H, W, focal, N_rand, optimizer, loss_fu
             coords = torch.reshape(coords, [-1,2])  # (H * W, 2)
             select_inds = np.random.choice(coords.shape[0], size=[N_rand], replace=False)  # (N_rand,)
             select_coords = coords[select_inds].long()  # (N_rand, 2)
+            # print('\n ===== before, rays_o.shape=', rays_o.shape, 'rays_d.shape=', rays_d.shape, 'select_coords.shape=', select_coords.shape)
+            # print('[select_coords[:, 0], select_coords[:, 1]] = ',[select_coords[:, 0], select_coords[:, 1]])
             rays_o = rays_o[select_coords[:, 0], select_coords[:, 1]]  # (N_rand, 3)
             rays_d = rays_d[select_coords[:, 0], select_coords[:, 1]]  # (N_rand, 3)
             batch_rays = torch.stack([rays_o, rays_d], 0)
             target_s = target[select_coords[:, 0], select_coords[:, 1]]  # (N_rand, 3)
-
+            # print('after, rays_o.shape=', rays_o.shape, 'rays_d.shape=', rays_d.shape, 'target_s.shape=', target_s.shape)
         # #####  Core optimization loop  #####
         rgb, disp, acc, extras = render(H, W, focal, chunk=args.chunk, rays=batch_rays, retraw=True, img_idx=img_idx, **render_kwargs_train)
         optimizer.zero_grad()
@@ -72,7 +74,7 @@ def train_on_epoch_nerfw(args, train_dl, H, W, focal, N_rand, optimizer, loss_fu
         # for param2 in render_kwargs_train['network_fn'].parameters():
         #     print(param2.grad)
         
-        # print('\n\n ====== NeRF-fine gradients:')
+        # print('\n\n ====== NeRF-fine gradients 111:')
         # for param3 in render_kwargs_train['network_fine'].parameters():
         #     print(param3.grad)
 
@@ -149,6 +151,7 @@ def train_nerf(args, train_dl, val_dl, hwf, i_split, near, far, render_poses=Non
     # loss function
     loss_func = loss_dict['nerfw'](coef=1)
 
+    best_psnr = 24.62
     for i in trange(start, N_epoch):
         time0 = time.time()
         if args.reduce_embedding==2:
@@ -160,7 +163,9 @@ def train_nerf(args, train_dl, val_dl, hwf, i_split, near, far, render_poses=Non
         #####           end            #####
         print('\n\n ======== i={}, i_weights={} ========\n\n'.format(i, args.i_weights))
         # Rest is logging
-        if i%args.i_weights==0 and i!=0:
+        #仅存最佳ckpt的代码  
+        if psnr > best_psnr:
+            best_psnr = psnr
             path = os.path.join(basedir, expname, '{:06d}.tar'.format(i))
             if args.N_importance > 0: # have fine sample network
                 torch.save({
@@ -177,7 +182,26 @@ def train_nerf(args, train_dl, val_dl, hwf, i_split, near, far, render_poses=Non
                     'network_fn_state_dict': render_kwargs_train['network_fn'].state_dict(),
                     'optimizer_state_dict': optimizer.state_dict(),
                 }, path)
-            print('Saved checkpoints at', path)
+            print('Saved checkpoints at', path)   
+        #原本存ckpt的代码   
+        # if (i%args.i_weights==0 and i!=0): 
+        #     path = os.path.join(basedir, expname, '{:06d}.tar'.format(i))
+        #     if args.N_importance > 0: # have fine sample network
+        #         torch.save({
+        #             'global_step': global_step,
+        #             'network_fn_state_dict': render_kwargs_train['network_fn'].state_dict(),
+        #             'network_fine_state_dict': render_kwargs_train['network_fine'].state_dict(),
+        #             'embedding_a_state_dict': render_kwargs_train['embedding_a'].state_dict(),
+        #             'embedding_t_state_dict': render_kwargs_train['embedding_t'].state_dict(),
+        #             'optimizer_state_dict': optimizer.state_dict(),
+        #         }, path)
+        #     else:
+        #         torch.save({
+        #             'global_step': global_step,
+        #             'network_fn_state_dict': render_kwargs_train['network_fn'].state_dict(),
+        #             'optimizer_state_dict': optimizer.state_dict(),
+        #         }, path)
+        #     print('Saved checkpoints at', path)
 
         if i%args.i_testset==0 and i > 0: # run thru all validation set
 

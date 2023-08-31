@@ -291,7 +291,7 @@ seven_scenes.py line 297 self.real改成True,train_split ==seq01 (dso seq01),tes
 cd zeroshot123cycle0524/
 conda activate dfnet0514
 python run_nerf.py --config config_nerfh.txt
-python run_nerf.py --config config_nerfh.txt --no_reload --epochs 1000
+python run_nerf.py --config config_nerfh.txt --epochs 1000 --real
 验证nerf
 cd zeroshot123cycle0524/
 conda activate dfnet0514

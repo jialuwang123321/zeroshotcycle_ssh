@@ -467,7 +467,7 @@ def create_nerf(args):
         print('optimizer 2  ,nerf optimizer is not None')
         print_current_line()
         optimizer = torch.optim.Adam(params=grad_vars, lr=args.lrate, betas=(0.9, 0.999))
-        # optimizer = torch.optim.Adam(params=model.parameters(), lr=args.lrate, betas=(0.9, 0.999))
+        # optimizer = torch.optim1.Adam(params=model.parameters(), lr=args.lrate, betas=(0.9, 0.999))
         
 
     start = 0
@@ -486,7 +486,7 @@ def create_nerf(args):
         print('Reloading from', ckpt_path)
         ckpt = torch.load(ckpt_path)
 
-        startoptimizer = ckpt['global_step']
+        start = ckpt['global_step']
         optimizer.load_state_dict(ckpt['optimizer_state_dict'])
         # Load model
         model.load_state_dict(ckpt['network_fn_state_dict'])

@@ -1,0 +1,29 @@
+######run_nerf.py 
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_nerf.py --config config_nerfh.txt --epochs 2000 --real --pose_avg_stats_mode 0
+目前heads训练seq01测试是02
+
+
+
+验证nerf
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_nerf.py --config config_nerfh.txt --render_test --pose_avg_stats_mode 0
+
+######run_feature.py 
+
+cd zeroshot123cycle0524/
+conda activate dfnet0514
+python run_feature.py --config config_dfnet.txt
+ --val_on_psnr
+
+得到/home/jialu/zeroshot123cycle0524/logs/heads/dfnet/xxx
+
+self.real=True 所以是dso
+！！我暂时把train从02改成01，test还是01,之后改回来 (目前训练测试是01) data/7Scenes/heads/TrainSplit_zeroshot.txt
+验证（！！我暂时把train从02改成01，test还是01，
+验证记得real=true and false on seq02,
+load_pose_avg_stats=False,之后改回来）
+python run_feature.py --config config_dfnet.txt --eval --testskip=1 --pretrain_model_path=./logs/heads/dfnet/checkpoint-0363-0.1366.pt
+Reloading from ./logs/heads/nerfh/000600.tar

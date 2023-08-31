@@ -22,6 +22,6 @@ for file_name in files:
         # 构造运行命令
         command = f"python train_dfnet.py --config config_dfnetdm.txt --eval --testskip=1 --pose_avg_stats_mode={args.pose_avg_stats_mode} --pose_avg_stats_mode_pred_eval={args.pose_avg_stats_mode_pred_eval} --pretrain_model_path={os.path.join(folder_path, file_name)}"
         # command = f"python run_feature.py --config config_dfnet.txt --eval --pretrain_model_path={os.path.join(folder_path, file_name)}"
-        
+        command = f"python run_nerf.py --config config_nerfh.txt --render_test"
         # 执行命令
         os.system(command)

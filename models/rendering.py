@@ -315,7 +315,7 @@ def render_rays(ray_batch,
         else:
             raw = network_query_fn(pts, viewdirs, img_idxs, network_fine, 'fine', embedding_a, embedding_t, output_transient, test_time=test_time)
 
-        print(' fine raw.shape ', raw.shape)
+        # print(' fine raw.shape ', raw.shape)
         rgb_map, disp_map, acc_map, weights, depth_map, transient_sigmas, beta = raw2outputs_NeRFW(raw, z_vals, rays_d, raw_noise_std, output_transient, network_fine.beta_min, white_bkgd, test_time, typ="fine")
 
     ret = {'rgb_map' : rgb_map, 'disp_map' : disp_map, 'acc_map' : acc_map}
@@ -361,17 +361,21 @@ def render(H, W, focal, chunk=1024*32, rays=None, c2w=None, ndc=True,
                   near=0., far=1.,
                   use_viewdirs=False, c2w_staticcam=None, img_idx=torch.Tensor(0),
                   **kwargs):
-    if c2w is not None:
+    '''
+    run_nerf进 2,3,6,7
+    dfnet进 1,3,6,7
+    '''
+    if c2w is not None: #dfnet进 
         # print('=== 1')
         # special case to render full image
         rays_o, rays_d = get_rays(H, W, focal, c2w)
     else:
-        # print('=== 2')
+        # print('=== 2') #run_nerf进
         # use provided ray batch
         rays_o, rays_d = rays
 
     if use_viewdirs:
-        # print('=== 3')
+        # print('=== 3') #dfnet进, run_nerf进
         # provide ray directions as input
         viewdirs = rays_d
         if c2w_staticcam is not None:
@@ -393,12 +397,12 @@ def render(H, W, focal, chunk=1024*32, rays=None, c2w=None, ndc=True,
     near, far = near * torch.ones_like(rays_d[...,:1]), far * torch.ones_like(rays_d[...,:1])
     rays = torch.cat([rays_o, rays_d, near, far], -1)
     if use_viewdirs:
-        # print('=== 6')
+        # print('=== 6')#dfnet进, run_nerf进
         rays = torch.cat([rays, viewdirs], -1) # [1024, 11]
 
     # for NeRFW, we need to add frame index as input
     if img_idx.shape[0] != rays.shape[0]:
-        # print('=== 7')
+        # print('=== 7')#dfnet进, run_nerf进
         img_idx = img_idx.repeat(rays.shape[0],1) # [1024, 1]
     rays = torch.cat([rays, img_idx], 1) # [1024, 12]
 

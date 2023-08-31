@@ -6,7 +6,12 @@ def get_rays(H, W, focal, c2w):
     i, j = torch.meshgrid(torch.linspace(0, W-1, W), torch.linspace(0, H-1, H), indexing='ij')  # pytorch's meshgrid has indexing='ij'
     i = i.t()
     j = j.t()
+    # print('i = ', i, 'j=', j)
+    # print('dirs before = ', dirs)
+    # print('(i-W*.5)/focal = ', (i-W*.5)/focal)
     dirs = torch.stack([(i-W*.5)/focal, -(j-H*.5)/focal, -torch.ones_like(i)], -1)
+    # print('dirs after= ', dirs)
+    # print('dirs.shape = ', dirs.shape) # dfnetdm dirs.shape =   torch.Size([60, 80, 3])
 
     # Rotate ray directions from camera frame to the world frame
     rays_d = torch.sum(dirs[..., np.newaxis, :] * c2w[:3,:3], -1)  # dot product, equals to: [c2w.dot(dir) for dir in dirs]

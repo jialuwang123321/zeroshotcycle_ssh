@@ -248,9 +248,9 @@ class SevenScenes(data.Dataset):
 
       # decide which sequences to use
       if train:
-        split_file = osp.join(base_dir, 'TrainSplit.txt')
+        split_file = osp.join(base_dir, 'TrainSplit_zeroshot.txt')
       else:
-        split_file = osp.join(base_dir, 'TestSplit.txt')
+        split_file = osp.join(base_dir, 'TestSplit_zeroshot.txt')
       print('=================train={}, split_file = {}'.format(train,split_file))
       with open(split_file, 'r') as f:
         seqs = [int(l.split('sequence')[-1]) for l in f if not l.startswith('#')] # parsing
@@ -266,12 +266,17 @@ class SevenScenes(data.Dataset):
       for seq in seqs:
         seq_dir = osp.join(base_dir, 'seq-{:02d}'.format(seq))
         seq_data_dir = osp.join(data_dir, 'seq-{:02d}'.format(seq))
+        print('seq_dir = ', seq_dir)
         
         p_filenames = [n for n in os.listdir(osp.join(seq_dir, '.')) if n.find('pose') >= 0]        
         #p_filenames =  ['frame-000309.pose.txt', 'frame-00...]
+        # print('p_filenames = ', p_filenames)
         idxes = [int(n[6:12]) for n in p_filenames]
+        # print('idxes = ', idxes)
 
         frame_idx = np.array(sorted(idxes))
+        # print('frame_idx = ', frame_idx)
+        
 
 
         # trainskip and testskip
@@ -293,20 +298,18 @@ class SevenScenes(data.Dataset):
           frame_idx.shape = (1000,), type(frame_idx)=<class 'numpy.ndarray'>
        '''
 
-        print('\n\n ===train={}, frame_idx[0:4] = {}\n'.format(train, frame_idx[0:4]))
-        # self.real=True 
+        # print('\n\n ===train={}, frame_idx = {}\n'.format(train, frame_idx))
+        self.real=True 
         print("\n\n\n\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!! self.real=", self.real)
 
         if self.real==True:
               vo_lib='dso'
               pose_file = osp.join(data_dir, '{:s}_poses'.format(vo_lib), 'seq-{:02d}.txt'.format(seq))
-              # print('\n\n =============data_dir = {}, self.vo_lib = {},  pose_file = {}'.format(data_dir, self.vo_lib, pose_file))
-              pss = np.loadtxt(pose_file)
-              # print('\n\n ============== pss.shape = ', pss.shape) #pss.shape =  (1000, 13)
-              # frame_idx = pss[:, 0].astype(np.int)
-              # ps[seq] = pss[:, 1:13]  #ps[seq].shape =  (989, 12)
-              frame_idx_dso = frame_idx-frame_idx[0]
-              print('frame_idx_dso[0:4] = ', frame_idx_dso[0:4])
+              pss = np.loadtxt(pose_file) #pose_file = ./data/7Scenes/fire/dso_poses/seq-01.txt
+              print('pss.shape=  = ', pss.shape)#pss.shape= (988, 13)
+              frame_idx_dso = pss[:,0].astype(int)
+              frame_idx_dso = frame_idx-frame_idx_dso[0]
+              print('frame_idx_dso = ', frame_idx_dso)
               ps[seq] = pss[frame_idx_dso, 1:13] 
               vo_stats_filename = osp.join(seq_dir, '{:s}_vo_stats.pkl'.format(vo_lib))
               # with open(vo_stats_filename, 'rb') as f:

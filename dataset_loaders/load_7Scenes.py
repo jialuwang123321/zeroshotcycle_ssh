@@ -618,6 +618,7 @@ def load_7Scenes_dataloader_NeRF(args):
         pose_avg_stats_file = osp.join(args.datadir, 'pose_avg_stats.txt')
         train_set, val_set, bounds = fix_coord(args, train_set, val_set, pose_avg_stats_file)
     else:
+        print('pose_avg_stats_file = None')
         train_set, val_set, bounds = fix_coord(args, train_set, val_set)
 
     render_poses = None

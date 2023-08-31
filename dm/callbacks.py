@@ -49,27 +49,28 @@ class EarlyStopping:
 
     def __call__(self, val_loss, model, epoch=-1, save_multiple=False, save_all=False, val_psnr=None, median_r=None, median_t=None):
         # find maximum psnr
-        if self.val_on_psnr:
-            print('\n\n ============= self.val_on_psnr = ', self.val_on_psnr,'validation on val_on_psnr!! (in /home/jialu/zeroshot123cycle0524/dm/callbacks.py)')
-            score = val_psnr
-            if self.best_score is None:
-                self.best_score = score
-                self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=save_multiple)
-            elif score < self.best_score + self.delta:
-                self.counter += 1
+        # if self.val_on_psnr:
+        #     print('val_psnr = ', val_psnr)
+        #     print('\n\n ============= self.val_on_psnr = ', self.val_on_psnr,'validation on val_on_psnr!! (in /home/jialu/zeroshot123cycle0524/dm/callbacks.py)')
+        #     score = val_psnr
+        #     if self.best_score is None:
+        #         self.best_score = score
+        #         self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=save_multiple)
+        #     elif score < self.best_score + self.delta:
+        #         self.counter += 1
 
-                if self.counter >= self.patience:
-                    self.early_stop = True
+        #         if self.counter >= self.patience:
+        #             self.early_stop = True
                 
-                if save_all: # save all ckpt
-                    self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=True, update_best=False)
-            else: # save best ckpt only
-                self.best_score = score
-                self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=save_multiple)
-                self.counter = 0
+        #         if save_all: # save all ckpt
+        #             self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=True, update_best=False)
+        #     else: # save best ckpt only
+        #         self.best_score = score
+        #         self.save_checkpoint(val_psnr, model, epoch=epoch, save_multiple=save_multiple)
+        #         self.counter = 0
 
         # find minimum loss
-        elif self.val_on_psnr==False and median_t != None:
+        if self.val_on_psnr==False and median_t != None:
             print('\n\n ============= self.val_on_psnr = ', self.val_on_psnr,'validation on median_t!! (in /home/jialu/zeroshot123cycle0524/dm/callbacks.py)')
             print('=====. median_t = ', median_t, 'val_loss = ', val_loss)
             score = -median_t #-val_loss

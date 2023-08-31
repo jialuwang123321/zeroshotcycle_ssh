@@ -31,6 +31,12 @@ from feature.mapnet_common_train import step_feedfwd
 #AtLoc R-->logq
 from tools.utils import process_poses, pose2logq
 
+import inspect
+def print_current_line():
+    frame = inspect.currentframe()
+    lineno = frame.f_lineno
+    filename = inspect.getframeinfo(frame).filename
+    print(f"Current line: {lineno} in {filename}")
 
 def tmp_plot2(target_in, rgb_in, features_target, features_rgb, i=0):
     '''
@@ -354,7 +360,8 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
 
     if half_res:
         rgb, disp, acc, extras = render(H//4, W//4, focal/4, chunk=args.chunk, c2w=pose_nerf[0,:3,:4], img_idx=img_idx, **render_kwargs_train)
-        # convert rgb to B,C,H,W
+        rgb_partial = rgb.clone() #rgb.shape torch.Size([60, 80, 3])
+       # convert rgb to B,C,H,W
         rgb = rgb[None,...].permute(0,3,1,2)
         # upsample rgb to hwf size
         rgb = torch.nn.Upsample(size=(H, W), mode='bicubic')(rgb)
@@ -389,7 +396,8 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     if args.combine_loss: #args.combine_loss_w= [0.0, 0.0, 1.0]
         pose_loss = PoseLoss(args, pose_, pose, device) #pose_.shape= torch.Size([1, 3, 4])， pose_loss= tensor(0.0001, grad_fn=<MseLossBackward0>)
         loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss + args.combine_loss_w[2] * feat_loss
-        print('\n\n ================ pose_loss = {}, photo_loss = {}, feat_loss={}'.format( pose_loss, photo_loss, feat_loss))
+        # loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[2] * feat_loss
+        # print('\n\n ================ pose_loss = {}, photo_loss = {}, feat_loss={}'.format( pose_loss, photo_loss, feat_loss))
 
     # if args.combine_loss: #args.combine_loss_w= [0.0, 0.0, 1.0]
 
@@ -397,17 +405,50 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     #     # print('\n\n ================ pose_loss = {}, photo_loss = {}'.format( pose_loss, photo_loss))
     #     loss = args.combine_loss_w[0] * pose_loss + args.combine_loss_w[1] * photo_loss #+ args.combine_loss_w[2] * feat_loss
 
+   # run_nerf's loss function
+
+    from models.losses import loss_dict
+    loss_func_nerf = loss_dict['nerfwdm'](coef=1)
+
+    # # compute loss
+    results = {}
+    results['rgb_fine'] = rgb_partial #rgb
+    results['rgb_coarse'] = extras['rgb0']
+    results['beta'] = extras['beta']
+    results['transient_sigmas'] = extras['transient_sigmas']
+
+    loss_d = loss_func_nerf(results, data)
+    loss_func_nerf_all = sum(l for l in loss_d.values())
+    loss = loss + loss_func_nerf_all
 
     ### Loss Design End
-    #dfnetdm optimizer
+    
     loss.backward()
-    optimizer.step()
-    optimizer.zero_grad()
-    psnr = mse2psnr(img2mse(rgb, data))
 
+    #dfnetdm optimizer
+    optimizer.step()
     #dfnetdm nerf optimizer
     optimizer_nerf.step()
+
+   # 在训练迭代结束后打印最后一层的权重.grad
+
+    # print('\n\n ====== Model gradients:')
+    # for param1 in model.parameters():
+    #     print(param1.grad)
+
+    # print('\n\n ====== NeRF gradients:')
+    # for param2 in render_kwargs_train['network_fn'].parameters():
+    #     print(param2.grad)
+    
+    # print('\n\n ====== NeRF-fine gradients:')
+    # for param3 in render_kwargs_train['network_fine'].parameters():
+    #     print(param3.grad)
+    
+    optimizer.zero_grad()
+    psnr = mse2psnr(img2mse(rgb, data))
     optimizer_nerf.zero_grad()
+
+
 
     # torch.cuda.empty_cache() # free memory
 
@@ -427,19 +468,7 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
         optimizer_nerf.step()
           -> nerf_model.param.grad
     """
-    # 在训练迭代结束后打印最后一层的权重.grad
-
-    # print('\n\n ====== Model gradients:')
-    # for param1 in model.parameters():
-    #     print(param1.grad)
-
-    # print('\n\n ====== NeRF gradients:')
-    # for param2 in render_kwargs_train['network_fn'].parameters():
-    #     print(param2.grad)
-    
-    # print('\n\n ====== NeRF-fine gradients:')
-    # for param3 in render_kwargs_train['network_fine'].parameters():
-    #     print(param3.grad)
+ 
 
 
     # last_layer_params_1 = list(render_kwargs_train['network_fn'].parameters())[-1]  # 获取最后一层的参数
@@ -447,9 +476,6 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
 
     # last_layer_params_2 = list(render_kwargs_train['network_fine'].parameters())[-1]  # 获取最后一层的参数
     # print("&&& Last Layer nerf_fine Weights:", last_layer_params_2)
-
-
-
 
 
 
@@ -467,29 +493,17 @@ def train_on_batch(args, data, model, feat_model, pose, img_idx, hwf, optimizer,
     #     psnr = mse2psnr(img_loss)
     # loss.backward()
     # photo_loss.backward()
-    # run_nerf's loss function
 
-    # from models.losses import loss_dict
-    # loss_func_nerf = loss_dict['nerfw'](coef=1)
 
-    # # compute loss
-    # results = {}
-    # results['rgb_fine'] = rgb
-    # results['rgb_coarse'] = extras['rgb0']
-    # results['beta'] = extras['beta']
-    # results['transient_sigmas'] = extras['transient_sigmas']
-    # loss_d = loss_func_nerf(results, results+10)
-    # loss_func_nerf_all = sum(l for l in loss_d.values())
+ 
 
-    # with torch.no_grad():
-    #     img_loss = img2mse(rgb, results+10)
-    #     psnr = mse2psnr(img_loss)
+    # # with torch.no_grad():
+    # #     img_loss = img2mse(rgb, results+10)
+    # #     psnr = mse2psnr(img_loss)
+
     # loss_func_nerf_all.backward()
-    # optimizer_nerf.step()
-    
-    # loss_func_nerf.backward()
 
-
+ 
     
 
 
@@ -826,9 +840,9 @@ def train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, nea
                 last_layer_name = name2
                 last_layer_param = param2
 
-        # 打印最后一层的名称和参数
-        print("feat_model Last Layer Name:", last_layer_name)
-        print("feat_model Last Layer Parameters:", last_layer_param)
+        # # 打印最后一层的名称和参数
+        # print("feat_model Last Layer Name:", last_layer_name)
+        # print("feat_model Last Layer Parameters:", last_layer_param)
 
         # for name1, param1 in model.named_parameters():
             # if name1=='fc_pose.bias':
@@ -884,7 +898,7 @@ def train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, nea
         for param_group in optimizer.param_groups:
             # param_group['lr'] = new_lrate
             print('For dfnetdm, args.learning_rate = {}, new_lrate = {}, global_step = {}'.format(args.learning_rate, param_group['lr'], global_step))
-
+            print_current_line()
         # ###   update learning rate end  ###
 
 
@@ -900,7 +914,7 @@ def train_feature_matching(args, model, feat_model, optimizer, i_split, hwf, nea
         for param_group in optimizer_nerf.param_groups:
             param_group['lr'] = new_lrate
             print('For nerf, args.lrate = {}, new_lrate = {}, global_step = {}'.format(args.lrate, param_group['lr'], global_step))
-
+            print_current_line()
         ###   update learning rate end  ###
 
         # 26% speed up for DFNet_s

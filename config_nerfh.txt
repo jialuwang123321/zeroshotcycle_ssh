@@ -1,7 +1,7 @@
 ############################################### NeRF-Hist training example 7-Scenes ###############################################
 expname=nerfh
-basedir=./logs/heads #fire
-datadir=./data/7Scenes/heads #fire
+basedir=./logs/heads  #fire
+datadir=./data/7Scenes/heads  #fire
 dataset_type=7Scenes
 lrate_decay=0.754
 trainskip=5 
